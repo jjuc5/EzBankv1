@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>StudentServlet</servlet-name>
+        <servlet-class>sheridan.studentdb.controller.StudentServlet</servlet-class>
+        <init-param>
+            <param-name>greeting</param-name>
+            <param-value>Student Logins</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>StudentServlet</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+    
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Read</web-resource-name>
+            <url-pattern>/listall.do</url-pattern>
+            <url-pattern>/change_password.do</url-pattern>
+            <url-pattern>/update_password.do</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>assistant</role-name>
+            <role-name>administrator</role-name>
+        </auth-constraint>
+        <!--    
+            <user-data-constraint> 
+                <transport-guarantee>CONFIDENTIAL</transport-guarantee> 
+            </user-data-constraint>
+        -->
+    </security-constraint>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Edit</web-resource-name>
+            <url-pattern>/clearall.do</url-pattern>
+            <url-pattern>/edit.do</url-pattern>
+            <url-pattern>/update.do</url-pattern>
+            <url-pattern>/delete.do</url-pattern>
+            <url-pattern>/remove.do</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>administrator</role-name>
+        </auth-constraint>
+        <!--    
+        <user-data-constraint> 
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee> 
+        </user-data-constraint>
+        -->
+    </security-constraint>
+    
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.jsp</form-login-page>
+            <form-error-page>/login_failed.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+ 
+    <error-page>
+        <error-code>403</error-code>
+        <location>/access_denied.jsp</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error404.jsp</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error500.jsp</location>
+    </error-page>
+    
+    <welcome-file-list>
+        <welcome-file>redirect.jsp</welcome-file>
+    </welcome-file-list>
+    
+</web-app>

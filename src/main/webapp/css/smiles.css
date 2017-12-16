@@ -1,0 +1,25 @@
+h1.smile{
+    background: url(../images/smiles/face-smile.png) no-repeat left center;
+    text-indent: 1.25em;
+}
+
+h1.glasses{
+    background: url(../images/smiles/face-glasses.png) no-repeat left center;
+    text-indent: 1.25em;
+}
+
+h1.grin{
+    background: url(../images/smiles/face-grin.png) no-repeat left center;
+    text-indent: 1.25em;
+}
+
+h1.surprise{
+    background: url(../images/smiles/face-surprise.png) no-repeat left center;
+    text-indent: 1.25em;
+}
+
+h1.wink{
+    background: url(../images/smiles/face-wink.png) no-repeat left center;
+    text-indent: 1.25em;
+}
+
