@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/StudentLogins">
-  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" name="jdbc/studentdb" password="pr1orIty16" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/studentdb" username="root"/>
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" name="jdbc/studentdb" password="" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/studentdb" username="root"/>
   <Realm className="org.apache.catalina.realm.DataSourceRealm" dataSourceName="jdbc/studentdb" digest="SHA-256" localDataSource="true" roleNameCol="user_role" userCredCol="user_password" userNameCol="user_login" userRoleTable="roles" userTable="users"/>
 </Context>
