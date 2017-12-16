@@ -12,11 +12,10 @@
     </head>
     <body>
         <main>
-            <my:SmileH1>Login</my:SmileH1>
-            <p class="message">Please login to continue.</p>
+            <my:SmileH1>XYZ Online Banking System</my:SmileH1>
             <form action="j_security_check" method="post">
                 <p>
-                    <label>Login</label>
+                    <label>Username</label>
                     <input type="text" name="j_username" maxlength='15' size='15' required/><my:Required/>
                 </p>
                 <p>
@@ -28,6 +27,7 @@
                     <input type="submit" value="Login">    
                 </p>
             </form>
+            <p><a href="<c:url value="signup.do"/>">Sign up</a></p>
         </main>
         <footer><my:Sheridan/></footer>
     </body>
