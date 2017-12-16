@@ -27,7 +27,7 @@
                     <input type="submit" value="Login">    
                 </p>
             </form>
-            <p><a href="<c:url value="signup.do"/>">Sign up</a></p>
+            <p><a href="<c:url value="input.do"/>">Sign up</a></p>
         </main>
         <footer><my:Sheridan/></footer>
     </body>
