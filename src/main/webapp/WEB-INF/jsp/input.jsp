@@ -19,58 +19,78 @@
             <form method="get" action="<c:url value="next.do"/>">
                 <h2>Personal Information:</h2>
                 <p>
-                    <label for="first">First Name:</label>
-                    <my:TextInput id="first" name="firstName" value="${param.firstName}"/>
-                    <my:Error property="firstName"/><my:Required/>
+                    <label for="first_name">First Name:</label>
+                    <my:TextInput id="first_name" name="first_name" value="${param.first_name}"/>
+                    <my:Error property="first_name"/><my:Required/>
                 </p>
                 <p>
-                    <label for="last">Last Name:</label>
-                    <my:TextInput id="last" name="lastName" value="${param.lastName}"/>
-                    <my:Error property="lastName"/><my:Required/>
+                    <label for="last_name">Last Name:</label>
+                    <my:TextInput id="last_name" name="last_name" value="${param.last_name}"/>
+                    <my:Error property="last_name"/><my:Required/>
                 </p>
                 <p>
                     <label for="birth_date">Date Of Birth:</label>
                     <my:TextInput id="birth_date" name="birth_date" value="${param.birth_date}"/>
+                    <my:Required/>
                 </p>
                 <p>
-                    <label for="social_security_no">Social Security Number (SIN):</label>
+                    <label for="social_security_no">Social Security Number (SSN):</label>
                     <my:TextInput id="social_security_no" name="social_security_no" value="${param.social_security_no}"/>
+                    <my:Required/>
                 </p>
                 <p>
                     <label for="tel_no">Telephone Number:</label>
                     <my:TextInput id="tel_no" name="tel_no" value="${param.tel_no}"/>
+                    <my:Required/>
+                </p>
+                <p>
+                    <label for="email">Email Address:</label>
+                    <my:TextInput id="email" name="email" value="${param.email}"/>
+                    <my:Required/>
                 </p>
                 <hr>
                 <h2>Address Information:</h2>
                 <p>
                     <label for="street_no">Street Number:</label>
                     <my:TextInput id="street_no" name="street_no" value="${param.street_no}"/>
+                    <my:Required/>
                 </p>
                 <p>
                     <label for="street_name">Street Name:</label>
                     <my:TextInput id="street_name" name="street_name" value="${param.street_name}"/>
+                    <my:Required/>
                 </p>
                 <p>
-                    <label for="Provincesprovince">Province:</label>
-                    <my:TextInput id="Provincesprovince" name="Provincesprovince" value="${param.Provincesprovince}"/>
+                    <label for="city">City:</label>
+                    <my:TextInput id="city" name="city" value="${param.city}"/>
+                    <my:Required/>
+                </p>
+                <p>
+                    <label for="province">Province:</label>
+                    <my:TextInput id="province" name="province" value="${param.province}"/>
+                    <my:Required/>
                 </p>
                 <p>
                     <label for="postal_code">Postal Code:</label>
                     <my:TextInput id="postal_code" name="postal_code" value="${param.postal_code}"/>
+                    <my:Required/>
                 </p>
                 <hr>
                 <h2>Login Information:</h2>
                 <p>
                     <label for="user_id">Username:</label>
                     <my:TextInput id="user_id" name="user_id" value="${param.user_id}"/>
+                    <my:Required/>
                 </p>
                 <p>
                     <label for="password">Password:</label>
                     <my:TextInput id="password" name="password" value="${param.password}"/>
+                    <my:Required/>
                 </p>
                 <p>
                     <label for="password2">Confirm Password:</label>
                     <my:TextInput id="password2" name="password2" value="${param.password2}"/>
+                    <my:Required/>
                 </p>
                 <hr>
                 <h2>Please Check The Account Types You Would Like To Activate:</h2>
@@ -94,7 +114,7 @@
                 <p><a href="<c:url value="list_assistant.do"/>">List All Assistants</a></p>
                 <p><a href="<c:url value="logout.jsp"/>">Logout</a></p>
             </my:IfLoggedIn>
-            <p><my:Required/>) Required inputs.</p>
+            <p>(<my:Required/>) Required inputs.</p>
         </main>
         <footer><my:Sheridan/></footer>
     </body>

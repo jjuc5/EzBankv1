@@ -41,7 +41,9 @@ public class StudentController {
 
     // user clicks on "Continue" button in "input.jsp", 
     // the form submits the data to "next.do"
-    public static String next(HttpServletRequest request) {
+    public static String next(HttpServletRequest request) 
+    {
+        
         Student student = new Student();
         student.setFirstName(request.getParameter("firstName"));
         student.setLastName(request.getParameter("lastName"));
