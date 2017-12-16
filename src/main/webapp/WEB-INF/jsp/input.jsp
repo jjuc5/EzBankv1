@@ -75,11 +75,11 @@
                 <hr>
                 <h2>Please Check The Account Types You Would Like To Activate:</h2>
                 <p>
-                    <label for="savingsAcct">Co-op:</label>
+                    <label for="savingsAcct">Savings Account?:</label>
                     <my:Checkbox id="savingsAcct" name="savingsAcct" option="yes" value="${param.savingsAcct}"/>
                 </p>
                 <p>
-                    <label for="chequingAcct">Co-op:</label>
+                    <label for="chequingAcct">Chequing Account?:</label>
                     <my:Checkbox id="chequingAcct" name="chequingAcct" option="yes" value="${param.chequingAcct}"/>
                 </p>
                 <p>
