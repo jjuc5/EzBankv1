@@ -4,6 +4,8 @@ import java.util.*;
 import javax.servlet.http.*;
 import javax.validation.ConstraintViolation;
 import ezbank.business.Customer;
+import ezbank.data.CustomerData;
+import ezbank.data.UserData;
 import sheridan.studentdb.data.AssistantData;
 import sheridan.studentdb.data.LoginData;
 import sheridan.studentdb.data.StudentData;
@@ -48,7 +50,7 @@ public class EzbankController
         customer.setFirst_name(request.getParameter("first_name"));
         customer.setLast_name(request.getParameter("last_name"));
         customer.setBirth_date(request.getParameter("birth_date"));
-        customer.setSocial_security_no(request.getParameter("social_security_no"));
+        customer.setSocial_security_no(Integer.parseInt(request.getParameter("social_security_no")));
         customer.setTel_no(Integer.parseInt(request.getParameter("tel_no")));
         customer.setEmail(request.getParameter("email"));
         customer.setStreet_no(request.getParameter("street_no"));
@@ -93,21 +95,24 @@ public class EzbankController
     public static String submit(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("student") == null)
+        if (session == null || session.getAttribute("customer") == null)
         {
             return "expired"; // show "your session has expired" with "expired.jsp"
         }
         else
         {
-            Student student = (Student) session.getAttribute("student");
-            StudentData.insert(student);
-            String userName = String.format("%s %s",
-                    student.getFirstName().trim(),
-                    student.getLastName().trim());
-            Cookie cookie = new Cookie("userName", userName);
+            Customer customer = (Customer) session.getAttribute("customer");
+            UserData.insert(customer);
+            CustomerData.insert(customer);
+            
+            
+            String user= String.format("%s %s",
+                    customer.getFirst_name().trim(),
+                    customer.getLast_name().trim());
+            Cookie cookie = new Cookie("userName", user);
             cookie.setMaxAge(30 * 24 * 60 * 60);// one month in sec
             response.addCookie(cookie);
-            return "redirect:thanks.do?id=" + student.getId();
+            return "redirect:thanks.do?id=" + customer.getCustomer_id();
         }
     }
 

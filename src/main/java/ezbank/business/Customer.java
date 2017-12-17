@@ -27,7 +27,7 @@ public class Customer implements Serializable {
     
     @NotBlank(message = "Missing Social Security Number")
     @Pattern(regexp = "/^\\d{9}$/", message = "Invalid Social Security Number")
-    private String social_security_no = "";
+    private int social_security_no = 0;
     
     @NotBlank(message = "Missing Telephone Number")
     @Pattern(regexp = "/^\\d{10}$/", message = "Invalid Telephone Number")
@@ -71,6 +71,7 @@ public class Customer implements Serializable {
     private String password = "";
     
     private int user_id = 0;
+    private int customer_id = 0;
     
     public Customer() 
     {
@@ -78,9 +79,9 @@ public class Customer implements Serializable {
     }
     
     protected Customer(String first_name, String last_name, String birth_date, 
-            String social_security_no, int tel_no, String email, String street_no,
+            int social_security_no, int tel_no, String email, String street_no,
             String street_name, String city, String province, String postal_code,
-            int user_id, String username, String password)
+            int user_id, String username, String password, int customer_id)
     {
         this.first_name = first_name;
         this.last_name = last_name;
@@ -96,6 +97,7 @@ public class Customer implements Serializable {
         this.user_id = user_id;
         this.username = username;
         this.password = password;
+        this.customer_id = customer_id;
     }
 
     
@@ -130,12 +132,12 @@ public class Customer implements Serializable {
         this.birth_date = birth_date;
     }
 
-    public String getSocial_security_no()
+    public int getSocial_security_no()
     {
         return social_security_no;
     }
 
-    public void setSocial_security_no(String social_security_no)
+    public void setSocial_security_no(int social_security_no)
     {
         this.social_security_no = social_security_no;
     }
@@ -240,5 +242,16 @@ public class Customer implements Serializable {
         this.password = password;
     }
 
+    public int getCustomer_id()
+    {
+        return customer_id;
+    }
+
+    public void setCustomer_id(int customer_id)
+    {
+        this.customer_id = customer_id;
+    }
+
+    
    
 }

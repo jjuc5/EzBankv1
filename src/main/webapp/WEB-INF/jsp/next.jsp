@@ -12,27 +12,59 @@
     </head>
     <body>
         <main>
-            <my:SmileH1>${greeting} - Output</my:SmileH1>
+            <my:SmileH1>Confirm Your Registration Details</my:SmileH1>
             <h2>Entered Data:</h2>
             <p>
                 <label>First Name:</label> 
-                <span class="output"><c:out value="${student.firstName}"/></span>
+                <span class="output"><c:out value="${customer.first_name}"/></span>
             </p>
             <p>
                 <label>Last Name:</label>
-                <span class="output"><c:out value="${student.lastName}"/></span>
+                <span class="output"><c:out value="${customer.last_name}"/></span>
             </p>
             <p>
-                <label>Program:</label>  
-                <span class="output"><c:out value="${student.program}"/></span>
+                <label>Birth Date:</label>  
+                <span class="output"><c:out value="${customer.birth_date}"/></span>
             </p>
             <p>
-                <label>Year:</label> 
-                <span class="output"><c:out value="${student.year}"/></span>
+                <label>Social Security Number:</label> 
+                <span class="output"><c:out value="${customer.social_security_no}"/></span>
             </p>
             <p>
-                <label>Co-op:</label> 
-                <span class="output"><c:out value="${student.coop}"/></span>
+                <label>Telephone Number:</label> 
+                <span class="output"><c:out value="${customer.tel_no}"/></span>
+            </p>
+            <p>
+                <label>Email Address:</label> 
+                <span class="output"><c:out value="${customer.email}"/></span>
+            </p>
+            <p>
+                <label>Street Number:</label> 
+                <span class="output"><c:out value="${customer.street_no}"/></span>
+            </p>
+            <p>
+                <label>Street Name:</label> 
+                <span class="output"><c:out value="${customer.street_name}"/></span>
+            </p>
+            <p>
+                <label>City:</label> 
+                <span class="output"><c:out value="${customer.city}"/></span>
+            </p>
+            <p>
+                <label>Province:</label> 
+                <span class="output"><c:out value="${customer.province}"/></span>
+            </p>
+            <p>
+                <label>Postal Code:</label> 
+                <span class="output"><c:out value="${customer.postal_code}"/></span>
+            </p>
+            <p>
+                <label>Username:</label> 
+                <span class="output"><c:out value="${customer.username}"/></span>
+            </p>
+            <p>
+                <label>Password:</label> 
+                <span class="output"><c:out value="${customer.password}"/></span>
             </p>
             <p class="message">
                 Please, check your data before clicking "Register".
