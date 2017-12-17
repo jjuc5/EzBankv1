@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 public class Customer implements Serializable {
 
+    private Integer user_id;
+    private Integer customer_id;
     
     @NotBlank(message = "Missing first name")
     @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid first name")
@@ -70,19 +72,19 @@ public class Customer implements Serializable {
     @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid Username")
     private String password = "";
     
-    private Integer user_id;
-    private Integer customer_id;
+    
     
     public Customer() 
     {
         
     }
     
-    protected Customer(String first_name, String last_name, String birth_date, 
+    protected Customer(int customer_id, String first_name, String last_name, String birth_date, 
             int social_security_no, int tel_no, String email, String street_no,
             String street_name, String city, String province, String postal_code,
-            int user_id, String username, String password, int customer_id)
+            int user_id, String username, String password)
     {
+        this.customer_id = customer_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.birth_date = birth_date;
@@ -97,7 +99,7 @@ public class Customer implements Serializable {
         this.user_id = user_id;
         this.username = username;
         this.password = password;
-        this.customer_id = customer_id;
+        
     }
 
     

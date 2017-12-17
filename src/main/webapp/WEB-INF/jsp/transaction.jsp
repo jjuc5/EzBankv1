@@ -1,5 +1,5 @@
 <%-- 
-    Document   : listallassist
+    Document   : transaction
     Created on : 13-Apr-2017, 4:36:33 PM
     Author     : John Urbanowicz
 --%>
@@ -25,8 +25,7 @@
     </head>
     <body>
        <div class="container">
-         
-		<!-- Example row of columns -->
+  	<!-- Example row of columns -->
 		<div class="row">
 		<div class="col-md-4">
 		<h2>EZ-BANK</h2>
@@ -76,44 +75,63 @@
                     
                 <div class="col-md-8">
                 <main>
-            <my:SmileH1>Personal Accounts</my:SmileH1>
+            <my:SmileH1>Transaction History</my:SmileH1>
+            <!--old code
+             <label for="prog">Program: </label>
+                    <my:Select id="prog" name="program" options="${programs}" value="${param.program}"/>
+                    <my:Error property="program"/><my:Required/>
+            -->
+            <!--bootstrap input textbox-->
             
-            <div class="col-sm-4">
-            <!-- username is user_name-->
-            <label for="user_id"></label>
-            <input type="text" class="form-control" id="user_id" placeholder="User id">
+            <div class="col-sm-4"><!--col-xs-2-->
+            <!-- ACCOUNT NAME dropdown name: account_name -->
+            <label for="account_name">Choose an account</label></br>
+            <div class="form-group">
+            <label for="account_name"></label> <select class="form-control" id="account_name">
+            <option>Chequing</option>
+            <option>Savings</option>
+            </select>
             </div>
+            </div>
+            
+            
+            <!--<label for="prog">Program: </label>
+            <my:Select id="prog" name="program" options="${programs}" value="${param.program}"/>
+            <my:Error property="program"/><my:Required/>
+            -->
              
             <c:choose>
                 <c:when test="${not empty visits}">
                     <table>
                         <tr>
+                            <!--code for the table
+                            <th>Date</th>
+                            <th>Description Type</th>
+                            <th>Amount</th>
+                            <th>Balance</th>
+                            -->
+                            <th colspan="2">Update</th>
                             <!--working code
                             <th>Count</th>
                             <th>Username</th>
                             <th>Role</th>
                             <th colspan="2">Update</th>
                             -->
-                            <!--altered code
-                            <th>Account</th>
-                            <th>Account Type</th>
-                            <th>Balance</th>
-                            <th colspan="2">Update</th>
-                            -->
                         </tr>
-                        <c:forEach items="${visits}" var="v" varStatus="s"><!--visits -->
+                        <c:forEach items="${visits}" var="v" varStatus="s">
                             <tr>
                                 <!--Working code
                                 <td><c:out value="${s.count}"/></td>
                                 <td><c:out value="${v.username}"/></td>
                                 <td><c:out value="${v.role}"/></td>
                                 -->
-                                <!--Code for the table
-                                <td><c:out value="${a.account}"/></td>
-                                <td><c:out value="${a.account_type}"/></td>
-                                <td><c:out value="${a.account_balance}"/></td>
+                                <!-- altered code
+                                <td><c:out value="${a.date}"/></td>
+                                <td><c:out value="${a.description}"/></td>
+                                <td><c:out value="${a.amount}"/></td>
+                                <td><c:out value="${a.balance}"/></td>
                                 -->   
-                                
+                              </tr>  
                                 <c:url value="editassist.do" var="ref_editassist">
                                     <c:param name="username" value="${v.username}"/>
                                 </c:url>
@@ -128,8 +146,7 @@
                     </table>
                 </c:when>
                 <c:otherwise>
-                    </br>
-                    <p class="message">Accounts Of Customer To Display.</p>
+                    <p class="message">Transaction History to be displayed.</p>
                 </c:otherwise>
             </c:choose>
                 <p><a href="input.do">Add A Student</a></p>
@@ -146,7 +163,7 @@
            </div> 
            </div>
        </div>
-         
+       
         <footer><my:Sheridan/></footer>
     </body>
 </html>

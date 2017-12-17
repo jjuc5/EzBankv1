@@ -104,14 +104,13 @@ public class EzbankController
             UserData.insert(customer);
             CustomerData.insert(customer);
             
-            
-            String userName = String.format("%s%s",
-                    customer.getFirst_name().trim(),
-                    customer.getLast_name().trim());
+            String userName = String.format("%s",
+                    customer.getFirst_name().trim());
             Cookie cookie = new Cookie("userName", userName);
             cookie.setMaxAge(30 * 24 * 60 * 60);// one month in sec
             response.addCookie(cookie);
-            return "redirect:thanks.do?id=" + customer.getCustomer_id();
+            System.out.println("Value of customer.getCustomer_id() before THANKS.DO:" + customer.getCustomer_id());
+            return "redirect:thanks.do?customer_id=" + customer.getCustomer_id();
         }
     }
 
