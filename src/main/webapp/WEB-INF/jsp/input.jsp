@@ -1,4 +1,4 @@
-<%-- Alex Tetervak, Sheridan College, Ontario --%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="my" tagdir="/WEB-INF/tags"%>
@@ -78,8 +78,8 @@
                 <hr>
                 <h2>Login Information:</h2>
                 <p>
-                    <label for="user_id">Username:</label>
-                    <my:TextInput id="user_id" name="user_id" value="${param.user_id}"/>
+                    <label for="username">Username:</label>
+                    <my:TextInput id="username" name="username" value="${param.username}"/>
                     <my:Required/>
                 </p>
                 <p>

@@ -1,39 +1,39 @@
-/*
- * Alex Tetervak, Sheridan College, Ontario
- */
-package sheridan.studentdb.controller;
+package ezbank.controller;
 
-import sheridan.studentdb.util.ValidatorUtil;
-import sheridan.studentdb.util.CookieUtil;
 import java.util.*;
 import javax.servlet.http.*;
 import javax.validation.ConstraintViolation;
-import sheridan.studentdb.business.Assistant;
-
-import sheridan.studentdb.business.Student;
+import ezbank.business.Customer;
 import sheridan.studentdb.data.AssistantData;
 import sheridan.studentdb.data.LoginData;
 import sheridan.studentdb.data.StudentData;
+import sheridan.studentdb.util.ValidatorUtil;
+import sheridan.studentdb.util.CookieUtil;
 
-public class StudentController {
+public class EzbankController
+{
 
     // a user comes to the default front page at "hello.do"
-    public static String hello(HttpServletRequest request) {
+    public static String hello(HttpServletRequest request)
+    {
         String userName = CookieUtil.getCookieValue(request.getCookies(), "userName");
-        if (userName.isEmpty()) {
+        if (userName.isEmpty())
+        {
             return input(request);
         }
         return "hello"; // show "hello.jsp"
     }
 
     // a user comes to the data input page at "input.do"
-    public static String input(HttpServletRequest request) {
+    public static String input(HttpServletRequest request)
+    {
         return "input"; // show "input.jsp"
     }
 
     //  a user clicks on "Forget Me" link to "forget.do"
-    public static String forget(HttpServletResponse response) {
-        Cookie cookie = new Cookie("userName", "whatever");
+    public static String forget(HttpServletResponse response)
+    {
+        Cookie cookie = new Cookie("userName", "pass");
         cookie.setMaxAge(0);
         response.addCookie(cookie); // remove the cookie
         return "redirect:."; // redirect to the default front page
@@ -41,47 +41,64 @@ public class StudentController {
 
     // user clicks on "Continue" button in "input.jsp", 
     // the form submits the data to "next.do"
-    public static String next(HttpServletRequest request) 
+    public static String next(HttpServletRequest request)
     {
+        Customer customer = new Customer();
+
+        customer.setFirst_name(request.getParameter("first_name"));
+        customer.setLast_name(request.getParameter("last_name"));
+        customer.setBirth_date(request.getParameter("birth_date"));
+        customer.setSocial_security_no(request.getParameter("social_security_no"));
+        customer.setTel_no(Integer.parseInt(request.getParameter("tel_no")));
+        customer.setEmail(request.getParameter("email"));
+        customer.setStreet_no(request.getParameter("street_no"));
+        customer.setStreet_name(request.getParameter("street_name"));
+        customer.setCity(request.getParameter("city"));
+        customer.setProvince(request.getParameter("province"));
+        customer.setPostal_code(request.getParameter("postal_code"));
+        customer.setUsername(request.getParameter("username"));
+        customer.setPassword(request.getParameter("password"));
         
-        Student student = new Student();
-        student.setFirstName(request.getParameter("firstName"));
-        student.setLastName(request.getParameter("lastName"));
-        student.setProgram(request.getParameter("program"));
-        student.setYear(request.getParameter("year"));
-        String coop = request.getParameter("coop");
-        student.setCoop((coop == null) ? "no" : "yes");
-        Set<ConstraintViolation<Student>> errors
-                = ValidatorUtil.getValidator().validate(student);
-        if (errors.isEmpty()) {
+
+        Set<ConstraintViolation<Customer>> errors
+                = ValidatorUtil.getValidator().validate(customer);
+        if (errors.isEmpty())
+        {
             HttpSession session = request.getSession();
-            session.setAttribute("student", student);
+            session.setAttribute("customer", customer);
             // no data saving yet, the user must look through and confirm
             return "next"; // show "next.jsp"
-        } else {
+        }
+        else
+        {
             request.setAttribute("errors", errors);
             return input(request); // go back to showing "input.jsp"
         }
     }
-    
-    public static String nextAssist(HttpServletRequest request) {
-        
+
+    public static String nextAssist(HttpServletRequest request)
+    {
+
         Assistant assistant = new Assistant();
         assistant.setUsername(request.getParameter("assistUser"));
         assistant.setPassword(request.getParameter("pass"));
-        
+
         HttpSession session = request.getSession();
         session.setAttribute("assistant", assistant);
-        
+
         return "nextassist";
     }
 
     // a user clicks "Register" button in "next.jsp", the form submits to "submit.do"
-    public static String submit(HttpServletRequest request, HttpServletResponse response) {
+    public static String submit(HttpServletRequest request, HttpServletResponse response)
+    {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("student") == null) {
+        if (session == null || session.getAttribute("student") == null)
+        {
             return "expired"; // show "your session has expired" with "expired.jsp"
-        } else {
+        }
+        else
+        {
             Student student = (Student) session.getAttribute("student");
             StudentData.insert(student);
             String userName = String.format("%s %s",
@@ -93,36 +110,50 @@ public class StudentController {
             return "redirect:thanks.do?id=" + student.getId();
         }
     }
-    
-    public static String submitAssist(HttpServletRequest request, HttpServletResponse response) {
+
+    public static String submitAssist(HttpServletRequest request, HttpServletResponse response)
+    {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("assistant") == null) {
+        if (session == null || session.getAttribute("assistant") == null)
+        {
             return "expired"; // show "your session has expired" with "expired.jsp"
-        } else {
-            
+        }
+        else
+        {
+
             Assistant assistant = (Assistant) session.getAttribute("assistant");
             AssistantData.insert(assistant);
-            
+
             return "redirect:listallassist.do";
         }
     }
 
     // a user is redirected to "Thank you" page at "thanks.do"
-    public static String thanks(HttpServletRequest request) {
+    public static String thanks(HttpServletRequest request)
+    {
         String strId = request.getParameter("id");
-        if (strId == null || strId.isEmpty()) {
+        if (strId == null || strId.isEmpty())
+        {
             return "notfound";
-        } else {
-            try {
+        }
+        else
+        {
+            try
+            {
                 int id = Integer.parseInt(strId);
                 Student student = StudentData.get(id);
-                if (student == null) {
+                if (student == null)
+                {
                     return "notfound";
-                } else {
+                }
+                else
+                {
                     request.setAttribute("student", student);
                     return "thanks";
                 }
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e)
+            {
                 return "notfound";
             }
         }
@@ -130,65 +161,86 @@ public class StudentController {
 
     // a user clicks on "List All" link to "listall.do", 
     // or a user is redirected to "listall.do" 
-    public static String listAll(HttpServletRequest request) {
+    public static String listAll(HttpServletRequest request)
+    {
         List<Student> list = StudentData.getAll();
         request.setAttribute("visits", list);
-        if (request.isUserInRole("administrator")) {
+        if (request.isUserInRole("administrator"))
+        {
             return "editall";
-        } else {
+        }
+        else
+        {
             return "readall";
         }
     }
-    
-    public static String addAssist(HttpServletRequest request) {
-        if (request.isUserInRole("administrator")) {
+
+    public static String addAssist(HttpServletRequest request)
+    {
+        if (request.isUserInRole("administrator"))
+        {
             return "addassist";
-        } else {
+        }
+        else
+        {
             return "unauthorized";
         }
     }
-    
-    public static String listAllAssist(HttpServletRequest request) {
+
+    public static String listAllAssist(HttpServletRequest request)
+    {
         List<Assistant> list = AssistantData.getAll();
         request.setAttribute("visits", list);
-        if (request.isUserInRole("administrator")) {
+        if (request.isUserInRole("administrator"))
+        {
             return "listallassist";
-        } else {
+        }
+        else
+        {
             return "unauthorized";
         }
     }
 
     // a user clicks on "Clear All" link to "clearall.do"
-    public static String clearAll() {
+    public static String clearAll()
+    {
         StudentData.delete();
         return "redirect:listall.do";
     }
 
     // a user clicks "Edit" link (in the table) to "edit.do" 
-    public static String edit(HttpServletRequest request) {
+    public static String edit(HttpServletRequest request)
+    {
 
-        try {
+        try
+        {
             int id = Integer.parseInt(request.getParameter("id"));
             Student student = StudentData.get(id);
-            if (student != null) {
+            if (student != null)
+            {
                 request.setAttribute("student", student);
                 return "edit"; // show the student data in the form to edit
-            } else {
+            }
+            else
+            {
                 return "redirect:listall.do";
             }
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e)
+        {
             return "notfound";
         }
     }
-    
-    public static String editAssist(HttpServletRequest request) {
 
-        try 
+    public static String editAssist(HttpServletRequest request)
+    {
+
+        try
         {
             String username = request.getParameter("username");
             Assistant assistant = AssistantData.getAssist(username);
-            
-            if(assistant != null)
+
+            if (assistant != null)
             {
                 request.setAttribute("assistant", assistant);
                 return "editassist";
@@ -197,8 +249,8 @@ public class StudentController {
             {
                 return "redirect:input.jsp";
             }
-        } 
-        catch (NumberFormatException e) 
+        }
+        catch (NumberFormatException e)
         {
             return "notfound";
         }
@@ -206,9 +258,11 @@ public class StudentController {
 
     // a user clicks "Update" button in "edit.jsp", 
     // the form submits the data to "update.do"
-    public static String update(HttpServletRequest request) {
+    public static String update(HttpServletRequest request)
+    {
         Student student = new Student();
-        try {
+        try
+        {
             student.setId(Integer.parseInt(request.getParameter("id")));
             student.setFirstName(request.getParameter("firstName"));
             student.setLastName(request.getParameter("lastName"));
@@ -218,113 +272,151 @@ public class StudentController {
             student.setCoop((coop == null) ? "no" : "yes");
             Set<ConstraintViolation<Student>> errors
                     = ValidatorUtil.getValidator().validate(student);
-            if (errors.isEmpty()) {
+            if (errors.isEmpty())
+            {
                 StudentData.update(student);
                 return "redirect:listall.do";
-            } else {
+            }
+            else
+            {
 
                 request.setAttribute("errors", errors);
                 request.setAttribute("student", student);
                 return "edit";
             }
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e)
+        {
             return "notfound";
         }
     }
-    
-    public static String updateAssist(HttpServletRequest request) {
+
+    public static String updateAssist(HttpServletRequest request)
+    {
         Assistant assistant = new Assistant();
-        
+
         assistant.setUsername(request.getParameter("username"));
         assistant.setRole(request.getParameter("role"));
-        
+
         String originalUser = request.getParameter("originalUser");
-        
+
         AssistantData.update(assistant);
-        
+
         return "redirect:listallassist.do";
     }
 
     // a user cliks "Delete" link (in the table) to "delete.do"
-    public static String delete(HttpServletRequest request) {
-        try {
+    public static String delete(HttpServletRequest request)
+    {
+        try
+        {
             int id = Integer.parseInt(request.getParameter("id"));
             Student student = StudentData.get(id);
-            if (student != null) {
+            if (student != null)
+            {
                 request.setAttribute("student", student);
                 return "delete"; // ask "Do you really want to remove the data?"
-            } else {
+            }
+            else
+            {
                 return "redirect:listall.do";
             }
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e)
+        {
             return "notfound";
         }
     }
-    
-    public static String deleteAssist(HttpServletRequest request) {
-        try {
-            
+
+    public static String deleteAssist(HttpServletRequest request)
+    {
+        try
+        {
+
             String username = request.getParameter("username");
-            
+
             Assistant assistant = AssistantData.getAssist(username);
-            if (assistant != null) {
+            if (assistant != null)
+            {
                 request.setAttribute("assistant", assistant);
                 return "deleteassist";
-            } else {
+            }
+            else
+            {
                 return "redirect:listallassist.do";
             }
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e)
+        {
             return "notfound";
         }
     }
 
     // a user clicks "Remove Record" button in "delete.jsp",
     // the form submits the data to "remove.do"
-    public static String remove(HttpServletRequest request) {
-        try {
+    public static String remove(HttpServletRequest request)
+    {
+        try
+        {
             StudentData.delete(Integer.parseInt(request.getParameter("id")));
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e)
+        {
             return "notfound";
         }
         return "redirect:listall.do";
     }
-    
-    public static String removeAssist(HttpServletRequest request) {
+
+    public static String removeAssist(HttpServletRequest request)
+    {
         AssistantData.delete(request.getParameter("username"));
-        
+
         return "redirect:listallassist.do";
     }
 
     // a user clicks "Change password" link
-    public static String changePassword(HttpServletRequest request) {
+    public static String changePassword(HttpServletRequest request)
+    {
         request.setAttribute("message", "Enter your new password twice");
         return "passwords";
     }
 
     // a user clicks "Change Password" button in "passwords.jsp",
     // the form submits data to "/update_password.do"
-    public static String updatePassword(HttpServletRequest request) {
+    public static String updatePassword(HttpServletRequest request)
+    {
         String login = request.getRemoteUser();
-        if (login == null) {
+        if (login == null)
+        {
             return "expired";
         }
         String message;
         String current_password = request.getParameter("current_password");
         String new_password_1 = request.getParameter("new_password_1");
         String new_password_2 = request.getParameter("new_password_2");
-        if (current_password == null || current_password.isEmpty()) {
+        if (current_password == null || current_password.isEmpty())
+        {
             message = "Current password input is left empty.";
-        } else if (LoginData.checkPassword(login, current_password)) {
+        }
+        else if (LoginData.checkPassword(login, current_password))
+        {
             if (new_password_1 == null || new_password_1.isEmpty()
-                || new_password_2 == null || new_password_2.isEmpty()) {
+                    || new_password_2 == null || new_password_2.isEmpty())
+            {
                 message = "New password input is left empty.";
-            } else if (new_password_1.equals(new_password_2)) {
+            }
+            else if (new_password_1.equals(new_password_2))
+            {
                 LoginData.updatePassword(login, new_password_1);
                 message = "Your password has been changed.";
-            } else {
+            }
+            else
+            {
                 message = "New password inputs do not match.";
             }
-        } else {
+        }
+        else
+        {
             message = "Your current password input is wrong.";
         }
         request.setAttribute("message", message);

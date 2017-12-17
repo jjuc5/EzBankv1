@@ -1,6 +1,4 @@
-/*
- * Alex Tetervak, Sheridan College, Ontario
- */
+
 package ezbank.business;
 
 import javax.validation.constraints.*;
@@ -10,7 +8,6 @@ import java.io.Serializable;
 
 public class Customer implements Serializable {
 
-    private int id = 0;
     
     @NotBlank(message = "Missing first name")
     @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid first name")
@@ -34,7 +31,7 @@ public class Customer implements Serializable {
     
     @NotBlank(message = "Missing Telephone Number")
     @Pattern(regexp = "/^\\d{10}$/", message = "Invalid Telephone Number")
-    private String tel_no = "";
+    private int tel_no = 0;
     
     @NotBlank(message = "Missing Email Address")
     @Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)"
@@ -67,21 +64,42 @@ public class Customer implements Serializable {
     
     @NotBlank(message = "Missing Username")
     @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid Username")
-    private String user_id = "";
+    private String username = "";
     
-    public Customer() {
+    @NotBlank(message = "Missing Username")
+    @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid Username")
+    private String password = "";
+    
+    private int user_id = 0;
+    
+    public Customer() 
+    {
+        
     }
     
+    protected Customer(String first_name, String last_name, String birth_date, 
+            String social_security_no, int tel_no, String email, String street_no,
+            String street_name, String city, String province, String postal_code,
+            int user_id, String username, String password)
+    {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.birth_date = birth_date;
+        this.social_security_no = social_security_no;
+        this.tel_no = tel_no;
+        this.email = email;
+        this.street_no = street_no;
+        this.street_name = street_name;
+        this.city = city;
+        this.province = province;
+        this.postal_code = postal_code;
+        this.user_id = user_id;
+        this.username = username;
+        this.password = password;
+    }
+
     
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    
     public String getFirst_name()
     {
         return first_name;
@@ -122,12 +140,12 @@ public class Customer implements Serializable {
         this.social_security_no = social_security_no;
     }
 
-    public String getTel_no()
+    public int getTel_no()
     {
         return tel_no;
     }
 
-    public void setTel_no(String tel_no)
+    public void setTel_no(int tel_no)
     {
         this.tel_no = tel_no;
     }
@@ -192,14 +210,34 @@ public class Customer implements Serializable {
         this.postal_code = postal_code;
     }
 
-    public String getUser_id()
+    public int getUser_id()
     {
         return user_id;
     }
 
-    public void setUser_id(String user_id)
+    public void setUser_id(int user_id)
     {
         this.user_id = user_id;
+    }
+
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
     }
 
    

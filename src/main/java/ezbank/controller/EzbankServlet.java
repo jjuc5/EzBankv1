@@ -1,13 +1,11 @@
-/*
- * Alex Tetervak, Sheridan College, Ontario
- */
-package sheridan.studentdb.controller;
+
+package ezbank.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
-public class StudentServlet extends HttpServlet {
+public class EzbankServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -20,131 +18,131 @@ public class StudentServlet extends HttpServlet {
             
             // a user comes to the default front page at "hello.do"
             case "/hello.do": {
-                showNext = StudentController.hello(request);
+                showNext = EzbankController.hello(request);
                 break;
             }
             
             // a user comes to the first input form at "input.do"
             case "/input.do": {
-                showNext = StudentController.input(request);
+                showNext = EzbankController.input(request);
                 break;
             }
             
             // a user clicks "Forget Me" link to "forget.do"
             case "/forget.do": {
-                showNext = StudentController.forget(response);
+                showNext = EzbankController.forget(response);
                 break;
             }
             
             // a user clicks "Continue" button in "input.jsp", 
             // the form submits the data to "next.do"
             case "/next.do": {
-                showNext = StudentController.next(request);
+                showNext = EzbankController.next(request);
                 break;
             }
             
             // a user clicks "Register" button in "next.jsp", 
             // the form submits the data to "submit.do"
             case "/submit.do": {
-                showNext = StudentController.submit(request, response);
+                showNext = EzbankController.submit(request, response);
                 break;
             }
             
             // a user is redirected to "Thank you" page at "thanks.do"
             case "/thanks.do": {
-                showNext = StudentController.thanks(request);
+                showNext = EzbankController.thanks(request);
                 break;
             }
             
             // a user clicks on "List All" link to "listall.do", 
             // or a user is redirected to "listall.do"
             case "/listall.do": {
-                showNext = StudentController.listAll(request);
+                showNext = EzbankController.listAll(request);
                 break;
             }
             
             // a user clicks on "Clear All" link to "clearall.do"
             case "/clearall.do": {
-                showNext = StudentController.clearAll();
+                showNext = EzbankController.clearAll();
                 break;
             }
             
             // a user click on "Edit" link (in the table) to "edit.do" 
             case "/edit.do": {
-                showNext = StudentController.edit(request);
+                showNext = EzbankController.edit(request);
                 break;
             }
             
             case "/editassist.do": {
-                showNext = StudentController.editAssist(request);
+                showNext = EzbankController.editAssist(request);
                 break;
             }
             
             // a user clicks "Update" button in "edit.jsp", 
             // the form submits the data to "update.do"
             case "/update.do": {
-                showNext = StudentController.update(request);
+                showNext = EzbankController.update(request);
                 break;
             }
             
             case "/updateassist.do": {
-                showNext = StudentController.updateAssist(request);
+                showNext = EzbankController.updateAssist(request);
                 break;
             }
             
             // a user cliks "Delete" link (in the table) to "delete.do"
             case "/delete.do": {
-                showNext = StudentController.delete(request);
+                showNext = EzbankController.delete(request);
                 break;
             }
             
             case "/deleteassist.do": {
-                showNext = StudentController.deleteAssist(request);
+                showNext = EzbankController.deleteAssist(request);
                 break;
             }
             
             // a user clicks "Remove Record" button in "delete.jsp",
             // the form submits the data to "remove.do"
             case "/remove.do": {
-                showNext = StudentController.remove(request);
+                showNext = EzbankController.remove(request);
                 break;
             }
             
             case "/removeassist.do": {
-                showNext = StudentController.removeAssist(request);
+                showNext = EzbankController.removeAssist(request);
                 break;
             }
             
             // a user clicks "Change password" link
             case "/change_password.do":{
-                showNext = StudentController.changePassword(request);
+                showNext = EzbankController.changePassword(request);
                 break;
             }
             
             // a user clicks "Change Password" button in "passwords.jsp",
             // the form submits data to "/update_password.do"
             case "/update_password.do":{
-                showNext = StudentController.updatePassword(request);
+                showNext = EzbankController.updatePassword(request);
                 break;
             }
             
             case "/addassist.do": {
-                showNext = StudentController.addAssist(request);
+                showNext = EzbankController.addAssist(request);
                 break;
             }
             
             case "/nextassist.do": {
-                showNext = StudentController.nextAssist(request);
+                showNext = EzbankController.nextAssist(request);
                 break;
             }
             
             case "/submitassist.do": {
-                showNext = StudentController.submitAssist(request, response);
+                showNext = EzbankController.submitAssist(request, response);
                 break;
             }
             
             case "/listallassist.do": {
-                showNext = StudentController.listAllAssist(request);
+                showNext = EzbankController.listAllAssist(request);
                 break;
             }
             
