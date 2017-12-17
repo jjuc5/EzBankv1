@@ -105,7 +105,7 @@ public class EzbankController
             CustomerData.insert(customer);
             
             
-            String userName = String.format("%s %s",
+            String userName = String.format("%s%s",
                     customer.getFirst_name().trim(),
                     customer.getLast_name().trim());
             Cookie cookie = new Cookie("userName", userName);
@@ -138,6 +138,7 @@ public class EzbankController
     public static String thanks(HttpServletRequest request)
     {
         String customerID = request.getParameter("customer_id");
+        System.out.println("**** THIS IS IS BEFORE cusID CHECK: " + customerID);
         if (customerID == null || customerID.isEmpty())
         {
             return "notfound";
@@ -150,6 +151,7 @@ public class EzbankController
                 Customer customer = CustomerData.get(id);
                 if (customer == null)
                 {
+                    System.out.println("**** THIS IS ID IN TRY: " + customerID);
                     return "notfound";
                 }
                 else
