@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>StudentServlet</servlet-name>
-        <servlet-class>sheridan.studentdb.controller.StudentServlet</servlet-class>
+        <servlet-name>EzbankServlet</servlet-name>
+        <servlet-class>ezbank.controller.EzbankServlet</servlet-class>
         <init-param>
             <param-name>greeting</param-name>
-            <param-value>Student Logins</param-value>
+            <param-value>Ezbank Login</param-value>
         </init-param>
     </servlet>
     
     <servlet-mapping>
-        <servlet-name>StudentServlet</servlet-name>
+        <servlet-name>EzbankServlet</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
     

@@ -25,13 +25,13 @@ public class Customer implements Serializable {
                     "Invalid birth date")
     private String birth_date = "";
     
-    @NotBlank(message = "Missing Social Security Number")
-    @Pattern(regexp = "/^\\d{9}$/", message = "Invalid Social Security Number")
-    private int social_security_no = 0;
+    @NotNull(message = "Missing Social Security Number")
+    //@Pattern(regexp = "/^\\d{9}$/", message = "Invalid Social Security Number")
+    private Integer social_security_no;
     
-    @NotBlank(message = "Missing Telephone Number")
-    @Pattern(regexp = "/^\\d{10}$/", message = "Invalid Telephone Number")
-    private int tel_no = 0;
+    @NotNull(message = "Missing Telephone Number")
+    //@Pattern(regexp = "/^\\d{10}$/", message = "Invalid Telephone Number")
+    private Integer tel_no;
     
     @NotBlank(message = "Missing Email Address")
     @Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)"
@@ -70,8 +70,8 @@ public class Customer implements Serializable {
     @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid Username")
     private String password = "";
     
-    private int user_id = 0;
-    private int customer_id = 0;
+    private Integer user_id;
+    private Integer customer_id;
     
     public Customer() 
     {
@@ -252,6 +252,4 @@ public class Customer implements Serializable {
         this.customer_id = customer_id;
     }
 
-    
-   
 }

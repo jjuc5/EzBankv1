@@ -1,8 +1,6 @@
 package ezbank.data;
 
-import sheridan.studentdb.data.*;
 import java.sql.*;
-import java.util.*;
 
 import ezbank.business.Customer;
 
@@ -30,11 +28,11 @@ public class CustomerData
             ps.setString(4, customer.getStreet_name().trim());
             ps.setString(5, customer.getCity().trim());
             ps.setString(6, customer.getProvince().trim());
-            ps.setString(7, customer.getBirth_date().trim());
-            ps.setInt(8, customer.getTel_no());
-            ps.setInt(9, customer.getSocial_security_no());
-            ps.setString(10, customer.getEmail().trim());
-            ps.setString(11, customer.getBirth_date().trim());
+            ps.setString(7, customer.getPostal_code().trim());
+            ps.setString(8, customer.getBirth_date().trim());
+            ps.setInt(9, customer.getTel_no());
+            ps.setInt(10, customer.getSocial_security_no());
+            ps.setString(11, customer.getEmail().trim());
             ps.setInt(12, customer.getUser_id());
             ps.executeUpdate();
             ResultSet keys = ps.getGeneratedKeys();
@@ -57,7 +55,7 @@ public class CustomerData
             pool.freeConnection(connection);
         }
     }
-
+/*
     public static ArrayList<Student> getAll()
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -142,16 +140,16 @@ public class CustomerData
             pool.freeConnection(connection);
         }
     }
-
-    public static Student get(int id)
+*/
+    public static Customer get(int id)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Student student = null; // to be returned
+        Customer customer = null; // to be returned
 
-        String query = "SELECT * FROM student WHERE id = ?";
+        String query = "SELECT * FROM customer WHERE customer_id = ?";
         try
         {
             ps = connection.prepareStatement(query);
@@ -159,18 +157,25 @@ public class CustomerData
             rs = ps.executeQuery();
             if (rs.next())
             {
-                student = new Student();
-                student.setId(id);
-                student.setFirstName(rs.getString("first_name"));
-                student.setLastName(rs.getString("last_name"));
-                student.setProgram(rs.getString("program_name"));
-                student.setYear(Integer.toString(rs.getInt("program_year")));
-                student.setCoop(rs.getBoolean("program_coop") ? "yes" : "no");
+                customer = new Customer();
+                customer.setCustomer_id(id);
+                customer.setFirst_name(rs.getString("first_name"));
+                customer.setLast_name(rs.getString("last_name"));
+                customer.setStreet_no(rs.getString("street_no"));
+                customer.setStreet_name(rs.getString("street_name"));
+                customer.setCity(rs.getString("city"));
+                customer.setProvince(rs.getString("province"));
+                customer.setPostal_code(rs.getString("postal_code"));
+                customer.setBirth_date(rs.getString("birth_date"));
+                customer.setTel_no(rs.getInt("tel_no"));
+                customer.setSocial_security_no(rs.getInt("social_security_no"));
+                customer.setEmail(rs.getString("email"));
+                customer.setUser_id(rs.getInt("Usersuser_id"));
             }
         }
         catch (SQLException e)
         {
-            throw new RuntimeException("Cannot get the student record.", e);
+            throw new RuntimeException("Cannot get the customer record.", e);
         }
         finally
         {
@@ -179,9 +184,9 @@ public class CustomerData
             pool.freeConnection(connection);
         }
 
-        return student;
+        return customer;
     }
-
+/*
     public static void update(Student student)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -214,5 +219,5 @@ public class CustomerData
             pool.freeConnection(connection);
         }
     }
-
+*/
 }

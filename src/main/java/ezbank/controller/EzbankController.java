@@ -6,9 +6,6 @@ import javax.validation.ConstraintViolation;
 import ezbank.business.Customer;
 import ezbank.data.CustomerData;
 import ezbank.data.UserData;
-import sheridan.studentdb.data.AssistantData;
-import sheridan.studentdb.data.LoginData;
-import sheridan.studentdb.data.StudentData;
 import sheridan.studentdb.util.ValidatorUtil;
 import sheridan.studentdb.util.CookieUtil;
 
@@ -78,6 +75,7 @@ public class EzbankController
         }
     }
 
+    /*
     public static String nextAssist(HttpServletRequest request)
     {
 
@@ -90,6 +88,7 @@ public class EzbankController
 
         return "nextassist";
     }
+    */
 
     // a user clicks "Register" button in "next.jsp", the form submits to "submit.do"
     public static String submit(HttpServletRequest request, HttpServletResponse response)
@@ -106,16 +105,17 @@ public class EzbankController
             CustomerData.insert(customer);
             
             
-            String user= String.format("%s %s",
+            String userName = String.format("%s %s",
                     customer.getFirst_name().trim(),
                     customer.getLast_name().trim());
-            Cookie cookie = new Cookie("userName", user);
+            Cookie cookie = new Cookie("userName", userName);
             cookie.setMaxAge(30 * 24 * 60 * 60);// one month in sec
             response.addCookie(cookie);
             return "redirect:thanks.do?id=" + customer.getCustomer_id();
         }
     }
 
+    /*
     public static String submitAssist(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession(false);
@@ -132,12 +132,13 @@ public class EzbankController
             return "redirect:listallassist.do";
         }
     }
+*/
 
     // a user is redirected to "Thank you" page at "thanks.do"
     public static String thanks(HttpServletRequest request)
     {
-        String strId = request.getParameter("id");
-        if (strId == null || strId.isEmpty())
+        String customerID = request.getParameter("customer_id");
+        if (customerID == null || customerID.isEmpty())
         {
             return "notfound";
         }
@@ -145,15 +146,15 @@ public class EzbankController
         {
             try
             {
-                int id = Integer.parseInt(strId);
-                Student student = StudentData.get(id);
-                if (student == null)
+                int id = Integer.parseInt(customerID);
+                Customer customer = CustomerData.get(id);
+                if (customer == null)
                 {
                     return "notfound";
                 }
                 else
                 {
-                    request.setAttribute("student", student);
+                    request.setAttribute("customer", customer);
                     return "thanks";
                 }
             }
@@ -163,7 +164,7 @@ public class EzbankController
             }
         }
     }
-
+/*
     // a user clicks on "List All" link to "listall.do", 
     // or a user is redirected to "listall.do" 
     public static String listAll(HttpServletRequest request)
@@ -428,5 +429,6 @@ public class EzbankController
 
         return "passwords";
     }
+*/
 
 }

@@ -1,5 +1,6 @@
 
-package sheridan.studentdb.data;
+package ezbank.data;
+
 
 import java.sql.*;
 

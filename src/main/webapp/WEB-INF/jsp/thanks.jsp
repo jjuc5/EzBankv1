@@ -12,12 +12,12 @@
     </head>
     <body>
         <main>
-            <my:SmileH1>${greeting} - Thanks</my:SmileH1>
+            <my:SmileH1>EzBank Account Registration Complete!</my:SmileH1>
             <h2>Dear 
-                <c:out value="${student.firstName} ${student.lastName}"/>:
+                <c:out value="${customer.first_name} ${customer.last_name}"/>:
             </h2>
             <p class="message">
-                Thank you for registering at our site.
+                Thank you for registering.  You may now begin banking with EzBank!
             </p>
             <p><a href="<c:url value="input.do"/>">Go Back to Input</a></p>
             <p><a href="<c:url value="listall.do"/>">List All</a></p>

@@ -27,7 +27,7 @@
                 <span class="output"><c:out value="${customer.birth_date}"/></span>
             </p>
             <p>
-                <label>Social Security Number:</label> 
+                <label>SSN:</label> 
                 <span class="output"><c:out value="${customer.social_security_no}"/></span>
             </p>
             <p>

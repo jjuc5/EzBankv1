@@ -1,6 +1,5 @@
 package ezbank.data;
 
-import sheridan.studentdb.data.*;
 import java.sql.*;
 import java.util.*;
 
@@ -47,6 +46,7 @@ public class UserData
         }
     }
 
+    /*
     public static ArrayList<Student> getAll()
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -84,7 +84,9 @@ public class UserData
         }
         return students;
     }
+*/
 
+    /*
     public static void delete()
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -107,7 +109,8 @@ public class UserData
             pool.freeConnection(connection);
         }
     }
-
+*/
+    /*
     public static void delete(int id)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -131,7 +134,9 @@ public class UserData
             pool.freeConnection(connection);
         }
     }
+*/
 
+    /*
     public static Student get(int id)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -170,7 +175,9 @@ public class UserData
 
         return student;
     }
+*/
 
+    /*
     public static void update(Student student)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -203,5 +210,6 @@ public class UserData
             pool.freeConnection(connection);
         }
     }
+*/
 
 }

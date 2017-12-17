@@ -1,4 +1,4 @@
-package sheridan.studentdb.data;
+package ezbank.data;
 
 import java.sql.*;
 import javax.sql.DataSource;
@@ -13,7 +13,7 @@ public class ConnectionPool {
     private ConnectionPool() {
         try {
             InitialContext ic = new InitialContext();
-            dataSource = (DataSource) ic.lookup("java:/comp/env/jdbc/studentdb");
+            dataSource = (DataSource) ic.lookup("java:/comp/env/jdbc/banking");
         } catch (NamingException e) {
             throw new RuntimeException("Cannot make the connection pool.", e);
         }

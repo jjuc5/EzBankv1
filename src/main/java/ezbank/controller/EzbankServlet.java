@@ -53,7 +53,7 @@ public class EzbankServlet extends HttpServlet {
                 showNext = EzbankController.thanks(request);
                 break;
             }
-            
+    /*        
             // a user clicks on "List All" link to "listall.do", 
             // or a user is redirected to "listall.do"
             case "/listall.do": {
@@ -145,7 +145,7 @@ public class EzbankServlet extends HttpServlet {
                 showNext = EzbankController.listAllAssist(request);
                 break;
             }
-            
+     */       
             default: {
                 response.sendError(404);
                 return;

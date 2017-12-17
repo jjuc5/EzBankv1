@@ -31,61 +31,61 @@
                 <p>
                     <label for="birth_date">Date Of Birth:</label>
                     <my:TextInput id="birth_date" name="birth_date" value="${param.birth_date}"/>
-                    <my:Required/>
+                    <my:Error property="birth_date"/><my:Required/>
                 </p>
                 <p>
-                    <label for="social_security_no">Social Security Number (SSN):</label>
+                    <label for="social_security_no">SSN:</label>
                     <my:TextInput id="social_security_no" name="social_security_no" value="${param.social_security_no}"/>
-                    <my:Required/>
+                    <my:Error property="social_security_no"/><my:Required/>
                 </p>
                 <p>
                     <label for="tel_no">Telephone Number:</label>
                     <my:TextInput id="tel_no" name="tel_no" value="${param.tel_no}"/>
-                    <my:Required/>
+                    <my:Error property="tel_no"/><my:Required/>
                 </p>
                 <p>
                     <label for="email">Email Address:</label>
                     <my:TextInput id="email" name="email" value="${param.email}"/>
-                    <my:Required/>
+                    <my:Error property="email"/><my:Required/>
                 </p>
                 <hr>
                 <h2>Address Information:</h2>
                 <p>
                     <label for="street_no">Street Number:</label>
                     <my:TextInput id="street_no" name="street_no" value="${param.street_no}"/>
-                    <my:Required/>
+                    <my:Error property="street_no"/><my:Required/>
                 </p>
                 <p>
                     <label for="street_name">Street Name:</label>
                     <my:TextInput id="street_name" name="street_name" value="${param.street_name}"/>
-                    <my:Required/>
+                    <my:Error property="street_name"/><my:Required/>
                 </p>
                 <p>
                     <label for="city">City:</label>
                     <my:TextInput id="city" name="city" value="${param.city}"/>
-                    <my:Required/>
+                    <my:Error property="city"/><my:Required/>
                 </p>
                 <p>
                     <label for="province">Province:</label>
-                    <my:TextInput id="province" name="province" value="${param.province}"/>
-                    <my:Required/>
+                    <my:Select id="province" name="province" options="${provinces}" value="${param.province}"/>
+                    <my:Error property="province"/><my:Required/>
                 </p>
                 <p>
                     <label for="postal_code">Postal Code:</label>
                     <my:TextInput id="postal_code" name="postal_code" value="${param.postal_code}"/>
-                    <my:Required/>
+                    <my:Error property="postal_code"/><my:Required/>
                 </p>
                 <hr>
                 <h2>Login Information:</h2>
                 <p>
                     <label for="username">Username:</label>
                     <my:TextInput id="username" name="username" value="${param.username}"/>
-                    <my:Required/>
+                    <my:Error property="username"/><my:Required/>
                 </p>
                 <p>
                     <label for="password">Password:</label>
                     <my:TextInput id="password" name="password" value="${param.password}"/>
-                    <my:Required/>
+                    <my:Error property="password"/><my:Required/>
                 </p>
                 <p>
                     <label for="password2">Confirm Password:</label>
