@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="imgcontainer" >
-                <img src="img_banking2.png" img align="middle" alt="banking" class="banking" style="width: 1330px; height: 307px">
+                <img src="images/img_banking2.png" img align="middle" alt="banking" class="banking" style="width: 1330px; height: 307px">
             </div>
             <div class="container">
                 <div class="row">
@@ -49,12 +49,12 @@
                             <div class="centerText">
                                 <div align="center">
                                     <div class="row">
-                                        <div class="col-md-4"></br>
+                                        <div class="col-md-4">
                                             <label for="user_name">Login</label>
                                             <input type="text" name="j_username" class="form-control" id="user_name" maxlength='15' size='15' required/><my:Required/>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group"></br>
+                                        <div class="form-group">
                                             <label for="password">Password</label>
                                             <input type="password" name="j_password" class="form-control" id="password" maxlength='15' size='15' required/><my:Required/>
                                         </div>
