@@ -4,6 +4,7 @@ import java.util.*;
 import javax.servlet.http.*;
 import javax.validation.ConstraintViolation;
 import ezbank.business.Customer;
+import ezbank.data.AccountData;
 import ezbank.data.CustomerData;
 import ezbank.data.UserData;
 import sheridan.studentdb.util.ValidatorUtil;
@@ -58,6 +59,11 @@ public class EzbankController
         customer.setUsername(request.getParameter("username"));
         customer.setPassword(request.getParameter("password"));
         
+        String savings = request.getParameter("savingsAcct");
+        customer.setSavings((savings == null) ? "no" : "yes");
+        
+        String chequing = request.getParameter("chequingAcct");
+        customer.setChequing((chequing == null) ? "no" : "yes");
 
         Set<ConstraintViolation<Customer>> errors
                 = ValidatorUtil.getValidator().validate(customer);
@@ -103,6 +109,7 @@ public class EzbankController
             Customer customer = (Customer) session.getAttribute("customer");
             UserData.insert(customer);
             CustomerData.insert(customer);
+            AccountData.insert(customer);
             
             String userName = String.format("%s",
                     customer.getFirst_name().trim());
@@ -137,7 +144,6 @@ public class EzbankController
     public static String thanks(HttpServletRequest request)
     {
         String customerID = request.getParameter("customer_id");
-        System.out.println("**** THIS IS IS BEFORE cusID CHECK: " + customerID);
         if (customerID == null || customerID.isEmpty())
         {
             return "notfound";
@@ -150,7 +156,6 @@ public class EzbankController
                 Customer customer = CustomerData.get(id);
                 if (customer == null)
                 {
-                    System.out.println("**** THIS IS ID IN TRY: " + customerID);
                     return "notfound";
                 }
                 else

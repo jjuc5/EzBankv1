@@ -72,17 +72,23 @@ public class Customer implements Serializable {
     @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid Username")
     private String password = "";
     
+    @Pattern(regexp = "yes|no", message="Invalid choice for savings")
+    private String savings = "";
     
+    @Pattern(regexp = "yes|no", message="Invalid choice for chequing")
+    private String chequing = "";
     
+   
     public Customer() 
     {
         
     }
     
-    protected Customer(int customer_id, String first_name, String last_name, String birth_date, 
-            int social_security_no, int tel_no, String email, String street_no,
-            String street_name, String city, String province, String postal_code,
-            int user_id, String username, String password)
+    protected Customer(int customer_id, String first_name, String last_name, String 
+            birth_date, int social_security_no, int tel_no, String email, String 
+            street_no, String street_name, String city, String province, String 
+            postal_code, int user_id, String username, String password, String 
+            savings, String chequing)
     {
         this.customer_id = customer_id;
         this.first_name = first_name;
@@ -99,7 +105,6 @@ public class Customer implements Serializable {
         this.user_id = user_id;
         this.username = username;
         this.password = password;
-        
     }
 
     
@@ -252,6 +257,26 @@ public class Customer implements Serializable {
     public void setCustomer_id(int customer_id)
     {
         this.customer_id = customer_id;
+    }
+
+    public String getSavings()
+    {
+        return savings;
+    }
+
+    public void setSavings(String savings)
+    {
+        this.savings = savings;
+    }
+
+    public String getChequing()
+    {
+        return chequing;
+    }
+
+    public void setChequing(String chequing)
+    {
+        this.chequing = chequing;
     }
 
 }

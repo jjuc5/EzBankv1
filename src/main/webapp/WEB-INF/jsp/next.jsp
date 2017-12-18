@@ -66,6 +66,14 @@
                 <label>Password:</label> 
                 <span class="output"><c:out value="${customer.password}"/></span>
             </p>
+            <p>
+                <label>Chequing:</label> 
+                <span class="output"><c:out value="${customer.chequing}"/></span>
+            </p>
+            <p>
+                <label>Savings:</label> 
+                <span class="output"><c:out value="${customer.savings}"/></span>
+            </p>
             <p class="message">
                 Please, check your data before clicking "Register".
             </p>
