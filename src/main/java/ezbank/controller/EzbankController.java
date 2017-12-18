@@ -116,8 +116,8 @@ public class EzbankController
             Cookie cookie = new Cookie("userName", userName);
             cookie.setMaxAge(30 * 24 * 60 * 60);// one month in sec
             response.addCookie(cookie);
-            System.out.println("Value of customer.getCustomer_id() before THANKS.DO:" + customer.getCustomer_id());
-            return "redirect:thanks.do?customer_id=" + customer.getCustomer_id();
+            session.setAttribute("customer", customer);
+            return "redirect:thanks.do";
         }
     }
 
@@ -143,31 +143,16 @@ public class EzbankController
     // a user is redirected to "Thank you" page at "thanks.do"
     public static String thanks(HttpServletRequest request)
     {
-        String customerID = request.getParameter("customer_id");
-        if (customerID == null || customerID.isEmpty())
+        HttpSession session = request.getSession(false);
+        //String customerID = request.getParameter("customer_id");
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (customer == null)
         {
             return "notfound";
         }
         else
         {
-            try
-            {
-                int id = Integer.parseInt(customerID);
-                Customer customer = CustomerData.get(id);
-                if (customer == null)
-                {
-                    return "notfound";
-                }
-                else
-                {
-                    request.setAttribute("customer", customer);
-                    return "thanks";
-                }
-            }
-            catch (NumberFormatException e)
-            {
-                return "notfound";
-            }
+            return "thanks";
         }
     }
 /*
