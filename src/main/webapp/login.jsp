@@ -64,7 +64,7 @@
                                             <!--<button type="" class="btn btn-primary">Sign up</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
                                             <input class="btn btn-primary" type="submit" value="Login">
                                         </div>
-                                        <p><a href="<c:url value="signup.do"/>">Sign-Up For An Account</a></p>
+                                        <p><a href="<c:url value="input.do"/>">Sign-Up For An Account</a></p>
                                     </div>
                                 </div>
                             </div>

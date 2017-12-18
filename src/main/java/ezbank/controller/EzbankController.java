@@ -23,6 +23,14 @@ public class EzbankController
         }
         return "hello"; // show "hello.jsp"
     }
+    
+    // a user comes to the default front page at "hello.do"
+    public static String login(HttpServletRequest request)
+    {
+        String userName = CookieUtil.getCookieValue(request.getCookies(), "userName");
+        return "redirect:login.jsp";
+        //return "login"; // show "login.jsp"
+    }
 
     // a user comes to the data input page at "input.do"
     public static String input(HttpServletRequest request)

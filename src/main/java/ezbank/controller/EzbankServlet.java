@@ -1,59 +1,74 @@
-
 package ezbank.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
-public class EzbankServlet extends HttpServlet {
+public class EzbankServlet extends HttpServlet
+{
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException
+    {
 
         String action = request.getServletPath();
         String jspPath = "/WEB-INF/jsp/";
         String showNext; // where to forward/redirect
 
-        switch (action) {
-            
+        switch (action)
+        {
+
             // a user comes to the default front page at "hello.do"
-            case "/hello.do": {
+            case "/hello.do":
+            {
                 showNext = EzbankController.hello(request);
                 break;
             }
-            
+
+            // a user comes to the default front page at "hello.do"
+            case "/login.do":
+            {
+                showNext = EzbankController.login(request);
+                break;
+            }
+
             // a user comes to the first input form at "input.do"
-            case "/input.do": {
+            case "/input.do":
+            {
                 showNext = EzbankController.input(request);
                 break;
             }
-            
+
             // a user clicks "Forget Me" link to "forget.do"
-            case "/forget.do": {
+            case "/forget.do":
+            {
                 showNext = EzbankController.forget(response);
                 break;
             }
-            
+
             // a user clicks "Continue" button in "input.jsp", 
             // the form submits the data to "next.do"
-            case "/next.do": {
+            case "/next.do":
+            {
                 showNext = EzbankController.next(request);
                 break;
             }
-            
+
             // a user clicks "Register" button in "next.jsp", 
             // the form submits the data to "submit.do"
-            case "/submit.do": {
+            case "/submit.do":
+            {
                 showNext = EzbankController.submit(request, response);
                 break;
             }
-            
+
             // a user is redirected to "Thank you" page at "thanks.do"
-            case "/thanks.do": {
+            case "/thanks.do":
+            {
                 showNext = EzbankController.thanks(request);
                 break;
             }
-    /*        
+            /*        
             // a user clicks on "List All" link to "listall.do", 
             // or a user is redirected to "listall.do"
             case "/listall.do": {
@@ -145,8 +160,9 @@ public class EzbankServlet extends HttpServlet {
                 showNext = EzbankController.listAllAssist(request);
                 break;
             }
-     */       
-            default: {
+             */
+            default:
+            {
                 response.sendError(404);
                 return;
             }
@@ -154,10 +170,13 @@ public class EzbankServlet extends HttpServlet {
 
         String greeting = getInitParameter("greeting");
         request.setAttribute("greeting", greeting);
-        
-        if (showNext.startsWith("redirect:")) {
+
+        if (showNext.startsWith("redirect:"))
+        {
             response.sendRedirect(response.encodeRedirectURL(showNext.substring(9)));
-        } else {
+        }
+        else
+        {
             request.getRequestDispatcher(jspPath + showNext + ".jsp")
                     .forward(request, response);
         }
@@ -174,7 +193,8 @@ public class EzbankServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException
+    {
         processRequest(request, response);
     }
 
@@ -188,7 +208,8 @@ public class EzbankServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException
+    {
         processRequest(request, response);
     }
 
@@ -198,7 +219,8 @@ public class EzbankServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Student data collection servlet";
     }// </editor-fold>
 
