@@ -1,4 +1,3 @@
-<%-- Alex Tetervak, Sheridan College, Ontario --%>
 <%@tag pageEncoding="UTF-8"%>
 <%@tag import="java.util.*, javax.validation.*" %>
 <%@attribute name="property" required="true"%>
