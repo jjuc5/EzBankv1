@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/EzBankv1">
-  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" name="jdbc/banking" password="pr!orIty6" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/banking" username="root"/>
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" name="jdbc/banking" password="sesame" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/banking" username="root"/>
 </Context>

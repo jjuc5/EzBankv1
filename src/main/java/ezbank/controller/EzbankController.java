@@ -4,7 +4,6 @@ import java.util.*;
 import javax.servlet.http.*;
 import javax.validation.ConstraintViolation;
 import ezbank.business.Customer;
-import ezbank.business.Login;
 import ezbank.data.AccountData;
 import ezbank.data.CustomerData;
 import ezbank.data.LoginData;
@@ -39,25 +38,28 @@ public class EzbankController
 
     // user clicks on "Continue" button in "input.jsp", 
     // the form submits the data to "next.do"
-    public static String loginSubmit(HttpServletRequest request)
+    public static String loginSubmit(HttpServletRequest request, HttpServletResponse response)
     {
-        Login login = new Login();
+        String message;
+        String login_name = request.getParameter("login_name");
+        String password = request.getParameter("password");
 
-        login.setLogin_name(request.getParameter("login_name"));
-        login.setPassword(request.getParameter("password"));
-
-        Set<ConstraintViolation<Login>> errors
-                = ValidatorUtil.getValidator().validate(login);
-        if (errors.isEmpty())
+        System.out.println("Before password checking");
+        if (LoginData.checkPassword(login_name, password) == true)
         {
+            System.out.println("password is correct");
             HttpSession session = request.getSession();
-            session.setAttribute("login", login);
+            session.setAttribute("userName", login_name);
             // no data saving yet, the user must look through and confirm
-            return "nextlogin"; // show "nextlogin.jsp"
+            Cookie cookie = new Cookie("userName", login_name);
+            cookie.setMaxAge(30 * 24 * 60 * 60);// one month in sec
+            response.addCookie(cookie);
+            return "transaction"; // show "transaction.jsp"
         }
         else
         {
-            request.setAttribute("errors", errors);
+            System.out.println("password is incorrect");
+            message = "Invalid login";
             return login(request); // go back to showing "login.jsp"
         }
     }
@@ -190,37 +192,7 @@ public class EzbankController
         }
     }
 
-    public static String submitlogin(HttpServletRequest request, HttpServletResponse response)
-    {
-        String message;
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("customer") == null)
-        {
-            return "expired"; // show "your session has expired" with "expired.jsp"
-        }
-        else
-        {
-            Login login = (Login) session.getAttribute("login");
-            String login_name = request.getParameter("login_name");
-            String password = request.getParameter("password");
-            if (LoginData.checkPassword(login_name, password))
-            {
-                String userName = String.format("%s",
-                        login.getLogin_name().trim());
-                Cookie cookie = new Cookie("userName", userName);
-                cookie.setMaxAge(30 * 24 * 60 * 60);// one month in sec
-                response.addCookie(cookie);
-                session.setAttribute("login", login);
-                return "redirect:thanks.do";
-            }
-            else
-            {
-                message = "Incorrect Password";
-                return "login";
-            }
-
-        }
-    }
+    
 
     /*
     public static String submitAssist(HttpServletRequest request, HttpServletResponse response)

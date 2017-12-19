@@ -33,7 +33,7 @@ public class EzbankServlet extends HttpServlet
             
             case "/loginSubmit.do":
             {
-                showNext = EzbankController.loginSubmit(request);
+                showNext = EzbankController.loginSubmit(request, response);
                 break;
             }
 
