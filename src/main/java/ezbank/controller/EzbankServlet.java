@@ -25,10 +25,15 @@ public class EzbankServlet extends HttpServlet
                 break;
             }
 
-            // a user comes to the default front page at "hello.do"
             case "/login.do":
             {
                 showNext = EzbankController.login(request);
+                break;
+            }
+            
+            case "/loginSubmit.do":
+            {
+                showNext = EzbankController.loginSubmit(request, response);
                 break;
             }
 
@@ -36,6 +41,12 @@ public class EzbankServlet extends HttpServlet
             case "/input.do":
             {
                 showNext = EzbankController.input(request);
+                break;
+            }
+            
+             case "/transaction.do":
+            {
+                showNext = EzbankController.transaction(request, response);
                 break;
             }
 

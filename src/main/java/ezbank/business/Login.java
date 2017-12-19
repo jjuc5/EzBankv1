@@ -1,0 +1,56 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ezbank.business;
+
+import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.NotBlank;
+
+/**
+ *
+ * @author urban
+ */
+public class Login
+{
+    @NotBlank(message = "Missing Login")
+    @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid Login")
+    private String login_name = "";
+    
+    @NotBlank(message = "Missing Password")
+    @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid Password")
+    private String password = "";  
+    
+    public Login()
+            {
+                
+            }
+    protected Login(String login_name, String password)
+    {
+     
+        this.login_name = login_name;
+        this.password = password;
+    }
+
+    public String getLoginname()
+    {
+        return login_name;
+    }
+
+    public void setLoginname(String login_name)
+    {
+        this.login_name = login_name;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+    
+}

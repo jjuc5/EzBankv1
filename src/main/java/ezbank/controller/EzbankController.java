@@ -4,8 +4,10 @@ import java.util.*;
 import javax.servlet.http.*;
 import javax.validation.ConstraintViolation;
 import ezbank.business.Customer;
+import ezbank.business.Login;
 import ezbank.data.AccountData;
 import ezbank.data.CustomerData;
+import ezbank.data.LoginData;
 import ezbank.data.UserData;
 import sheridan.studentdb.util.ValidatorUtil;
 import sheridan.studentdb.util.CookieUtil;
@@ -23,8 +25,7 @@ public class EzbankController
         }
         return "hello"; // show "hello.jsp"
     }
-    
-    // a user comes to the default front page at "hello.do"
+
     public static String login(HttpServletRequest request)
     {
         String userName = CookieUtil.getCookieValue(request.getCookies(), "userName");
@@ -32,10 +33,42 @@ public class EzbankController
         //return "login"; // show "login.jsp"
     }
 
-    // a user comes to the data input page at "input.do"
+    public static String loginSubmit(HttpServletRequest request, HttpServletResponse response)
+    {
+       /* HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("login") == null)
+        {
+            return "expired"; // show "your session has expired" with "expired.jsp"
+        }
+        else
+        {*/
+
+            Login login = new Login();
+            login.setLoginname(request.getParameter("login_name"));
+            login.setPassword(request.getParameter("password"));
+     
+            if (LoginData.checkPassword(login.getLoginname(), login.getPassword()) == true)
+            {
+                System.out.println("before displaying transaction page");
+          
+                return "transaction";
+            }
+        
+        return "login";
+    }
+    
+
+    
+
     public static String input(HttpServletRequest request)
     {
         return "input"; // show "input.jsp"
+    }
+
+    // a user comes to the data input page at "input.do"
+    public static String transaction(HttpServletRequest request, HttpServletResponse response)
+    {
+        return "transaction"; // show "input.jsp"
     }
 
     //  a user clicks on "Forget Me" link to "forget.do"
@@ -66,10 +99,10 @@ public class EzbankController
         customer.setPostal_code(request.getParameter("postal_code"));
         customer.setUsername(request.getParameter("username"));
         customer.setPassword(request.getParameter("password"));
-        
+
         String savings = request.getParameter("savingsAcct");
         customer.setSavings((savings == null) ? "no" : "yes");
-        
+
         String chequing = request.getParameter("chequingAcct");
         customer.setChequing((chequing == null) ? "no" : "yes");
 
@@ -102,8 +135,7 @@ public class EzbankController
 
         return "nextassist";
     }
-    */
-
+     */
     // a user clicks "Register" button in "next.jsp", the form submits to "submit.do"
     public static String submit(HttpServletRequest request, HttpServletResponse response)
     {
@@ -118,7 +150,7 @@ public class EzbankController
             UserData.insert(customer);
             CustomerData.insert(customer);
             AccountData.insert(customer);
-            
+
             String userName = String.format("%s",
                     customer.getFirst_name().trim());
             Cookie cookie = new Cookie("userName", userName);
@@ -146,8 +178,7 @@ public class EzbankController
             return "redirect:listallassist.do";
         }
     }
-*/
-
+     */
     // a user is redirected to "Thank you" page at "thanks.do"
     public static String thanks(HttpServletRequest request)
     {
@@ -163,7 +194,7 @@ public class EzbankController
             return "thanks";
         }
     }
-/*
+    /*
     // a user clicks on "List All" link to "listall.do", 
     // or a user is redirected to "listall.do" 
     public static String listAll(HttpServletRequest request)
@@ -428,6 +459,6 @@ public class EzbankController
 
         return "passwords";
     }
-*/
+     */
 
 }

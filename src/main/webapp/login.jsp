@@ -45,18 +45,20 @@
                         <my:SmileH1><b>Log In</b></my:SmileH1>
                             <p class="message">Please login to continue.</p>
                         </div>   
-                        <form action="j_security_check" class="form-inline" method="post">
+                        <form action="<c:url value="loginSubmit.do"/>" class="form-inline" method="post">
                             <div class="centerText">
                                 <div align="center">
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <label for="user_name">Login</label>
-                                            <input type="text" name="j_username" class="form-control" id="user_name" maxlength='15' size='15' required/><my:Required/>
+                                    <div class="col-md-4">
+                                       <label for="login_name">Username:</label>
+                                       <my:TextInput id="login_name" name="login_name" value="${param.login_name}"/>
+                                       <my:Error property="login_name"/><my:Required/>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="password">Password</label>
-                                            <input type="password" name="j_password" class="form-control" id="password" maxlength='15' size='15' required/><my:Required/>
+                                            <label for="password">Password:</label>
+                                            <my:TextInput id="password" name="password" value="${param.password}"/>
+                                            <my:Error property="password"/><my:Required/>
                                         </div>
                                     </div>
                                     <div class="col-xs-4"></br>
