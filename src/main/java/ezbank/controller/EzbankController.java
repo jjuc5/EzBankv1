@@ -12,36 +12,59 @@ import ezbank.data.UserData;
 import sheridan.studentdb.util.ValidatorUtil;
 import sheridan.studentdb.util.CookieUtil;
 
-public class EzbankController
-{
+public class EzbankController {
 
     // a user comes to the default front page at "hello.do"
-    public static String hello(HttpServletRequest request)
-    {
+    public static String hello(HttpServletRequest request) {
         String userName = CookieUtil.getCookieValue(request.getCookies(), "userName");
-        if (userName.isEmpty())
-        {
+        if (userName.isEmpty()) {
             return input(request);
         }
         return "hello"; // show "hello.jsp"
     }
 
-    public static String login(HttpServletRequest request)
-    {
+    public static String login(HttpServletRequest request) {
         String userName = CookieUtil.getCookieValue(request.getCookies(), "userName");
-        return "redirect:login.jsp";
+        if (userName.isEmpty()) {
+            return input(request);
+        }
+        return "login.jsp";
         //return "login"; // show "login.jsp"
     }
 
+    // user clicks on "Continue" button in "input.jsp", 
+    // the form submits the data to "next.do"
+    public static String loginSubmit(HttpServletRequest request) {
+        Login login = new Login();
+
+        login.setLogin_name(request.getParameter("login_name"));
+        login.setPassword(request.getParameter("password"));
+
+        Set<ConstraintViolation<Login>> errors
+                = ValidatorUtil.getValidator().validate(login);
+        if (errors.isEmpty()) {
+            HttpSession session = request.getSession();
+            session.setAttribute("login", login);
+            // no data saving yet, the user must look through and confirm
+            return "nextlogin"; // show "nextlogin.jsp"
+        } else {
+            request.setAttribute("errors", errors);
+            return login(request); // go back to showing "login.jsp"
+        }
+    }
+
+    /*   
+    
+
     public static String loginSubmit(HttpServletRequest request, HttpServletResponse response)
     {
-       /* HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("login") == null)
         {
             return "expired"; // show "your session has expired" with "expired.jsp"
         }
         else
-        {*/
+        
 
             Login login = new Login();
             login.setLoginname(request.getParameter("login_name"));
@@ -56,24 +79,18 @@ public class EzbankController
         
         return "login";
     }
-    
-
-    
-
-    public static String input(HttpServletRequest request)
-    {
+     */
+    public static String input(HttpServletRequest request) {
         return "input"; // show "input.jsp"
     }
 
     // a user comes to the data input page at "input.do"
-    public static String transaction(HttpServletRequest request, HttpServletResponse response)
-    {
+    public static String transaction(HttpServletRequest request, HttpServletResponse response) {
         return "transaction"; // show "input.jsp"
     }
 
     //  a user clicks on "Forget Me" link to "forget.do"
-    public static String forget(HttpServletResponse response)
-    {
+    public static String forget(HttpServletResponse response) {
         Cookie cookie = new Cookie("userName", "pass");
         cookie.setMaxAge(0);
         response.addCookie(cookie); // remove the cookie
@@ -82,15 +99,14 @@ public class EzbankController
 
     // user clicks on "Continue" button in "input.jsp", 
     // the form submits the data to "next.do"
-    public static String next(HttpServletRequest request)
-    {
+    public static String next(HttpServletRequest request) {
         Customer customer = new Customer();
 
         customer.setFirst_name(request.getParameter("first_name"));
         customer.setLast_name(request.getParameter("last_name"));
         customer.setBirth_date(request.getParameter("birth_date"));
         customer.setSocial_security_no(Integer.parseInt(request.getParameter("social_security_no")));
-        customer.setTel_no(Integer.parseInt(request.getParameter("tel_no")));
+        customer.setTel_no(request.getParameter("tel_no"));
         customer.setEmail(request.getParameter("email"));
         customer.setStreet_no(request.getParameter("street_no"));
         customer.setStreet_name(request.getParameter("street_name"));
@@ -108,15 +124,12 @@ public class EzbankController
 
         Set<ConstraintViolation<Customer>> errors
                 = ValidatorUtil.getValidator().validate(customer);
-        if (errors.isEmpty())
-        {
+        if (errors.isEmpty()) {
             HttpSession session = request.getSession();
             session.setAttribute("customer", customer);
             // no data saving yet, the user must look through and confirm
             return "next"; // show "next.jsp"
-        }
-        else
-        {
+        } else {
             request.setAttribute("errors", errors);
             return input(request); // go back to showing "input.jsp"
         }
@@ -137,15 +150,11 @@ public class EzbankController
     }
      */
     // a user clicks "Register" button in "next.jsp", the form submits to "submit.do"
-    public static String submit(HttpServletRequest request, HttpServletResponse response)
-    {
+    public static String submit(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("customer") == null)
-        {
+        if (session == null || session.getAttribute("customer") == null) {
             return "expired"; // show "your session has expired" with "expired.jsp"
-        }
-        else
-        {
+        } else {
             Customer customer = (Customer) session.getAttribute("customer");
             UserData.insert(customer);
             CustomerData.insert(customer);
@@ -158,6 +167,33 @@ public class EzbankController
             response.addCookie(cookie);
             session.setAttribute("customer", customer);
             return "redirect:thanks.do";
+        }
+    }
+
+    public static String submitlogin(HttpServletRequest request, HttpServletResponse response) {
+        String message;
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("customer") == null) {
+            return "expired"; // show "your session has expired" with "expired.jsp"
+        } else {
+            Login login = (Login) session.getAttribute("login");
+            String login_name = request.getParameter("login_name");
+            String password = request.getParameter("password");
+            if (LoginData.checkPassword(login_name, password)) {
+                String userName = String.format("%s",
+                        login.getLogin_name().trim());
+                Cookie cookie = new Cookie("userName", userName);
+                cookie.setMaxAge(30 * 24 * 60 * 60);// one month in sec
+                response.addCookie(cookie);
+                session.setAttribute("login", login);
+                return "redirect:thanks.do";
+            }
+            else
+            {
+               message = "Incorrect Password"; 
+               return "login";
+            }
+
         }
     }
 
@@ -180,17 +216,13 @@ public class EzbankController
     }
      */
     // a user is redirected to "Thank you" page at "thanks.do"
-    public static String thanks(HttpServletRequest request)
-    {
+    public static String thanks(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         //String customerID = request.getParameter("customer_id");
         Customer customer = (Customer) session.getAttribute("customer");
-        if (customer == null)
-        {
+        if (customer == null) {
             return "notfound";
-        }
-        else
-        {
+        } else {
             return "thanks";
         }
     }

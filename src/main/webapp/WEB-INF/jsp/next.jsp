@@ -81,7 +81,7 @@
                 <input type="submit" value="Register"/>
             </form>
             <p><a href="<c:url value="input.do"/>">Go Back to Input</a></p>
-            <p><a href="<c:url value="listall.do"/>">List All</a></p>
+            <%--<p><a href="<c:url value="listall.do"/>">List All</a></p>--%>
         </main>
         <footer><my:Sheridan/></footer>
     </body>

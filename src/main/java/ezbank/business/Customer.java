@@ -28,12 +28,14 @@ public class Customer implements Serializable {
     private String birth_date = "";
     
     @NotNull(message = "Missing Social Security Number")
-    //@Pattern(regexp = "/^\\d{9}$/", message = "Invalid Social Security Number")
+  //  @Pattern(regexp = "/^\\d{9}$/", message = "Invalid Social Security Number")
     private Integer social_security_no;
     
     @NotNull(message = "Missing Telephone Number")
-    //@Pattern(regexp = "/^\\d{10}$/", message = "Invalid Telephone Number")
-    private Integer tel_no;
+    @Pattern(regexp = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}|\\(\\d{3}\\)-"
+            + "\\d{3}-?\\d{4}|\\(\\d{3}\\) \\d{3} ?\\d{4}|\\(\\d{3}\\)-\\d{3} ?\\d{4}|\\("
+            + "\\d{3}\\) \\d{3}-?\\d{4}", message = "Invalid Telephone Number")
+    private String tel_no;
     
     @NotBlank(message = "Missing Email Address")
     @Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)"
@@ -68,8 +70,8 @@ public class Customer implements Serializable {
     @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid Username")
     private String username = "";
     
-    @NotBlank(message = "Missing Username")
-    @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid Username")
+    @NotBlank(message = "Missing Password")
+    //@Pattern(regexp = "((?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})", message = "Invalid Password")
     private String password = "";
     
     @Pattern(regexp = "yes|no", message="Invalid choice for savings")
@@ -85,7 +87,7 @@ public class Customer implements Serializable {
     }
     
     protected Customer(int customer_id, String first_name, String last_name, String 
-            birth_date, int social_security_no, int tel_no, String email, String 
+            birth_date, int social_security_no, String tel_no, String email, String 
             street_no, String street_name, String city, String province, String 
             postal_code, int user_id, String username, String password, String 
             savings, String chequing)
@@ -149,12 +151,12 @@ public class Customer implements Serializable {
         this.social_security_no = social_security_no;
     }
 
-    public int getTel_no()
+    public String getTel_no()
     {
         return tel_no;
     }
 
-    public void setTel_no(int tel_no)
+    public void setTel_no(String tel_no)
     {
         this.tel_no = tel_no;
     }

@@ -1,5 +1,6 @@
 package ezbank.data;
 
+import ezbank.business.Login;
 import java.sql.*;
 
 import ezbank.login.SaltedPassword;
@@ -11,6 +12,46 @@ import ezbank.login.SaltedPassword;
 public class LoginData
 {
 
+   public static void insertLogin(Login login)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+
+        String update = "INSERT INTO users "
+                + "(login_name, password, Usersuser_type) " 
+                + "VALUES (?, ?, ?)";
+        try
+        {
+            ps = connection.prepareStatement(update,
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, login.getLogin_name().trim());
+            ps.setString(2, SaltedPassword.encode(login.getPassword().trim()));
+            ps.setInt(3, 1);
+
+            ps.executeUpdate();
+            ResultSet keys = ps.getGeneratedKeys();
+            if (keys.next())
+            {
+                login.setUsersuser_type(keys.getInt(1));
+            }
+            else
+            {
+                throw new RuntimeException("Cannot get the generated key.");
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException("Cannot insert the user data.", e);
+        }
+        finally
+        {
+            DatabaseUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    } 
+    
+       
     public static void updatePassword(String login, String password)
     {
 

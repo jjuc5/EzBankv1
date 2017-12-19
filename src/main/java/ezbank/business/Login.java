@@ -22,6 +22,8 @@ public class Login
     @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid Password")
     private String password = "";  
     
+    private int Usersuser_type;
+    
     public Login()
             {
                 
@@ -33,15 +35,23 @@ public class Login
         this.password = password;
     }
 
-    public String getLoginname()
+    
+    protected Login(String login_name, String password, int Usersuser_type)
     {
+     
+        this.login_name = login_name;
+        this.password = password;
+        this.Usersuser_type = Usersuser_type;
+    }
+
+    public String getLogin_name() {
         return login_name;
     }
 
-    public void setLoginname(String login_name)
-    {
+    public void setLogin_name(String login_name) {
         this.login_name = login_name;
     }
+
 
     public String getPassword()
     {
@@ -51,6 +61,14 @@ public class Login
     public void setPassword(String password)
     {
         this.password = password;
+    }
+
+    public int getUsersuser_type() {
+        return Usersuser_type;
+    }
+
+    public void setUsersuser_type(int Usersuser_type) {
+        this.Usersuser_type = Usersuser_type;
     }
     
 }

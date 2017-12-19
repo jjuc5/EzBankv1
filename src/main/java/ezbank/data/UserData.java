@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 import ezbank.business.Customer;
+import ezbank.login.SaltedPassword;
 
 public class UserData
 {
@@ -23,6 +24,7 @@ public class UserData
                     Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, customer.getUsername().trim());
             ps.setString(2, customer.getPassword().trim());
+            //ps.setString(2, SaltedPassword.encode(customer.getPassword().trim()));
             ps.setInt(3, 1);
             ps.executeUpdate();
             ResultSet keys = ps.getGeneratedKeys();

@@ -30,7 +30,7 @@ public class CustomerData
             ps.setString(6, customer.getProvince().trim());
             ps.setString(7, customer.getPostal_code().trim());
             ps.setString(8, customer.getBirth_date().trim());
-            ps.setInt(9, customer.getTel_no());
+            ps.setString(9, customer.getTel_no());
             ps.setInt(10, customer.getSocial_security_no());
             ps.setString(11, customer.getEmail().trim());
             ps.setInt(12, customer.getUser_id());
@@ -167,7 +167,7 @@ public class CustomerData
                 customer.setProvince(rs.getString("province"));
                 customer.setPostal_code(rs.getString("postal_code"));
                 customer.setBirth_date(rs.getString("birth_date"));
-                customer.setTel_no(rs.getInt("tel_no"));
+                customer.setTel_no(rs.getString("tel_no"));
                 customer.setSocial_security_no(rs.getInt("social_security_no"));
                 customer.setEmail(rs.getString("email"));
                 customer.setUser_id(rs.getInt("Usersuser_id"));
