@@ -28,7 +28,7 @@ public class EzbankController {
         if (userName.isEmpty()) {
             return input(request);
         }
-        return "login.jsp";
+        return "redirect:login.jsp";
         //return "login"; // show "login.jsp"
     }
 
