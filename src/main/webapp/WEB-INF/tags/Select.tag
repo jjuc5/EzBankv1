@@ -7,7 +7,7 @@
 <c:if test="${empty labels}">
     <c:set var="labels" value="${options}"/>
 </c:if>
-<select id="${id}" name="${name}">
+<select id="${id}" class="form-control" name="${name}">
     <c:set var="i" value="0"/>
     <c:forEach items="${options}" var="option">
         <option value="${option}" ${(value == option)?"selected":""}>${labels[i]}</option>

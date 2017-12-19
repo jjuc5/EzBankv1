@@ -18,8 +18,6 @@ public class Login
     @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid Login")
     private String login_name = "";
     
-    @NotBlank(message = "Missing Password")
-    @Pattern(regexp = "(([a-zA-Z]+['.,-]?)|\\s)*", message = "Invalid Password")
     private String password = "";  
     
     private int Usersuser_type;
