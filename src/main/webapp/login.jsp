@@ -57,7 +57,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="password">Password:</label>
-                                            <my:TextInput id="password" name="password" value="${param.password}"/>
+                                            <my:PassInput id="password" name="password" value="${param.password}"/>
                                             <my:Error property="password"/><my:Required/>
                                         </div>
                                     </div>
