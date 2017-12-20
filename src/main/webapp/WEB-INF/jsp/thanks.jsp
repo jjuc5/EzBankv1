@@ -1,4 +1,3 @@
-<%-- Alex Tetervak, Sheridan College, Ontario --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="my" tagdir="/WEB-INF/tags"%>
@@ -19,8 +18,7 @@
             <p class="message">
                 Thank you for registering.  You may now begin banking with EzBank!
             </p>
-            <p><a href="<c:url value="input.do"/>">Go Back to Input</a></p>
-            <p><a href="<c:url value="transaction.do"/>">Transactions</a></p>
+            <p><a href="<c:url value="transaction.do"/>">Proceed to Account Summary</a></p>
         </main>
         <footer><my:Sheridan/></footer>
     </body>

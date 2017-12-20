@@ -53,7 +53,7 @@ public class EzbankController
             cookie.setMaxAge(30 * 24 * 60 * 60);// one month in sec
             response.addCookie(cookie);
             
-            ArrayList<Account> accounts = new ArrayList<>();
+            ArrayList<Account> accounts;
             accounts = AccountData.get(login_name);
             
             session.setAttribute("accounts", accounts);
@@ -157,6 +157,11 @@ public class EzbankController
             UserData.insert(customer);
             CustomerData.insert(customer);
             AccountData.insert(customer);
+            
+            ArrayList<Account> accounts;
+            accounts = AccountData.get(customer.getUsername());
+            
+            session.setAttribute("accounts", accounts);
 
             String userName = String.format("%s",
                     customer.getFirst_name().trim());

@@ -63,10 +63,6 @@
                 <span class="output"><c:out value="${customer.username}"/></span>
             </p>
             <p>
-                <label>Password:</label> 
-                <span class="output"><c:out value="${customer.password}"/></span>
-            </p>
-            <p>
                 <label>Chequing:</label> 
                 <span class="output"><c:out value="${customer.chequing}"/></span>
             </p>
