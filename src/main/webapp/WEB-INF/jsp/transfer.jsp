@@ -118,6 +118,5 @@
                 </div> 
             </div>
         </div>
-       <footer><my:Sheridan/></footer>
-    </body>
+      </body>
 </html>

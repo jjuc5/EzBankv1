@@ -18,6 +18,5 @@
             <p><a href="forget.do">Forget Me</a></p>
             <p><a href="listall.do">List All</a></p>
         </main>
-        <footer><my:Sheridan/></footer>
     </body>
 </html>

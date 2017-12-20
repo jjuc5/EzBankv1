@@ -15,6 +15,5 @@
             <p class="message">Your are not authorized to access this resource.</p>
             <p><a href="<c:url value="/redirect.jsp" />"> Back to the front page</a></p>
         </main>
-        <footer><my:Sheridan/></footer>
     </body>
 </html>

@@ -39,5 +39,4 @@
                 <p><a href="<c:url value="logout.jsp"/>">Logout</a></p>
         </main>
     </body>
-    <footer><my:Sheridan/></footer>
 </html>

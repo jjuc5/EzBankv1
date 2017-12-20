@@ -71,12 +71,43 @@ public class EzbankController
         return "input"; // show "input.jsp"
     }
 
-    // a user comes to the data input page at "input.do"
+    // a user comes to the input page at "transaction.do"
     public static String transaction(HttpServletRequest request, HttpServletResponse response)
     {
-        return "transaction"; // show "input.jsp"
+        return "transaction"; // show "transaction.jsp"
+    }
+    
+    // a user comes to the data input page at "chequing.do"    
+    public static String chequing(HttpServletRequest request, HttpServletResponse response)
+    {
+        return "chequing"; // show "chequing.jsp"
+    }
+    
+    // a user comes to the data input page at "savings.do"    
+    public static String savings(HttpServletRequest request, HttpServletResponse response)
+    {
+        return "savings"; // show "printe.jsp"
+    }
+    
+    // a user comes to the page at "transfer.do"    
+    public static String transfer(HttpServletRequest request, HttpServletResponse response)
+    {
+        return "transfer"; // show "transfer.jsp"
     }
 
+    // a user comes to the data input page at "deposite.do"    
+    public static String deposite(HttpServletRequest request, HttpServletResponse response)
+    {
+        return "deposite"; // show "deposite.jsp"
+    }
+    
+     // a user comes to the data input page at "printe.do"    
+    public static String printe(HttpServletRequest request, HttpServletResponse response)
+    {
+        return "printe"; // show "printe.jsp"
+    }
+    
+    
     //  a user clicks on "Forget Me" link to "forget.do"
     public static String forget(HttpServletResponse response)
     {

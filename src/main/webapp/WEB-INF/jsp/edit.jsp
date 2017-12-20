@@ -56,6 +56,5 @@
             <p><a href="<c:url value="listall.do"/>">List All</a></p>
             <p><my:Required/>) Required inputs.</p>
         </main>
-        <footer><my:Sheridan/></footer>
     </body>
 </html>

@@ -175,6 +175,5 @@
             <hr>
             <p><a href="<c:url value="login.do"/>">Back to Login</a></p>
         </main>
-        <footer><my:Sheridan/></footer>
     </body>
 </html>

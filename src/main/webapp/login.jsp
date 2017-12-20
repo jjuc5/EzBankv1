@@ -73,6 +73,5 @@
                         </div>
                     </form>  
         </main>
-        <footer><my:Sheridan/></footer>
-    </body>
+     </body>
 </html>

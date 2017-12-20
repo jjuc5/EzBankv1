@@ -135,6 +135,5 @@
                 </div> 
             </div>
         </div>
-    <footer><my:Sheridan/></footer>
     </body>
 </html>

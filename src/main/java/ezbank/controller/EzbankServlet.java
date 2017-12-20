@@ -49,7 +49,38 @@ public class EzbankServlet extends HttpServlet
                 showNext = EzbankController.transaction(request, response);
                 break;
             }
-
+            
+            case "/chequing.do":
+            {
+                showNext = EzbankController.chequing(request, response);
+                break;
+            }
+            
+            case "/savings.do":
+            {
+                showNext = EzbankController.savings(request, response);
+                break;
+            }
+            
+                       
+            case "/transfer.do":
+            {
+                showNext = EzbankController.transfer(request, response);
+                break;
+            }
+            
+            case "/deposite.do":
+            {
+                showNext = EzbankController.deposite(request, response);
+                break;
+            }
+            
+            case "/printe.do":
+            {
+                showNext = EzbankController.printe(request, response);
+                break;
+            }
+            
             // a user clicks "Forget Me" link to "forget.do"
             case "/forget.do":
             {
