@@ -43,14 +43,14 @@
                          <div class="panel panel-default">
                           <div class="panel-heading">
                              <h4 class="panel-title">
-                                 <a data-toggle="collapse" href="#collapse1"><h4><a>Personal Accounts</a></h4></div>
+                                 <a data-toggle="collapse" href="#collapse1">Personal Accounts</a></h4></div>
                                  <div id="collapse1" class="panel-collapse collapse">
                                  <ul class="list-group">
                                  <li><a href="account.jsp" class="list-group-item list-group-item-action">Accounts Overview</a></li>
                                  <li><a href="transaction.jsp" class="list-group-item list-group-item-action">Transaction History</a></li>
-                                 </ul>
-                                 <div class="panel-footer"></div>
-                                 </div>
+                                  </ul>
+                                  <div class="panel-footer"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,27 +75,32 @@
                                 </div>
                             </div>
                         </div>
-                      </div>
+                        
+                    </div>
                 </div>
 
                            <div class="col-md-8">
                             <main>
-                            <my:SmileH1>Print E-Cheque</my:SmileH1>
+                            <my:SmileH1>Deposit E-Cheque</my:SmileH1>
                             <form>
                             <div class="col-md-8"><!--col-xs-2col-sm-6-->
                                <div class="form-group">
                                   <label for="account_name">Choose&nbsp;account&nbsp;to&nbsp;withdraw&nbsp;from:&nbsp;</label> 
-                                   <my:Select name="account_name" id="account_name" options="${provinces}" value="${param.province}">
                                </div>
-                            </div>
+                               <select class="form-control" id="account_name">
+                                    <option>Chequing</option>
+                                    <option>Savings</option>
+                               </select>
+                            </div></br>
+
+                            <div class="col-md-8"><!--col-xs-2col-sm-6-->
                                
-                            <div class="col-md-8">
                                <div class="form-group row">
-                                  <label for="transfer_amount" class="col-sm-2 col-form-label">Amount:</label>
-                                  <div class="col-sm-10">
+                                    <label for="transfer_amount" class="col-sm-2 col-form-label">Amount:</label>
+                                    <div class="col-sm-10">
                                         <my:TextInput name="transfer_amount" id="transfer_amount" value="${param.transfer_amount}"/>
                                         <my:Required/>
-                                  </div>
+                                    </div>
                                 </div>
                             </div>
                             </form>  
