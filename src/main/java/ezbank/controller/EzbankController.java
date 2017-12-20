@@ -1,5 +1,6 @@
 package ezbank.controller;
 
+import ezbank.business.Account;
 import java.util.*;
 import javax.servlet.http.*;
 import javax.validation.ConstraintViolation;
@@ -54,6 +55,10 @@ public class EzbankController
             Cookie cookie = new Cookie("userName", login_name);
             cookie.setMaxAge(30 * 24 * 60 * 60);// one month in sec
             response.addCookie(cookie);
+            
+            ArrayList<Account> accounts = new ArrayList();
+            accounts = AccountData.get(login_name);
+            
             return "transaction"; // show "transaction.jsp"
         }
         else
