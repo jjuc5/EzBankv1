@@ -37,6 +37,5 @@
             <p><a href="<c:url value="addassist.do"/>">Go Back to Input</a></p>
             <p><a href="<c:url value="listallassist.do"/>">List All</a></p>
         </main>
-        <footer><my:Sheridan/></footer>
     </body>
 </html>

@@ -26,6 +26,5 @@
             </p>
             <p><a href="redirect.jsp"> Back to the front page</a></p>
         </main>
-        <footer><my:Sheridan/></footer>
-    </body>
+      </body>
 </html>

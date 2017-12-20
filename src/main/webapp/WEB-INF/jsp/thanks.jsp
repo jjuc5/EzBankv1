@@ -20,6 +20,5 @@
             </p>
             <p><a href="<c:url value="transaction.do"/>">Proceed to Account Summary</a></p>
         </main>
-        <footer><my:Sheridan/></footer>
-    </body>
+   </body>
 </html>

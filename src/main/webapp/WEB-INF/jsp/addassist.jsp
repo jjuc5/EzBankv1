@@ -44,6 +44,5 @@
             </my:IfLoggedIn>
             <p><my:Required/>) Required inputs.</p>
         </main>
-        <footer><my:Sheridan/></footer>
     </body>
 </html>

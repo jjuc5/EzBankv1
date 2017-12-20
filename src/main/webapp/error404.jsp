@@ -16,6 +16,5 @@
             <p class="message">The resource is not found</p>
             <p><a href="<c:url value="/redirect.jsp" />"> Back to the front page</a></p>
         </main>
-        <footer><my:Sheridan/></footer>
-    </body>
+     </body>
 </html>

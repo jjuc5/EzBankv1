@@ -17,6 +17,5 @@
             </p>
             <p><a href=".">Go Back</a></p>
         </main>
-        <footer><my:Sheridan/></footer>
-    </body>
+      </body>
 </html>

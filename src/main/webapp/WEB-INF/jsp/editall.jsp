@@ -58,6 +58,5 @@
             </my:IfLoggedIn>
             <p><a href="<c:url value="input.do"/>">Go Back to Input</a></p>
         </main>
-        <footer><my:Sheridan/></footer>
     </body>
 </html>

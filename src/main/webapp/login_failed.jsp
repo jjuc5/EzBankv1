@@ -29,6 +29,5 @@
                 </p>
             </form>
         </main>
-        <footer><my:Sheridan/></footer>
     </body>
 </html>
