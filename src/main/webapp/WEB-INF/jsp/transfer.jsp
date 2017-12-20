@@ -37,15 +37,15 @@
 
                     <div class="divTable">
                        <div class="panel-group">
-                          <a href="#" class="list-group-item active"></a>
+                          <!-- <a href="#" class="list-group-item active"></a>-->
                             <div class="panel panel-default">
                               <div class="panel-heading">
                                 <h4 class="panel-title">
                                 <a data-toggle="collapse" href="#collapse1">Personal Accounts</a></h4></div>
                                 <div id="collapse1" class="panel-collapse collapse">
                                 <ul class="list-group">
-                                <li><a href="account.jsp" class="list-group-item list-group-item-action">Accounts Overview</a></li>
-                                        <li><a href="transaction.jsp" class="list-group-item list-group-item-action">Transaction History</a></li>
+                                <li><a href="transaction.jsp" class="list-group-item list-group-item-action">Accounts Overview</a></li>
+                                        <li><a href="#" class="list-group-item list-group-item-action">Transaction History</a></li>
                                 </ul>
                                 <div class="panel-footer"></div>
                                 </div>
@@ -55,7 +55,7 @@
 
                     <div class="divTable">
                         <div class="panel-group2">
-                           <a href="#" class="list-group-item active2"></a>
+                           <!--<a href="#" class="list-group-item active2"></a>-->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -64,9 +64,9 @@
                                 </div>
                                 <div id="collapse2" class="panel-collapse collapse">
                                 <ul class="list-group">
-                                        <li><a href="#"	class="list-group-item list-group-item-action">Transfer</a></li>
-                                        <li><a href="#"	class="list-group-item list-group-item-action">Deposit E-Cheque</a></li>
-                                        <li><a href="#"	class="list-group-item list-group-item-action">Print E-Cheque</a></li>
+                                        <li><a href="transfer.jsp"	class="list-group-item list-group-item-action">Transfer</a></li>
+                                        <li><a href="deposite.jsp"	class="list-group-item list-group-item-action">Deposit E-Cheque</a></li>
+                                        <li><a href="printe.jsp"	class="list-group-item list-group-item-action">Print E-Cheque</a></li>
                                 </ul>
                                 <div class="panel-footer"></div>
                                 </div>
