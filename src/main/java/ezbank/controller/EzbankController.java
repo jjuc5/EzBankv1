@@ -130,13 +130,13 @@ public class EzbankController
         customer.setPostal_code(request.getParameter("postal_code"));
         customer.setUsername(request.getParameter("username"));
         customer.setPassword(request.getParameter("password"));
-
+       
         String savings = request.getParameter("savingsAcct");
         customer.setSavings((savings == null) ? "no" : "yes");
 
         String chequing = request.getParameter("chequingAcct");
         customer.setChequing((chequing == null) ? "no" : "yes");
-
+             
         Set<ConstraintViolation<Customer>> errors
                 = ValidatorUtil.getValidator().validate(customer);
         if (errors.isEmpty())

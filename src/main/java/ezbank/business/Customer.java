@@ -8,6 +8,9 @@ import java.io.Serializable;
 
 public class Customer implements Serializable {
 
+
+
+
     private Integer user_id;
     private Integer customer_id;
     
@@ -73,7 +76,7 @@ public class Customer implements Serializable {
     @NotBlank(message = "Missing Password")
     //@Pattern(regexp = "((?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})", message = "Invalid Password")
     private String password = "";
-    
+       
     @Pattern(regexp = "yes|no", message="Invalid choice for savings")
     private String savings = "";
     
