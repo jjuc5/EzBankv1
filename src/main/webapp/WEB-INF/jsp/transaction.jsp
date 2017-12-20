@@ -70,7 +70,7 @@
                 <div class="col-md-8">
                     <main>
                         <hr>
-                        <h2>Welcome Back, <c:out value='${cookie["userName"].value}'/>!</h2>
+                        <h2>Welcome Back, <c:out value="${customer.first_name} ${customer.last_name}"/>!</h2>
                         <hr>
                         <my:SmileH1>Account Summary</my:SmileH1>
                         <c:choose>

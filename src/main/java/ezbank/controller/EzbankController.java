@@ -40,29 +40,28 @@ public class EzbankController
   
     public static String loginSubmit(HttpServletRequest request, HttpServletResponse response)
     {
-        String message;
         String login_name = request.getParameter("login_name");
         String password = request.getParameter("password");
 
         if (LoginData.checkPassword(login_name, password) == true)
         {
             HttpSession session = request.getSession();
-            session.setAttribute("userName", login_name);
-            // no data saving yet, the user must look through and confirm
-            Cookie cookie = new Cookie("userName", login_name);
-            cookie.setMaxAge(30 * 24 * 60 * 60);// one month in sec
+            Cookie cookie = new Cookie("userLogin", login_name);
+            cookie.setMaxAge(30 * 24 * 60 * 60);// Approximately one month in seconds
             response.addCookie(cookie);
+            
+            int user_id = LoginData.getUserID(login_name);
+            Customer customer = CustomerData.get(user_id);
+            session.setAttribute("customer", customer);
             
             ArrayList<Account> accounts;
             accounts = AccountData.get(login_name);
-            
             session.setAttribute("accounts", accounts);
             
             return "transaction"; // show "transaction.jsp"
         }
         else
         {
-            message = "Invalid login";
             return login(request); // go back to showing "login.jsp"
         }
     }

@@ -2,59 +2,57 @@ package ezbank.data;
 
 import java.sql.*;
 
-import ezbank.login.SaltedPassword;
 
 /**
  *
- * @author Alex
+ * @author John
  */
 public class LoginData
 {
-       
-    public static void updatePassword(String login, String password)
+    
+    public static int getUserID(String login_name)
     {
-
+        int user_id;
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
-
-        String update
-                = "UPDATE users SET password = ? WHERE login_name = ?";
-
+        ResultSet rs = null;
+        
+        String query = "SELECT user_id FROM users WHERE login_name = ?";
         try
         {
-            ps = connection.prepareStatement(update);
-            ps.setString(1, SaltedPassword.encode(password));
-            ps.setString(2, login);
-            ps.executeUpdate();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, login_name);
+            rs = ps.executeQuery();
+            
+            if (rs.next())
+            {
+                user_id = rs.getInt("user_id");
+                return user_id;
+            }
+            else
+            {
+               return -1; 
+            }
         }
         catch (SQLException e)
         {
-            throw new RuntimeException("Cannot update password", e);
+            throw new RuntimeException("Cannot find User by login_name: " + login_name, e);
         }
         finally
         {
+            DatabaseUtil.closeResultSet(rs);
             DatabaseUtil.closePreparedStatement(ps);
             pool.freeConnection(connection);
         }
     }
-
-    public static String resetPassword(String login)
-    {
-
-        String password = SaltedPassword.random(8);
-        updatePassword(login, password);
-
-        return password;
-    }
-
+    
     public static boolean checkPassword(String login, String password)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        System.out.println("in LoginData before SELECT");
 
         String query = "SELECT password FROM users WHERE login_name = ?";
         try
