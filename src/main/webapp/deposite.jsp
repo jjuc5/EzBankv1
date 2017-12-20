@@ -79,31 +79,34 @@
                     </div>
                 </div>
 
-                           <div class="col-md-8">
-                            <main>
-                            <my:SmileH1>Deposit E-Cheque</my:SmileH1>
-                            <form>
-                            <div class="col-md-8"><!--col-xs-2col-sm-6-->
+                <div class="col-md-8">
+                    <main>
+                     <my:SmileH1>Deposit E-Cheque</my:SmileH1>
+                        <form>
+                           <div class="col-md-8"><!--col-xs-2col-sm-6-->
                                <div class="form-group">
-                                  <label for="account_name">Choose&nbsp;account&nbsp;to&nbsp;withdraw&nbsp;from:&nbsp;</label> 
+                                  <label for="account_name">Choose&nbsp;account&nbsp;to&nbsp;deposit&nbsp;to:&nbsp;</label> 
                                </div>
-                               <select class="form-control" id="account_name">
-                                    <option>Chequing</option>
-                                    <option>Savings</option>
-                               </select>
-                            </div></br>
+                               <my:Select name="account_name" id="account_name" options="${provinces}" value="${param.province}"/>
+                                <my:Error property="province"/><my:Required/>
+                           </div></br>
 
-                            <div class="col-md-8"><!--col-xs-2col-sm-6-->
-                               
-                               <div class="form-group row">
-                                    <label for="transfer_amount" class="col-sm-2 col-form-label">Amount:</label>
-                                    <div class="col-sm-10">
-                                        <my:TextInput name="transfer_amount" id="transfer_amount" value="${param.transfer_amount}"/>
-                                        <my:Required/>
-                                    </div>
-                                </div>
-                            </div>
-                            </form>  
+                           <div class="col-md-8"><!--col-xs-2col-sm-6-->
+                              <div class="form-group row">
+                                  <label for="amount" class="col-sm-2 col-form-label">Amount:</label>
+                                  <div class="col-sm-10">
+                                    <my:TextInput name="amount" id="amount" value="${param.amount}"/>
+                                    <my:Error property="amount"/><my:Required/>
+                                  </div>
+                              </div>
+                           </div>
+                           <div class="col-md-8"><!--col-xs-2col-sm-6-->
+                              <div class="form-group row">
+                                <input type="submit" class="btn btn-primary" value="Continue">&nbsp;&nbsp;
+                                <input type="button" class="btn btn-primary" value="Upload Image"><p class="message">Please upload image</p>
+                              </div>
+                           </div>       
+                        </form>  
                         
                         <p><a href="input.do">Add A Student</a></p>
                         <p><a href="listall.do">List All Students</a></p>

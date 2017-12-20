@@ -78,27 +78,48 @@
                       </div>
                 </div>
 
-                           <div class="col-md-8">
-                            <main>
-                            <my:SmileH1>Print E-Cheque</my:SmileH1>
-                            <form>
-                            <div class="col-md-8"><!--col-xs-2col-sm-6-->
-                               <div class="form-group">
-                                  <label for="account_name">Choose&nbsp;account&nbsp;to&nbsp;withdraw&nbsp;from:&nbsp;</label> 
-                                   <my:Select name="account_name" id="account_name" options="${provinces}" value="${param.province}">
-                               </div>
-                            </div>
+                <div class="col-md-8">
+                   <main>
+                    <my:SmileH1>Print E-Cheque</my:SmileH1>
+                    <form>
+                        <div class="col-md-8"><!--col-xs-2col-sm-6-->
+                          <div class="form-group row">
+                            <label for="account_name">Choose&nbsp;account&nbsp;to&nbsp;withdraw&nbsp;from:&nbsp;</label> 
+                            <my:Select name="account_name" id="account_name" options="${provinces}" value="${param.province}"/>
+                            <my:Required/>
+                          </div>
+                        </div>
                                
-                            <div class="col-md-8">
-                               <div class="form-group row">
-                                  <label for="transfer_amount" class="col-sm-2 col-form-label">Amount:</label>
-                                  <div class="col-sm-10">
-                                        <my:TextInput name="transfer_amount" id="transfer_amount" value="${param.transfer_amount}"/>
-                                        <my:Required/>
-                                  </div>
+                        <div class="col-md-8">
+                           <div class="form-group row">
+                              <label for="amount" class="col-sm-2 col-form-label">Amount:</label>
+                                <div class="col-sm-10">
+                                   <my:TextInput name="amount" id="amount" value="${param.amount}"/>
+                                   <my:Required/>
                                 </div>
+                           </div>
+                        </div>
+                                  
+                        <div class="col-md-8">
+                          <div class="form-group row">
+                                  <label for="month" class="col-sm-2 col-form-label">Print&nbsp;Options</label>
+				<!-- MONTH Name name: month-->
+				<select class="form-control" name="month" id="month">
+				<option>Download as a pdf file</option>
+				<option>Email the form to me</option>
+				</select>
+                                <!-- <label for="print">Print&nbsp;Options</label> In case we tag it
+                                 < m y: select goes herename="print" id="print" options="${provinces}" value="${param.province}"/>
+                                 <m y: Required goes here/>-->
+                          </div>
+                        </div>
+                          </br>
+                            <div class="col-md-8">
+                                <div class="form-group row">
+                                <input type="submit" class="btn btn-primary" value="Continue">
                             </div>
-                            </form>  
+                        </div>
+                    </form>  
                         
                         <p><a href="input.do">Add A Student</a></p>
                         <p><a href="listall.do">List All Students</a></p>
@@ -114,9 +135,6 @@
                 </div> 
             </div>
         </div>
-
-        <footer><my:Sheridan/></footer>
-
-
+    <footer><my:Sheridan/></footer>
     </body>
 </html>
