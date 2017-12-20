@@ -29,7 +29,7 @@
                     <h2>EzBank</h2>
                     <div class="divTable">
                         <div class="panel-group">
-                            <a href="#" class="list-group-item active"></a>
+                            <!--<a href="#" class="list-group-item active"></a>-->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
@@ -48,7 +48,7 @@
                     </div>
                     <div class="divTable">
                         <div class="panel-group2">
-                            <a href="#" class="list-group-item active2"></a>
+                            <!--<a href="#" class="list-group-item active2"></a>-->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
