@@ -15,7 +15,7 @@ import java.sql.Date;
 public class Account implements Serializable
 {
     private Integer account_id;
-    private Integer Account_Typesaccount_type;
+    private Integer account_Typesaccount_type;
     private Date creation_date;
     private double balance;
     private Integer Usersuser_id;
@@ -29,7 +29,7 @@ public class Account implements Serializable
             Integer Usersuser_id)
     {
         this.account_id = account_id;
-        this.Account_Typesaccount_type = Account_Typesaccounttype;
+        this.account_Typesaccount_type = Account_Typesaccounttype;
         this.creation_date = creation_date;
         this.balance = balance;
     }
@@ -42,16 +42,6 @@ public class Account implements Serializable
     public void setAccount_id(Integer account_id)
     {
         this.account_id = account_id;
-    }
-
-    public Integer getAccount_Typesaccount_type()
-    {
-        return Account_Typesaccount_type;
-    }
-
-    public void setAccount_Typesaccount_type(Integer Account_Typesaccounttype)
-    {
-        this.Account_Typesaccount_type = Account_Typesaccounttype;
     }
 
     public Date getCreation_date()
@@ -83,4 +73,15 @@ public class Account implements Serializable
     {
         this.Usersuser_id = Usersuser_id;
     }
+
+    public Integer getAccount_Typesaccount_type()
+    {
+        return account_Typesaccount_type;
+    }
+
+    public void setAccount_Typesaccount_type(Integer account_Typesaccount_type)
+    {
+        this.account_Typesaccount_type = account_Typesaccount_type;
+    }
+
 }

@@ -75,17 +75,23 @@
                         <hr>
                         <my:SmileH1>Account Summary</my:SmileH1>
                         <c:choose>
-                            <c:when test="${not empty account}">
+                            <c:when test="${not empty accounts}">
                                 <table>
                                     <tr>
                                         <th>Account ID</th>
                                         <th>Account Type</th>
                                         <th>Balance</th>
                                     </tr>
-                                    <c:forEach items="${account}" var="a" varStatus="s">
+                                    <c:forEach items="${accounts}" var="a" varStatus="s">
                                         <tr>
                                             <td><c:out value="${a.account_id}"/></td>
-                                            <td><c:out value="${a.account_type}"/></td>
+                                            <td><c:if test="${a.account_Typesaccount_type == 1}">
+                                                    Chequing
+                                                </c:if>
+                                                <c:if test="${a.account_Typesaccount_type == 2}">
+                                                    Savings
+                                                </c:if>
+                                            </td>
                                             <td><c:out value="${a.balance}"/></td>
                                         </tr>  
                                     </c:forEach>

@@ -97,7 +97,7 @@ public class AccountData
         }
         catch (SQLException e)
         {
-            throw new RuntimeException("Cannot select the list of all students.", e);
+            throw new RuntimeException("Unable to retrieve customer's account data.", e);
         }
         finally
         {

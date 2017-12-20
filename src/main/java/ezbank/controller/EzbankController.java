@@ -37,18 +37,15 @@ public class EzbankController
         //return "login"; // show "login.jsp"
     }
 
-    // user clicks on "Continue" button in "input.jsp", 
-    // the form submits the data to "next.do"
+  
     public static String loginSubmit(HttpServletRequest request, HttpServletResponse response)
     {
         String message;
         String login_name = request.getParameter("login_name");
         String password = request.getParameter("password");
 
-        System.out.println("Before password checking");
         if (LoginData.checkPassword(login_name, password) == true)
         {
-            System.out.println("password is correct");
             HttpSession session = request.getSession();
             session.setAttribute("userName", login_name);
             // no data saving yet, the user must look through and confirm
@@ -56,46 +53,20 @@ public class EzbankController
             cookie.setMaxAge(30 * 24 * 60 * 60);// one month in sec
             response.addCookie(cookie);
             
-            ArrayList<Account> accounts = new ArrayList();
+            ArrayList<Account> accounts = new ArrayList<>();
             accounts = AccountData.get(login_name);
+            
+            session.setAttribute("accounts", accounts);
             
             return "transaction"; // show "transaction.jsp"
         }
         else
         {
-            System.out.println("password is incorrect");
             message = "Invalid login";
             return login(request); // go back to showing "login.jsp"
         }
     }
 
-    /*   
-    
-
-    public static String loginSubmit(HttpServletRequest request, HttpServletResponse response)
-    {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("login") == null)
-        {
-            return "expired"; // show "your session has expired" with "expired.jsp"
-        }
-        else
-        
-
-            Login login = new Login();
-            login.setLoginname(request.getParameter("login_name"));
-            login.setPassword(request.getParameter("password"));
-     
-            if (LoginData.checkPassword(login.getLoginname(), login.getPassword()) == true)
-            {
-                System.out.println("before displaying transaction page");
-          
-                return "transaction";
-            }
-        
-        return "login";
-    }
-     */
     public static String input(HttpServletRequest request)
     {
         return "input"; // show "input.jsp"
