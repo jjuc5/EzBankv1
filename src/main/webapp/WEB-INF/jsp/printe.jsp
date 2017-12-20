@@ -47,7 +47,8 @@
                                  <div id="collapse1" class="panel-collapse collapse">
                                  <ul class="list-group">
                                  <li><a href="account.jsp" class="list-group-item list-group-item-action">Accounts Overview</a></li>
-                                 <li><a href="transaction.jsp" class="list-group-item list-group-item-action">Transaction History</a></li>
+                                 <li><a href="chequing.jsp" class="list-group-item list-group-item-action">Chequing Account</a></li>
+                                 <li><a href="savings.jsp" class="list-group-item list-group-item-action">Savings Account</a></li>
                                  </ul>
                                  <div class="panel-footer"></div>
                                  </div>
