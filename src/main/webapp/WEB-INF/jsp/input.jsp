@@ -15,14 +15,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <script type="text/javascript">
-            function addTodo() {
-                var password = document.getElementById("password");
-                var password2 = document.getElementById("password2");
+            function checkPasswordMatch() {
+            var password = $("#password").val();
+            var confirmPassword = $("#password2").val();
 
-                if(password.value !== password2.value) {
-                 alert("Your passwords do not match");
-                 } 
-             }
+            if (password != confirmPassword)
+                 $("#divCheckPasswordMatch").html("Passwords do not match!");
+            else
+                $("#divCheckPasswordMatch").html("Passwords match.");
+            }
+
+            $(document).ready(function () {
+            $("#password2").keyup(checkPasswordMatch);
+            });
         </script>
         <title>Input</title>
     </head>
@@ -126,16 +131,20 @@
                         <div class="col-md-4">
                              <div data-role="fieldcontain" >
                                 <label for="password" class="col-sm-2 col-form-label">Password:</label>
-                                <my:TextInput id="password" name="password" value="${param.password}"/>
+                                <my:PassInput id="password" name="password" value="${param.password}"/>
                                 <my:Error property="password"/><my:Required/>
                              </div>
                         </div>
                         <div class="col-md-4">
                             <div data-role="fieldcontain" >
                                 <label for="password2" class="col-sm-2 col-form-label">Confirm&nbsp;Password:</label>
-                                <my:TextInput id="password2" name="password2" value="${param.password2}"/>
+                                <my:PassMatch id="password2" name="password2" value="${param.password2}"/>
                                 <my:Required/>
                             </div>
+                                <div id="divCheckPasswordMatch">
+                            </div>                     
+                                                          
+                           </div>
                         </div>
                     </div>
                 </div>
@@ -159,7 +168,7 @@
                 <hr>
                 <div class="container">
                     <div class="col-md-4">
-                        <input type="submit" value="Continue" onClick=”addTodo();”>
+                        <input type="submit" value="Continue">
                     </div>
                 </div>
             </form>
