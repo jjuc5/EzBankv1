@@ -101,8 +101,14 @@
                                 <div class="col-sm-10">
                                     <my:TextInput name="amount" id="amount" value="${param.amount}"/>
                                 </div>
-                                </div>
                             </div>
+                        </div>
+                          </br>
+                            <div class="col-md-8">
+                                <div class="form-group row">
+                                <input type="submit" class="btn btn-primary" value="Continue">
+                            </div>
+                        </div>                                
                         </form>  
                     </main>
                 </div> 

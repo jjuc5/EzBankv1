@@ -118,15 +118,6 @@
                             </div>
                         </div>
                     </form>  
-   
-                        <my:IfLoggedIn>
-                            <!--
-                             <p><a href="<c:url value="change_password.do"/>">Change password</a></p>
-                             <p><a href="<c:url value="addassist.do"/>">Add An Assistant</a></p>
-                             <p><a href="<c:url value="listallassist.do"/>">List All Assistants</a></p>
-                             <p><a href="<c:url value="logout.jsp"/>">Logout</a></p> 
-                            -->
-                        </my:IfLoggedIn>
                     </main>
                 </div> 
             </div>
