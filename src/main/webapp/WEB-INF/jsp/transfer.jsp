@@ -44,9 +44,9 @@
                                 <a data-toggle="collapse" href="#collapse1">Personal Accounts</a></h4></div>
                                 <div id="collapse1" class="panel-collapse collapse">
                                 <ul class="list-group">
-                                <li><a href="transaction.jsp" class="list-group-item list-group-item-action">Accounts Overview</a></li>
-                                         <li><a href="chequing.jsp" class="list-group-item list-group-item-action">Chequing Account</a></li>
-                                         <li><a href="savings.jsp" class="list-group-item list-group-item-action">Savings Account</a></li>
+                                    <li><a href="<c:url value="transaction.do"/>" class="list-group-item list-group-item-action">Accounts Overview</a></li>
+                                    <li><a href="<c:url value="chequing.do"/>" class="list-group-item list-group-item-action">Chequing Account</a></li>
+                                    <li><a href="<c:url value="savings.do"/>" class="list-group-item list-group-item-action">Savings Account</a></li>
                                 </ul>
                                 <div class="panel-footer"></div>
                                 </div>
@@ -65,9 +65,9 @@
                                 </div>
                                 <div id="collapse2" class="panel-collapse collapse">
                                 <ul class="list-group">
-                                        <li><a href="transfer.jsp"	class="list-group-item list-group-item-action">Transfer</a></li>
-                                        <li><a href="deposite.jsp"	class="list-group-item list-group-item-action">Deposit E-Cheque</a></li>
-                                        <li><a href="printe.jsp"	class="list-group-item list-group-item-action">Print E-Cheque</a></li>
+                                    <li><a href="<c:url value="transfer.do"/>" class="list-group-item list-group-item-action">Transfer</a></li>
+                                    <li><a href="<c:url value="deposite.do"/>" class="list-group-item list-group-item-action">Deposit E-Cheque</a></li>
+                                    <li><a href="<c:url value="printe.do"/>" class="list-group-item list-group-item-action">Print E-Cheque</a></li>
                                 </ul>
                                 <div class="panel-footer"></div>
                                 </div>
@@ -104,17 +104,6 @@
                                 </div>
                             </div>
                         </form>  
-
-                        <p><a href="input.do">Add A Student</a></p>
-                        <p><a href="listall.do">List All Students</a></p>
-                        <my:IfLoggedIn>
-                            <!--
-                             <p><a href="<c:url value="change_password.do"/>">Change password</a></p>
-                             <p><a href="<c:url value="addassist.do"/>">Add An Assistant</a></p>
-                             <p><a href="<c:url value="listallassist.do"/>">List All Assistants</a></p>
-                             <p><a href="<c:url value="logout.jsp"/>">Logout</a></p> 
-                            -->
-                        </my:IfLoggedIn>
                     </main>
                 </div> 
             </div>

@@ -26,7 +26,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h2>EzBank</h2>
+                    <h2>EZ-BANK</h2>
                     <div class="divTable">
                         <div class="panel-group">
                             <!--<a href="#" class="list-group-item active"></a>-->
