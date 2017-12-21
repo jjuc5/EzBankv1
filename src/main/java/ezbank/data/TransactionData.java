@@ -1,6 +1,7 @@
 package ezbank.data;
 
 import ezbank.business.Account;
+import ezbank.business.Customer;
 import java.sql.*;
 
 import ezbank.business.Transaction;
@@ -10,45 +11,56 @@ import java.util.Collections;
 public class TransactionData
 {
 
-    //Need to finish this logic in regards to inserting a deposit and/or withdrawal record
-    /*
-    public static void insert(Transaction transaction)
+    public static void insertDeposit(Transaction transaction, Customer customer, double balance)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
 
         // 1 is Chequing, 2 is Savings for Account_Type
-        String update = "INSERT INTO accounts "
-                + "(Account_Typesaccount_Type, creation_date, balance, Usersuser_id) "
-                + "VALUES (?, ?, ?, ?)";
+        String update = "INSERT INTO transactions "
+                + "(Transaction_Typestransaction_type, transaction_date, transaction_amount"
+                + ", Accountsaccount_id) VALUES (?, ?, ?, ?)";
         try
         {
-            if(customer.getChequing().equals("yes"))
+            ps = connection.prepareStatement(update, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, transaction.getTranstype());
+            ps.setDate(2, transaction.getTransaction_date());
+            ps.setDouble(3, transaction.getTransaction_amount());
+            ps.setInt(4, transaction.getAccountsaccount_id());
+            ps.executeUpdate();
+            ResultSet keys = ps.getGeneratedKeys();
+            if (keys.next())
             {
-                ps = connection.prepareStatement(update,
-                    Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, 1);
-                ps.setDate(2, java.sql.Date.valueOf(java.time.LocalDate.now()));
-                ps.setDouble(3, 0.00);
-                ps.setInt(4, customer.getUser_id());
-                ps.executeUpdate();
+                transaction.setTransaction_id(keys.getInt(1));
+            }
+            else
+            {
+                throw new RuntimeException("Cannot get the generated key.");
             }
             
-            if(customer.getSavings().equals("yes"))
-            {
-                ps = connection.prepareStatement(update,
-                    Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, 2);
-                ps.setDate(2, java.sql.Date.valueOf(java.time.LocalDate.now()));
-                ps.setDouble(3, 0.00);
-                ps.setInt(4, customer.getUser_id());
-                ps.executeUpdate();
-            }
+            String update2 = "INSERT INTO customer_account_transactions "
+                + "(Customer_AccountCustomercustomer_id, Customer_AccountAccountsaccount_id, "
+                    + "Transactionstransaction_id) VALUES (?, ?, ?)";
+            
+            ps = connection.prepareStatement(update2); 
+            ps.setInt(1, customer.getCustomer_id());
+            ps.setInt(2, transaction.getAccountsaccount_id());
+            ps.setInt(3, transaction.getTransaction_id());
+            ps.executeUpdate();
+            
+            String update3 = "UPDATE accounts SET balance = ? WHERE account_id = ?";
+            
+            double newBalance = balance + transaction.getTransaction_amount();
+            ps = connection.prepareStatement(update3);
+            ps.setDouble(1, newBalance);
+            ps.setInt(2, transaction.getAccountsaccount_id());
+            ps.executeUpdate();
+            
         }
         catch (SQLException e)
         {
-            throw new RuntimeException("Cannot insert the customer data.", e);
+            throw new RuntimeException("Cannot insert the transaction data.", e);
         }
         finally
         {
@@ -56,7 +68,6 @@ public class TransactionData
             pool.freeConnection(connection);
         }
     }
-    */
     
     public static ArrayList<Transaction> getAllChequing(int user_id)
     {

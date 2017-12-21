@@ -139,6 +139,74 @@ public class EzbankController
     // a user comes to the data input page at "deposite.do"    
     public static String deposite(HttpServletRequest request, HttpServletResponse response)
     {
+        HttpSession session = request.getSession();
+        
+        String login_name = session.getAttribute("login_name").toString();
+        ArrayList<Account> accounts;
+        accounts = AccountData.get(login_name);
+        session.setAttribute("accounts", accounts);
+        
+        Customer customer = (Customer) session.getAttribute("customer");
+        session.setAttribute("customer", customer);
+        
+        return "deposite"; // show "deposite.jsp"
+    }
+    
+    // a user comes to the data input page at "deposite.do"    
+    public static String submitDeposit(HttpServletRequest request, HttpServletResponse response)
+    {
+        HttpSession session = request.getSession();
+        
+        String account_type = request.getParameter("account_type");
+        Double amount = Double.parseDouble(request.getParameter("amount"));
+        
+        int parsedAccount_Type = 0;
+        double balance = 0.0;
+        ArrayList<Account> accounts = (ArrayList<Account>) session.getAttribute("accounts");
+        
+        Customer customer = (Customer) session.getAttribute("customer");
+        Transaction depositTransaction = new Transaction();
+        
+        if(account_type.contains("Chequing"))
+        {
+            parsedAccount_Type = 1;
+        }
+        else if(account_type.contains("Savings"))
+        {
+            parsedAccount_Type = 2;
+        }
+        
+        depositTransaction.setTranstype(1);
+        depositTransaction.setTransaction_amount(amount);
+        depositTransaction.setTransaction_date(java.sql.Date.valueOf(java.time.LocalDate.now()));
+        
+        if(parsedAccount_Type == 1)
+        {
+            for(Account account : accounts)
+            {
+                if(account.getAccount_Typesaccount_type() == 1)
+                {
+                    depositTransaction.setAccountsaccount_id(account.getAccount_id());
+                    balance = account.getBalance();
+                }
+            }
+        }
+        else if(parsedAccount_Type == 2)
+        {
+            for(Account account : accounts)
+            {
+                if(account.getAccount_Typesaccount_type() == 2)
+                {
+                    depositTransaction.setAccountsaccount_id(account.getAccount_id());
+                    balance = account.getBalance();
+                }
+            }
+        }
+        
+        TransactionData.insertDeposit(depositTransaction, customer, balance);
+        
+        
+        
         return "deposite"; // show "deposite.jsp"
     }
     

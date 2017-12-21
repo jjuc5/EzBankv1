@@ -75,6 +75,12 @@ public class EzbankServlet extends HttpServlet
                 break;
             }
             
+            case "/submitDeposit.do":
+            {
+                showNext = EzbankController.submitDeposit(request, response);
+                break;
+            }
+            
             case "/printe.do":
             {
                 showNext = EzbankController.printe(request, response);
