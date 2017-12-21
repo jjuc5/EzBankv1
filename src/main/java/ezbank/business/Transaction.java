@@ -12,10 +12,10 @@ import java.sql.Date;
  *
  * @author urban
  */
-public class Transaction implements Serializable
+public class Transaction implements Serializable, Comparable<Transaction>
 {
     private int transaction_id;
-    private int typestransaction_type;
+    private int transtype;
     private Date transaction_date;
     private double transaction_amount;
     private int accountsaccount_id;
@@ -25,10 +25,10 @@ public class Transaction implements Serializable
     {
     }
 
-    public Transaction(int transaction_id, int typestransaction_type, Date transaction_date, double transaction_amount, int accountsaccount_id)
+    public Transaction(int transaction_id, int transtype, Date transaction_date, double transaction_amount, int accountsaccount_id)
     {
         this.transaction_id = transaction_id;
-        this.typestransaction_type = typestransaction_type;
+        this.transtype = transtype;
         this.transaction_date = transaction_date;
         this.transaction_amount = transaction_amount;
         this.accountsaccount_id = accountsaccount_id;
@@ -44,14 +44,14 @@ public class Transaction implements Serializable
         this.transaction_id = transaction_id;
     }
 
-    public int getTypestransaction_type()
+    public int getTranstype()
     {
-        return typestransaction_type;
+        return transtype;
     }
 
-    public void setTypestransaction_type(int typestransaction_type)
+    public void setTranstype(int transtype)
     {
-        this.typestransaction_type = typestransaction_type;
+        this.transtype = transtype;
     }
 
     public Date getTransaction_date()
@@ -85,7 +85,11 @@ public class Transaction implements Serializable
     }
     
     
-    
+    @Override
+    public int compareTo(Transaction o) 
+    {
+      return getTransaction_date().compareTo(o.getTransaction_date());
+    }
     
     
 }

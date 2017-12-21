@@ -37,10 +37,10 @@
                                 </div>
                                 <div id="collapse1" class="panel-collapse collapse">
                                     <ul class="list-group">
-                                        <li><a href="account.jsp" class="list-group-item list-group-item-action">
+                                        <li><a href="<c:url value="transaction.do"/>" class="list-group-item list-group-item-action">
                                                 Accounts Overview</a></li>
-                                        <li><a href="chequing.jsp" class="list-group-item list-group-item-action">Chequing Account</a></li>
-                                        <li><a href="savings.jsp" class="list-group-item list-group-item-action">Savings Account</a></li>
+                                        <li><a href="<c:url value="chequing.do"/>" class="list-group-item list-group-item-action">Chequing Account</a></li>
+                                        <li><a href="<c:url value="savings.do"/>" class="list-group-item list-group-item-action">Savings Account</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -71,31 +71,35 @@
                     <main>
                         <my:SmileH1>Chequing Account Transactions</my:SmileH1>
                         <c:choose>
-                            <c:when test="${not empty accounts}">
+                            <c:when test="${not empty transactionsChequing}">
                                 <table>
                                     <tr>
+                                        <th>Transaction Count</th>
+                                        <th>Transaction Date</th>
                                         <th>Transaction ID</th>
                                         <th>Transaction Type</th>
-                                        <th>Transaction Date</th>
                                         <th>Transaction Amount</th>
                                     </tr>
-                                    <c:forEach items="${accounts}" var="a" varStatus="s">
+                                    <c:forEach items="${transactionsChequing}" var="t" varStatus="tc">
                                         <tr>
-                                            <td><c:out value="${a.account_id}"/></td>
-                                            <td><c:if test="${a.account_Typesaccount_type == 1}">
-                                                    Chequing
+                                            <td><c:out value="${tc.count}"/></td>
+                                            <td><c:out value="${t.transaction_date}"/></td>
+                                            <td><c:out value="${t.accountsaccount_id}"/></td>
+                                            <td>
+                                                <c:if test="${t.transtype == 1}">
+                                                    Deposit
                                                 </c:if>
-                                                <c:if test="${a.account_Typesaccount_type == 2}">
-                                                    Savings
+                                                <c:if test="${t.transtype == 2}">
+                                                    Withdrawal
                                                 </c:if>
                                             </td>
-                                            <td><c:out value="${a.balance}"/></td>
+                                            <td><c:out value="${t.transaction_amount}"/></td>
                                         </tr>  
                                     </c:forEach>
                                 </table>
                             </c:when>
                             <c:otherwise>
-                                <p class="message">No transaction found for Chequing Account.</p>
+                                <p class="message">No transaction history found for Chequing Account.</p>
                             </c:otherwise>
                         </c:choose>
                     </main>

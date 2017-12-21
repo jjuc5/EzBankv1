@@ -5,9 +5,11 @@ import java.util.*;
 import javax.servlet.http.*;
 import javax.validation.ConstraintViolation;
 import ezbank.business.Customer;
+import ezbank.business.Transaction;
 import ezbank.data.AccountData;
 import ezbank.data.CustomerData;
 import ezbank.data.LoginData;
+import ezbank.data.TransactionData;
 import ezbank.data.UserData;
 import sheridan.studentdb.util.ValidatorUtil;
 import sheridan.studentdb.util.CookieUtil;
@@ -53,7 +55,7 @@ public class EzbankController
             int user_id = LoginData.getUserID(login_name);
             Customer customer = CustomerData.get(user_id);
             session.setAttribute("customer", customer);
-            
+            session.setAttribute("login_name", login_name);
             ArrayList<Account> accounts;
             accounts = AccountData.get(login_name);
             session.setAttribute("accounts", accounts);
@@ -74,19 +76,58 @@ public class EzbankController
     // a user comes to the input page at "transaction.do"
     public static String transaction(HttpServletRequest request, HttpServletResponse response)
     {
+        HttpSession session = request.getSession();
+        
+        String login_name = session.getAttribute("login_name").toString();
+        ArrayList<Account> accounts;
+        accounts = AccountData.get(login_name);
+        session.setAttribute("accounts", accounts);
+
         return "transaction"; // show "transaction.jsp"
     }
     
     // a user comes to the data input page at "chequing.do"    
     public static String chequing(HttpServletRequest request, HttpServletResponse response)
     {
-        return "chequing"; // show "chequing.jsp"
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("customer") == null)
+        {
+            return "expired"; // show "your session has expired" with "expired.jsp"
+        }
+        else
+        {
+
+            Customer customer = (Customer) session.getAttribute("customer");
+            ArrayList<Transaction> transactionsChequing;
+            transactionsChequing = TransactionData.getAllChequing(customer.getUser_id());
+
+            session.setAttribute("customer", customer);
+            session.setAttribute("transactionsChequing", transactionsChequing);
+
+            return "chequing"; // show "chequing.jsp"
+        }
     }
     
     // a user comes to the data input page at "savings.do"    
     public static String savings(HttpServletRequest request, HttpServletResponse response)
     {
-        return "savings"; // show "printe.jsp"
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("customer") == null)
+        {
+            return "expired"; // show "your session has expired" with "expired.jsp"
+        }
+        else
+        {
+
+            Customer customer = (Customer) session.getAttribute("customer");
+            ArrayList<Transaction> transactionsSavings;
+            transactionsSavings = TransactionData.getAllSavings(customer.getUser_id());
+
+            session.setAttribute("customer", customer);
+            session.setAttribute("transactionsSavings", transactionsSavings);
+
+            return "savings"; // show "printe.jsp"
+        }
     }
     
     // a user comes to the page at "transfer.do"    
@@ -108,13 +149,13 @@ public class EzbankController
     }
     
     
-    //  a user clicks on "Forget Me" link to "forget.do"
-    public static String forget(HttpServletResponse response)
+    //  a user clicks on "Logout" link to "forget.do"
+    public static String logout(HttpServletResponse response)
     {
-        Cookie cookie = new Cookie("userName", "pass");
+        Cookie cookie = new Cookie("userLogin", "pass");
         cookie.setMaxAge(0);
         response.addCookie(cookie); // remove the cookie
-        return "redirect:."; // redirect to the default front page
+        return "redirect:logout.jsp"; // redirect to the default front page
     }
 
     // user clicks on "Continue" button in "input.jsp", 

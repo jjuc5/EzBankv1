@@ -1,6 +1,6 @@
 <%-- 
-    Document   : transaction
-    Created on : 13-Apr-2017, 4:36:33 PM
+    Document   : savings
+    Created on : 20-Dec-2017, 2:11:33 PM
     Author     : John Urbanowicz
 --%>
 
@@ -15,7 +15,7 @@
         <link type="text/css" rel="stylesheet" href="css/smiles.css">
 
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <title>Accounts Summary</title>
+        <title>Savings Account Transactions</title>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -37,10 +37,10 @@
                                 </div>
                                 <div id="collapse1" class="panel-collapse collapse">
                                     <ul class="list-group">
-                                        <li><a href="account.jsp" class="list-group-item list-group-item-action">
+                                        <li><a href="<c:url value="transaction.do"/>" class="list-group-item list-group-item-action">
                                                 Accounts Overview</a></li>
-                                        <li><a href="chequing.jsp" class="list-group-item list-group-item-action">Chequing Account</a></li>
-                                        <li><a href="savings.jsp" class="list-group-item list-group-item-action">Savings Account</a></li>
+                                        <li><a href="<c:url value="chequing.do"/>" class="list-group-item list-group-item-action">Chequing Account</a></li>
+                                        <li><a href="<c:url value="savings.do"/>" class="list-group-item list-group-item-action">Savings Account</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -69,39 +69,42 @@
                 </div>
                 <div class="col-md-8">
                     <main>
-                        <hr>
-                        <h2>Welcome Back, <c:out value="${customer.first_name} ${customer.last_name}"/>!</h2>
-                        <hr>
-                        <my:SmileH1>Savings Account Summary</my:SmileH1>
+                        <my:SmileH1>Savings Account Transactions</my:SmileH1>
                         <c:choose>
-                            <c:when test="${not empty accounts}">
+                            <c:when test="${not empty transactionsSavings}">
                                 <table>
                                     <tr>
-                                        <th>Account ID</th>
-                                        <th>Account Type</th>
-                                        <th>Balance</th>
+                                        <th>Transaction Count</th>
+                                        <th>Transaction Date</th>
+                                        <th>Transaction ID</th>
+                                        <th>Transaction Type</th>
+                                        <th>Transaction Amount</th>
                                     </tr>
-                                    <c:forEach items="${accounts}" var="a" varStatus="s">
+                                    <c:forEach items="${transactionsSavings}" var="t" varStatus="tc">
                                         <tr>
-                                            <td><c:out value="${a.account_id}"/></td>
+                                            <td><c:out value="${tc.count}"/></td>
+                                            <td><c:out value="${t.transaction_date}"/></td>
+                                            <td><c:out value="${t.accountsaccount_id}"/></td>
                                             <td>
-                                                <c:if test="${a.account_Typesaccount_type == 2}">
-                                                    <c:out value="${a.account_Type}"/>
+                                                <c:if test="${t.transtype == 1}">
+                                                    Deposit
+                                                </c:if>
+                                                <c:if test="${t.transtype == 2}">
+                                                    Withdrawal
                                                 </c:if>
                                             </td>
-                                            <td><c:out value="${a.balance}"/></td>
+                                            <td><c:out value="${t.transaction_amount}"/></td>
                                         </tr>  
                                     </c:forEach>
                                 </table>
                             </c:when>
                             <c:otherwise>
-                                <p class="message">No accounts found to summarize.</p>
+                                <p class="message">No transaction history found for Savings Account.</p>
                             </c:otherwise>
                         </c:choose>
                     </main>
                 </div> 
             </div>
         </div>
-        <footer><my:Sheridan/></footer>
     </body>
 </html>

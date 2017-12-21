@@ -44,7 +44,7 @@ public class EzbankServlet extends HttpServlet
                 break;
             }
             
-             case "/transaction.do":
+            case "/transaction.do":
             {
                 showNext = EzbankController.transaction(request, response);
                 break;
@@ -81,10 +81,10 @@ public class EzbankServlet extends HttpServlet
                 break;
             }
             
-            // a user clicks "Forget Me" link to "forget.do"
-            case "/forget.do":
+            // a user clicks "Forget Me" link to "logout.do"
+            case "/logout.do":
             {
-                showNext = EzbankController.forget(response);
+                showNext = EzbankController.logout(response);
                 break;
             }
 
