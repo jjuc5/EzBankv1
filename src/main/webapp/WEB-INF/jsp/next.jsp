@@ -79,11 +79,10 @@
             <p class="message">
                 Please, check your data before clicking "Register".
             </p>
-            <form method="post" action="<c:url value="submit.do"/>">
+            <form method="post" action="<c:url value="submit.ez"/>">
                 <input type="submit" value="Register"/>
             </form>
-            <p><a href="<c:url value="input.do"/>">Go Back to Input</a></p>
-            <%--<p><a href="<c:url value="listall.do"/>">List All</a></p>--%>
+            <p><a href="<c:url value="input.ez"/>">Go Back to Input</a></p>
         </main>
      </body>
 </html>

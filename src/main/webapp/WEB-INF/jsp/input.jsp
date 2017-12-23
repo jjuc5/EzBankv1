@@ -54,7 +54,7 @@
             <c:if test="${not empty errors}">
                 <h3 class="error">Input Errors:</h3>
             </c:if>
-            <form method="get" action="<c:url value="next.do"/>">
+            <form method="get" action="<c:url value="next.ez"/>">
                 <h4><b>Personal Information:</b></h4>
                 <div class="container">
                     <div class="form-group row">
@@ -179,7 +179,7 @@
                 </div>
             </form>
             <hr>
-            <p><a href="<c:url value="login.do"/>">Back to Login</a></p>
+            <p><a href="<c:url value="login.ez"/>">Back to Login</a></p>
         </main>
     </body>
 </html>

@@ -3,4 +3,4 @@
     if the browser accepts cookies (it is a way to check it).
 --%>
 <%@ page session="true"%>
-<% response.sendRedirect("login.do"); %>
+<% response.sendRedirect("login.ez"); %>

@@ -250,7 +250,7 @@ public class TransactionData
             
             String updateDestinationDeposit3 = "UPDATE accounts SET balance = ? WHERE account_id = ?";
             
-            double newBalanceDest = destBalance + depositTransfer.getTransaction_amount();
+            double newBalanceDest = Math.round((destBalance + depositTransfer.getTransaction_amount()) * 100.0) / 100.0;
             ps = connection.prepareStatement(updateDestinationDeposit3);
             ps.setDouble(1, newBalanceDest);
             ps.setInt(2, depositTransfer.getAccountsaccount_id());

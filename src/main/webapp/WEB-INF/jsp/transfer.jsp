@@ -41,9 +41,9 @@
                                  <a data-toggle="collapse" href="#collapse1">Personal Accounts</a></h4></div>
                                  <div id="collapse1" class="panel-collapse collapse">
                                  <ul class="list-group">
-                                     <li><a href="<c:url value="transaction.do"/>" class="list-group-item list-group-item-action">Accounts Overview</a></li>
-                                     <li><a href="<c:url value="chequing.do"/>" class="list-group-item list-group-item-action">Chequing Account</a></li>
-                                     <li><a href="<c:url value="savings.do"/>" class="list-group-item list-group-item-action">Savings Account</a></li>
+                                     <li><a href="<c:url value="transaction.ez"/>" class="list-group-item list-group-item-action">Accounts Overview</a></li>
+                                     <li><a href="<c:url value="chequing.ez"/>" class="list-group-item list-group-item-action">Chequing Account</a></li>
+                                     <li><a href="<c:url value="savings.ez"/>" class="list-group-item list-group-item-action">Savings Account</a></li>
                                   </ul>
                                   <div class="panel-footer"></div>
                                 </div>
@@ -61,9 +61,9 @@
                                     </div>
                                     <div id="collapse2" class="panel-collapse collapse">
                                     <ul class="list-group">
-                                        <li><a href="<c:url value="transfer.do"/>" class="list-group-item list-group-item-action">Transfer</a></li>
-                                        <li><a href="<c:url value="deposite.do"/>" class="list-group-item list-group-item-action">Deposit E-Cheque</a></li>
-                                        <li><a href="<c:url value="printe.do"/>" class="list-group-item list-group-item-action">Print E-Cheque</a></li>
+                                        <li><a href="<c:url value="transfer.ez"/>" class="list-group-item list-group-item-action">Transfer</a></li>
+                                        <li><a href="<c:url value="deposite.ez"/>" class="list-group-item list-group-item-action">Deposit E-Cheque</a></li>
+                                        <li><a href="<c:url value="printe.ez"/>" class="list-group-item list-group-item-action">Print E-Cheque</a></li>
                                     </ul>
                                     <!--  <div class="panel-footer">Footer</div> -->
                                     <div class="panel-footer"></div>
@@ -71,11 +71,14 @@
                             </div>
                         </div>
                     </div>
+                    <form method="post" action="<c:url value="logout.ez"/>">
+                        <input type="submit" class="btn btn-primary" value="Logout">
+                    </form>
                 </div>
                 <div class="col-md-8">
                     <main>
                         <my:SmileH1>Transfer Funds</my:SmileH1>
-                        <form method="post" action="<c:url value="submitTransfer.do"/>">
+                        <form method="post" action="<c:url value="submitTransfer.ez"/>">
                                <div class="form-group">
                                     <label for="accountsSource">Source Account: </label> &nbsp;
                                     <select id="accountsSource" name="accountsSource">

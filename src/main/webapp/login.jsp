@@ -51,7 +51,7 @@
                     <div class="col-xs-6">
                         <my:SmileH1><b>Log In</b></my:SmileH1>
                         </div>
-                        <form action="<c:url value="loginSubmit.do"/>" class="form-inline" method="post">
+                        <form action="<c:url value="loginSubmit.ez"/>" class="form-inline" method="post">
                             <div class="centerText">
                                 <div align="center">
                                     <div class="row">
@@ -72,7 +72,7 @@
                                             <!--<button type="" class="btn btn-primary">Sign up</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
                                             <input class="btn btn-primary" type="submit" value="Login">
                                         </div>
-                                        <p><a href="<c:url value="input.do"/>">Sign-Up For An Account</a></p>
+                                        <p><a href="<c:url value="input.ez"/>">Sign-Up For An Account</a></p>
                                     </div>
                                     <p class="message">${message}</p>
                                 </div>

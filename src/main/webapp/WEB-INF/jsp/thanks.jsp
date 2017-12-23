@@ -25,7 +25,10 @@
             <p class="message">
                 Thank you for registering.  You may now begin banking with EzBank!
             </p>
-            <p><a href="<c:url value="transaction.do"/>">Proceed to Account Summary</a></p>
+            <p><a href="<c:url value="summary.ez"/>">Proceed to Account Summary</a></p>
+            <form method="post" action="<c:url value="logout.ez"/>">
+                <input type="submit" class="btn btn-primary" value="Logout">
+            </form>
         </main>
    </body>
 </html>
