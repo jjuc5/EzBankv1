@@ -11,12 +11,17 @@ import java.sql.*;
 
 
 /**
- *
- * @author John
+ * This class gets the user information including the login name, the user id and 
+ * checks the password against the password stored in the database.
+ * @author melan
  */
 public class LoginData
 {
-    
+    /**
+     * This method finds the user id using the login name that is passed.
+     * @param login_name = the customer's login name that they created
+     * @return 
+     */
     public static int getUserID(String login_name)
     {
         int user_id;
@@ -53,7 +58,12 @@ public class LoginData
             pool.freeConnection(connection);
         }
     }
-    
+   
+    /**
+     * This method finds the login name using the user id that is passed.
+     * @param user_id = the user id that was created for a customer
+     * @return 
+     */
     public static String getLoginName(int user_id)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -87,7 +97,14 @@ public class LoginData
         }
         return login_name;
     }
-    
+   
+    /**
+     * This method checks the password that was entered at login against the 
+     * password that is stored in the users table in the database.
+     * @param login = login name
+     * @param password = password
+     * @return 
+     */
     public static boolean checkPassword(String login, String password)
     {
         ConnectionPool pool = ConnectionPool.getInstance();

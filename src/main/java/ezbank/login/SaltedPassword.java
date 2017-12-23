@@ -10,6 +10,11 @@ package ezbank.login;
 import java.security.SecureRandom;
 import org.apache.catalina.realm.MessageDigestCredentialHandler;
 
+/**
+ * This class is used for Salting the password. We are using the SHA-256
+ * hash to salt the password.
+ * @author melan
+ */
 public class SaltedPassword
 {
 
@@ -22,6 +27,12 @@ public class SaltedPassword
     final private static int NUM_OF_ITERATIONS = 100;
     final private static String ALGORITHM = "SHA-256";
 
+    /**
+     * This method creates a random string which will be appended to the password.
+     * We pass the length of the string we want to have appended.
+     * @param length
+     * @return 
+     */
     public static String random(int length)
     {
 
@@ -36,6 +47,13 @@ public class SaltedPassword
         return buf.toString();
     }
 
+    /**
+     * This method compares one password against another password. The two passwords
+     * are passed into the class and a value of true or false is returned.
+     * @param p1 = 1st password
+     * @param p2 = 2nd password
+     * @return 
+     */
     public static boolean equals(String p1, String p2)
     {
         if (p1 != null && p2 != null)
@@ -48,6 +66,12 @@ public class SaltedPassword
         }
     }
 
+    /**
+     * This method encodes the password using the salt. The password is passed
+     * as a parameter into the method
+     * @param password = the original password
+     * @return 
+     */
     public static String encode(String password)
     {
 
@@ -71,6 +95,14 @@ public class SaltedPassword
         return code;
     }
 
+    /** 
+     * This method checks whether an entered password matches the one stored on file.
+     * It does so by salting the incoming password and verifying it against the 
+     * value that is stored on file.
+     * @param password = original password
+     * @param code = salted password
+     * @return 
+     */
     public static boolean match(String password, String code)
     {
 
@@ -93,6 +125,10 @@ public class SaltedPassword
         return handler.matches(password, code);
     }
 
+    /**
+     * This program is used for Salted passwords.
+     * @param args 
+     */
     public static void main(String[] args)
     {
         String password = "sesame";

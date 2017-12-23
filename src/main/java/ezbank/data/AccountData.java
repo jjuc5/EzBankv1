@@ -13,9 +13,19 @@ import java.sql.*;
 import ezbank.business.Customer;
 import java.util.ArrayList;
 
+/**
+ * This class handles all the insertion and retrieval of the accounts table.
+ * @author melan
+ */
 public class AccountData
 {
 
+    /**
+     * This method inserts a row into the accounts table using the information that 
+     * was passed from the customer object.
+     * @param customer = object that contains the customer information and the 
+     * accounts the customer wanted to create
+     */
     public static void insert(Customer customer)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -60,7 +70,11 @@ public class AccountData
             pool.freeConnection(connection);
         }
     }
-    
+    /**
+     * This method retrieves the account information from the accounts table in the database.
+     * @param login_name = login name that is used as a key to get the accounts table
+     * @return 
+     */
     public static ArrayList<Account> getAccounts(String login_name)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -115,6 +129,12 @@ public class AccountData
         return accounts;
     }
     
+    /** 
+     * This method retrieves the account information from the accounts table in the database
+     * @param account_id = the account id which is the key used to retrieve the 
+     * accounts information
+     * @return 
+     */
     public static Account get(int account_id)
     {
         ConnectionPool pool = ConnectionPool.getInstance();

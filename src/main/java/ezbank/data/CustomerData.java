@@ -11,9 +11,17 @@ import java.sql.*;
 
 import ezbank.business.Customer;
 
+/**
+ * This class handles the insertion and retrieval logic for the customer table. 
+ * @author melan
+ */
 public class CustomerData
 {
 
+    /**
+     * This method inserts a customer into the customer table in the database.
+     * @param customer = an object that contains all the customer information 
+     */
     public static void insert(Customer customer)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -63,6 +71,11 @@ public class CustomerData
         }
     }
     
+    /** 
+     * This method retrieves the customer data from the customer table in the database.
+     * @param id = customer id that is used as the key to retrieve the customer info
+     * @return 
+     */
     public static Customer get(int id)
     {
         ConnectionPool pool = ConnectionPool.getInstance();

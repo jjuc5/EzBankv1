@@ -12,12 +12,19 @@ import javax.sql.DataSource;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+/**
+ * This class establishes a connection pool with the database.
+ * @author melan
+ */
 public class ConnectionPool
 {
 
     private static ConnectionPool pool = null;
     private static DataSource dataSource = null;
 
+    /**
+     * This method makes the connection pool with the banking database
+     */
     private ConnectionPool()
     {
         try
@@ -31,6 +38,10 @@ public class ConnectionPool
         }
     }
 
+    /**
+     * This method creates an instance of the connection that was created/
+     * @return 
+     */
     public static synchronized ConnectionPool getInstance()
     {
         if (pool == null)
@@ -40,6 +51,10 @@ public class ConnectionPool
         return pool;
     }
 
+    /**
+     * This method gets the connection that was previously made.
+     * @return 
+     */
     public Connection getConnection()
     {
         try
@@ -52,6 +67,10 @@ public class ConnectionPool
         }
     }
 
+    /**
+     * This method frees up the connection that was previously made
+     * @param c = instance of the connection
+     */
     public void freeConnection(Connection c)
     {
         try

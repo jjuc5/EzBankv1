@@ -15,9 +15,22 @@ import ezbank.business.Transaction;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * This class handles all the transaction data for the transaction table.
+ * @author melan
+ */
 public class TransactionData
 {
 
+    /**
+     * This method insert deposits into the database.
+     * Creates the transaction table, the customer_account_transaction table, and
+     * updates the balance in the account table.
+     * @param transaction = object that contains all the data for the transaction
+     * @param customer = object that contains all the data for the customer
+     * @param account = object that contains all the data for the account
+     * @param balance = the account balance before the transaction is deposited
+     */
     public static void insertDeposit(Transaction transaction, Customer customer, Account account, double balance)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -77,6 +90,15 @@ public class TransactionData
         }
     }
     
+    /**
+     * This method inserts withdrawals into the database.
+     * Creates the transaction table, the customer_account_transaction table, and
+     * updates the balance in the account table.
+     * @param transaction = object that contains all the transaction data
+     * @param customer = object that contains all the customer data
+     * @param account = object that contains all the account data
+     * @param balance = account balance before the withdrawal transaction is made.
+     */
     public static void insertWithdrawal(Transaction transaction, Customer customer, Account account, double balance)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -135,6 +157,19 @@ public class TransactionData
         }
     }
     
+    /**
+     * This method inserts transfer records into the database.
+     * Creates the transaction table for the deposit and the withdrawal, creates 
+     * the customer_account_transaction for the deposit and the withdrawal, and updates
+     * the accounts with the new balances
+     * @param withdrawalTransfer = object that contains all the withdrawal information
+     * @param depositTransfer = object that contains all the deposit information
+     * @param customer = object that contains the customer information
+     * @param sourceAccount = object that contains the source account information
+     * @param destAccount = object that contains the destination account information
+     * @param sourceBalance = the source account balance before the transfer out
+     * @param destBalance = the destination balance before the transfer in 
+     */
     public static void insertTransfer(Transaction withdrawalTransfer, Transaction depositTransfer, Customer customer, 
             Account sourceAccount, Account destAccount, double sourceBalance, double destBalance)
     {
@@ -233,6 +268,15 @@ public class TransactionData
         }
     }
     
+    /**
+     * This method retrieves the chequing account using the user_id.
+     * This method finds the chequing account which has an account type of 1
+     * and then finds all the transactions for that account. These transactions
+     * are stored in the account and transaction objects. The transaction object
+     * is returned form. The transactions are sorted by date in descending order.
+     * @param user_id = the user id for the customer in question
+     * @return 
+     */
     public static ArrayList<Transaction> getAllChequing(int user_id)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -288,7 +332,16 @@ public class TransactionData
         Collections.sort(transactions, Collections.reverseOrder());
         return transactions;
     }
-    
+   
+    /**
+    * This method retrieves the savings account using the user_id.
+     * This method finds the savings account which has an account type of 2
+     * and then finds all the transactions for that account. These transactions
+     * are stored in the account and transaction objects. The transaction object
+     * is returned form. The transactions are sorted by date, in descending order.
+     * @param user_id = the user id for the customer in question
+     * @return 
+     */
     public static ArrayList<Transaction> getAllSavings(int user_id)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
