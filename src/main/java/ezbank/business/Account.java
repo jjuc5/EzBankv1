@@ -26,7 +26,6 @@ public class Account implements Serializable
     
     /**
      * No-arg constructor for an Account object.
-     * 
      */
     public Account()
     {
@@ -36,11 +35,11 @@ public class Account implements Serializable
      * Full argument construction of an Account object.  Contains all properties
      * required to represent an Account.
      * 
-     * @param account_id
-     * @param Account_Typesaccounttype
-     * @param creation_date
-     * @param balance
-     * @param Usersuser_id 
+     * @param account_id - the ID of an Account
+     * @param Account_Typesaccounttype - the account type of an account (e.g. Chequing, Savings)
+     * @param creation_date the date an Account was created
+     * @param balance the balance of funds in an Account
+     * @param Usersuser_id the user_id associated with ownership of an Account
      */
     public Account(Integer account_id, Integer Account_Typesaccounttype, Date creation_date, double balance, 
             Integer Usersuser_id)

@@ -21,10 +21,17 @@ import ezbank.data.UserData;
 import sheridan.studentdb.util.ValidatorUtil;
 import sheridan.studentdb.util.CookieUtil;
 
+
+/**
+ * This class represents the Servlet logic used for data processing, verification, 
+ * initiates database transactions and otherwise redirecting users to respective pages.
+ * It also passes along session attributes which are used to populate the jsp pages
+ * with information appropriate for that particular user.
+ * 
+ * @author John Urbanowicz, Melanie Iarocci
+ */
 public class EzbankController
 {
-
-    // a user comes to the default front page at "hello.do"
     public static String hello(HttpServletRequest request)
     {
         String userName = CookieUtil.getCookieValue(request.getCookies(), "userName");
@@ -35,6 +42,14 @@ public class EzbankController
         return "hello"; // show "hello.jsp"
     }
 
+    // a user comes to the default front page at "login.ez" where they can choose
+    /**
+     * This method is invoked when a user comes to the default page of the site ("login.ez").
+     * It allows them to either login or to register for an account with EzBank.
+     * 
+     * @param request 
+     * @return the login.jsp page
+     */
     public static String login(HttpServletRequest request)
     {
         String userName = CookieUtil.getCookieValue(request.getCookies(), "userName");
@@ -47,6 +62,18 @@ public class EzbankController
     }
 
   
+    /**
+     * This method is invoked when a user clicks submit on the login page.  It 
+     * verifies if the user credentials used are valid and if so, grabs the appropriate
+     * data required to populate that user's account summary page ("summary.ez").
+     * It also sets the appropriate session attributes to track the user through
+     * the session.  If login credentials are invalid, the user is redirected to 
+     * the login page with an appropriate error message.
+     * 
+     * @param request
+     * @param response
+     * @return the summary.jsp page or the login.jsp page.
+     */
     public static String loginSubmit(HttpServletRequest request, HttpServletResponse response)
     {
         String login_name = request.getParameter("login_name");
@@ -68,7 +95,7 @@ public class EzbankController
             accounts = AccountData.getAccounts(login_name);
             session.setAttribute("accounts", accounts);
             
-            return "transaction"; // show "transaction.jsp"
+            return "summary"; // show "summary.jsp"
         }
         else
         {
@@ -79,13 +106,29 @@ public class EzbankController
         }
     }
 
+    /**
+     * A method which directs a user to the ("input.ez") page.
+     * 
+     * @param request
+     * @return input.jsp
+     */
     public static String input(HttpServletRequest request)
     {
         return "input"; // show "input.jsp"
     }
 
-    // a user comes to the input page at "transaction.do"
-    public static String transaction(HttpServletRequest request, HttpServletResponse response)
+    // a user comes to the input page at "summary.do"
+    
+    /**
+     * A method which is invoked when the user logs in successfully, chooses to view
+     * the summary page or is otherwise redirected ("summary.ez").  Gets and sets the appropriate
+     * session attributes to populate the summary page.
+     * 
+     * @param request
+     * @param response
+     * @return summary.jsp
+     */
+    public static String summary(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession();
         
@@ -96,10 +139,17 @@ public class EzbankController
         
         session.setAttribute("accounts", accounts);
 
-        return "transaction"; // show "transaction.jsp"
+        return "summary"; // show "summary.jsp"
     }
     
-    // a user comes to the data input page at "chequing.do"    
+    /**
+     * This method is invoked when a user initiates "chequing.ez".  It retrieves 
+     * and populates the chequing account data if it exists for that user.
+     * 
+     * @param request
+     * @param response
+     * @return chequing.jsp
+     */
     public static String chequing(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession(false);
@@ -121,7 +171,14 @@ public class EzbankController
         }
     }
     
-    // a user comes to the data input page at "savings.do"    
+    /**
+     * This method is invoked when the user initiates ("savings.ez").  It retrieves
+     * and populates the respective savings account data for the user if it exists.
+     * 
+     * @param request
+     * @param response
+     * @return savings.jsp
+     */
     public static String savings(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession(false);
@@ -139,11 +196,19 @@ public class EzbankController
             session.setAttribute("customer", customer);
             session.setAttribute("transactionsSavings", transactionsSavings);
 
-            return "savings"; // show "printe.jsp"
+            return "savings"; // show "savings.jsp"
         }
     }
     
-    // a user comes to the page at "transfer.do"    
+    /**
+     * This method is invoked when a user selects to initiate ("transfer.ez").  It
+     * retrieves and populates the screen with appropriate account data to allow 
+     * for transfers between accounts.
+     * 
+     * @param request
+     * @param response
+     * @return transfer.jsp
+     */
     public static String transfer(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession();
@@ -158,6 +223,17 @@ public class EzbankController
         return "transfer"; // show "transfer.jsp"
     }
     
+    /**
+     * This method is invoked when the user at ("transfer.ez") chooses to proceed with
+     * a transfer request ("submitTransfer.ez").  This method verifies that the transfer can be completed
+     * without any conflicts and returns the user to the transfer page to view the
+     * completed transfer amounts.  Otherwise, the user is returned to the summary 
+     * page if there are any conflicts.
+     * 
+     * @param request
+     * @param response
+     * @return transfer.jsp or summary.jsp
+     */
     public static String submitTransfer(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession();
@@ -212,14 +288,14 @@ public class EzbankController
                 message = "[Insufficient Funds]:  Unable to withdraw $" + amount + " with a balance of $" + sourceBalance + " "
                         + "from source account";
                 request.setAttribute("message", message);
-                return "transaction";
+                return "summary";
             }
         }
         else
         {
             message = "[Account Selection Error]:  Cannot transfer funds to the same account";
             request.setAttribute("message", message);
-            return "transaction";
+            return "summary";
         }
         
         
@@ -231,7 +307,15 @@ public class EzbankController
         return "transfer"; // show "transfer.jsp"
     }
 
-    // a user comes to the data input page at "deposite.do"    
+    // a user comes to the data input page at "deposite.do"
+    /**
+     * This method is invoked when a user chooses to go to the deposit page ("deposite.ez").
+     * The page is appropriately populated with session attributes.
+     * 
+     * @param request
+     * @param response
+     * @return deposite.jsp
+     */    
     public static String deposite(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession();
@@ -247,6 +331,16 @@ public class EzbankController
         return "deposite"; // show "deposite.jsp"
     }
     
+    /**
+     * This method is invoked when a user chooses to submit their deposit ("submitDeposit.ez").
+     * The logic then assembles the appropriate data and sends it for insertion into
+     * the database.  The session attributes are then set and new values displayed when
+     * the user is redirected to the summary page.
+     * 
+     * @param request
+     * @param response
+     * @return summary.jsp
+     */
     public static String submitDeposit(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession();
@@ -276,10 +370,17 @@ public class EzbankController
         accounts = AccountData.getAccounts(customer.getUsername());
         session.setAttribute("accounts", accounts);
         
-        return "transaction"; // show "transaction.jsp"
+        return "summary"; // show "summary.jsp"
     }
     
-     // a user comes to the data input page at "printe.do"    
+    /**
+     * This method is invoked when a user chooses to withdraw / print an e-Cheque
+     * at ("printe.ez").  The appropriate account information is populated for display.
+     * 
+     * @param request
+     * @param response
+     * @return printe.jsp
+     */
     public static String printe(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession();
@@ -295,6 +396,15 @@ public class EzbankController
         return "printe"; // show "printe.jsp"
     }
     
+    /**
+     * This method is invoked when the user confirms their withdrawal request ("submitWithdrawal.ez").
+     * The logic in this code verifies that the amount requested is available for the selected account.
+     * In the future, this method will also display an e-Cheque for the customer to print.
+     * 
+     * @param request
+     * @param response
+     * @return summary.jsp
+     */
     public static String submitWithdrawal(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession();
@@ -324,7 +434,7 @@ public class EzbankController
         {
             message = "[Insufficient Funds]:  Unable to withdraw $" + amount + " with a balance of $" + balance;
             request.setAttribute("message", message);
-            return "transaction";
+            return "summary";
         }
         
         session.setAttribute("customer", customer);
@@ -333,20 +443,35 @@ public class EzbankController
         accounts = AccountData.getAccounts(customer.getUsername());
         session.setAttribute("accounts", accounts);
         
-        return "transaction"; // show "transaction.jsp"
+        return "summary"; // show "summary.jsp"
     }
     
-    //  a user clicks on "Logout" link to "forget.do"
-    public static String logout(HttpServletResponse response)
+    /**
+     * This method is invoked when a user wishes to logout of the banking site ("logout.ez").
+     * This method will terminate a user's session and return them to the login.jsp page.
+     * 
+     * @param response
+     * @return login.jsp
+     */
+    public static String logout(HttpServletRequest request, HttpServletResponse response)
     {
+        HttpSession session = request.getSession();
         Cookie cookie = new Cookie("userLogin", "pass");
         cookie.setMaxAge(0);
         response.addCookie(cookie); // remove the cookie
-        return "redirect:logout.jsp"; // redirect to the default front page
+        session.invalidate();  
+        return "redirect:login.jsp"; // redirect to the default front page
     }
 
-    // user clicks on "Continue" button in "input.jsp", 
-    // the form submits the data to "next.do"
+    /**
+     * This method is invoked when the user is submitting their registration data ("next.ez").
+     * The user is transferred to next.jsp where they can review and confirm the information
+     * they are submitted for accuracy.  Any errors or validation issues are also shown beside
+     * the corresponding fields.
+     * 
+     * @param request
+     * @return next.jsp
+     */
     public static String next(HttpServletRequest request)
     {
         Customer customer = new Customer();
@@ -388,21 +513,17 @@ public class EzbankController
         }
     }
 
-    /*
-    public static String nextAssist(HttpServletRequest request)
-    {
-
-        Assistant assistant = new Assistant();
-        assistant.setUsername(request.getParameter("assistUser"));
-        assistant.setPassword(request.getParameter("pass"));
-
-        HttpSession session = request.getSession();
-        session.setAttribute("assistant", assistant);
-
-        return "nextassist";
-    }
+    /**
+     * This method is invoked when the user clicks submit in the next.jsp page ("submit.ez").
+     * It takes the confirmed customer data and any account creation flags and populates
+     * the appropriate database tables with the customer, user and account data.
+     * Session attributes are set for the customer to be treated as logged in and 
+     * they are redirected to a thank you page.
+     * 
+     * @param request
+     * @param response
+     * @return thanks.do and subsequently thanks.jsp
      */
-    // a user clicks "Register" button in "next.jsp", the form submits to "submit.do"
     public static String submit(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession(false);
@@ -429,34 +550,19 @@ public class EzbankController
             response.addCookie(cookie);
             session.setAttribute("customer", customer);
             
-            return "redirect:thanks.do";
+            return "redirect:thanks.ez";
         }
     }
-
     
-
-    /*
-    public static String submitAssist(HttpServletRequest request, HttpServletResponse response)
-    {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("assistant") == null)
-        {
-            return "expired"; // show "your session has expired" with "expired.jsp"
-        }
-        else
-        {
-
-            Assistant assistant = (Assistant) session.getAttribute("assistant");
-            AssistantData.insert(assistant);
-
-            return "redirect:listallassist.do";
-        }
-    }
+    /**
+     * This method is invoked at ("thanks.ez").  Acknowledged customer and sets
+     * any necessary session attributes.
+     * 
+     * @param request
+     * @return thanks.jsp
      */
-    // a user is redirected to "Thank you" page at "thanks.do"
     public static String thanks(HttpServletRequest request)
     {
-        // I REMOVED FALSE FROM request.getSession();
         HttpSession session = request.getSession();
         
         Customer customer = (Customer) session.getAttribute("customer");

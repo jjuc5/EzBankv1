@@ -11,223 +11,127 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
+/**
+ * This class represents the listener Servlet which redirects the front end requests
+ * to the Controller for processing.
+ * 
+ * @author John Urbanowicz
+ */
 public class EzbankServlet extends HttpServlet
 {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-
         String action = request.getServletPath();
         String jspPath = "/WEB-INF/jsp/";
-        String showNext; // where to forward/redirect
+        String nextPage; // where to forward/redirect
 
         switch (action)
         {
-
-            // a user comes to the default front page at "hello.do"
-            case "/hello.do":
+            case "/hello.ez":
             {
-                showNext = EzbankController.hello(request);
+                nextPage = EzbankController.hello(request);
                 break;
             }
 
-            case "/login.do":
+            case "/login.ez":
             {
-                showNext = EzbankController.login(request);
+                nextPage = EzbankController.login(request);
                 break;
             }
             
-            case "/loginSubmit.do":
+            case "/loginSubmit.ez":
             {
-                showNext = EzbankController.loginSubmit(request, response);
+                nextPage = EzbankController.loginSubmit(request, response);
                 break;
             }
 
-            // a user comes to the first input form at "input.do"
-            case "/input.do":
+            case "/input.ez":
             {
-                showNext = EzbankController.input(request);
+                nextPage = EzbankController.input(request);
                 break;
             }
             
-            case "/transaction.do":
+            case "/summary.ez":
             {
-                showNext = EzbankController.transaction(request, response);
+                nextPage = EzbankController.summary(request, response);
                 break;
             }
             
-            case "/chequing.do":
+            case "/chequing.ez":
             {
-                showNext = EzbankController.chequing(request, response);
+                nextPage = EzbankController.chequing(request, response);
                 break;
             }
             
-            case "/savings.do":
+            case "/savings.ez":
             {
-                showNext = EzbankController.savings(request, response);
+                nextPage = EzbankController.savings(request, response);
                 break;
             }
             
                        
-            case "/transfer.do":
+            case "/transfer.ez":
             {
-                showNext = EzbankController.transfer(request, response);
+                nextPage = EzbankController.transfer(request, response);
                 break;
             }
             
-            case "/submitTransfer.do":
+            case "/submitTransfer.ez":
             {
-                showNext = EzbankController.submitTransfer(request, response);
+                nextPage = EzbankController.submitTransfer(request, response);
                 break;
             }
             
-            case "/deposite.do":
+            case "/deposite.ez":
             {
-                showNext = EzbankController.deposite(request, response);
+                nextPage = EzbankController.deposite(request, response);
                 break;
             }
             
-            case "/submitDeposit.do":
+            case "/submitDeposit.ez":
             {
-                showNext = EzbankController.submitDeposit(request, response);
+                nextPage = EzbankController.submitDeposit(request, response);
                 break;
             }
             
-            case "/printe.do":
+            case "/printe.ez":
             {
-                showNext = EzbankController.printe(request, response);
+                nextPage = EzbankController.printe(request, response);
                 break;
             }
             
-            case "/submitWithdrawal.do":
+            case "/submitWithdrawal.ez":
             {
-                showNext = EzbankController.submitWithdrawal(request, response);
+                nextPage = EzbankController.submitWithdrawal(request, response);
                 break;
             }
             
-            // a user clicks "Forget Me" link to "logout.do"
-            case "/logout.do":
+            case "/logout.ez":
             {
-                showNext = EzbankController.logout(response);
+                nextPage = EzbankController.logout(request, response);
                 break;
             }
 
-            // a user clicks "Continue" button in "input.jsp", 
-            // the form submits the data to "next.do"
-            case "/next.do":
+            case "/next.ez":
             {
-                showNext = EzbankController.next(request);
+                nextPage = EzbankController.next(request);
                 break;
             }
 
-            // a user clicks "Register" button in "next.jsp", 
-            // the form submits the data to "submit.do"
-            case "/submit.do":
+            case "/submit.ez":
             {
-                showNext = EzbankController.submit(request, response);
+                nextPage = EzbankController.submit(request, response);
                 break;
             }
 
-            // a user is redirected to "Thank you" page at "thanks.do"
-            case "/thanks.do":
+            case "/thanks.ez":
             {
-                showNext = EzbankController.thanks(request);
-                break;
-            }
-            /*        
-            // a user clicks on "List All" link to "listall.do", 
-            // or a user is redirected to "listall.do"
-            case "/listall.do": {
-                showNext = EzbankController.listAll(request);
+                nextPage = EzbankController.thanks(request);
                 break;
             }
             
-            // a user clicks on "Clear All" link to "clearall.do"
-            case "/clearall.do": {
-                showNext = EzbankController.clearAll();
-                break;
-            }
-            
-            // a user click on "Edit" link (in the table) to "edit.do" 
-            case "/edit.do": {
-                showNext = EzbankController.edit(request);
-                break;
-            }
-            
-            case "/editassist.do": {
-                showNext = EzbankController.editAssist(request);
-                break;
-            }
-            
-            // a user clicks "Update" button in "edit.jsp", 
-            // the form submits the data to "update.do"
-            case "/update.do": {
-                showNext = EzbankController.update(request);
-                break;
-            }
-            
-            case "/updateassist.do": {
-                showNext = EzbankController.updateAssist(request);
-                break;
-            }
-            
-            // a user cliks "Delete" link (in the table) to "delete.do"
-            case "/delete.do": {
-                showNext = EzbankController.delete(request);
-                break;
-            }
-            
-            case "/deleteassist.do": {
-                showNext = EzbankController.deleteAssist(request);
-                break;
-            }
-            
-            // a user clicks "Remove Record" button in "delete.jsp",
-            // the form submits the data to "remove.do"
-            case "/remove.do": {
-                showNext = EzbankController.remove(request);
-                break;
-            }
-            
-            case "/removeassist.do": {
-                showNext = EzbankController.removeAssist(request);
-                break;
-            }
-            
-            // a user clicks "Change password" link
-            case "/change_password.do":{
-                showNext = EzbankController.changePassword(request);
-                break;
-            }
-            
-            // a user clicks "Change Password" button in "passwords.jsp",
-            // the form submits data to "/update_password.do"
-            case "/update_password.do":{
-                showNext = EzbankController.updatePassword(request);
-                break;
-            }
-            
-            case "/addassist.do": {
-                showNext = EzbankController.addAssist(request);
-                break;
-            }
-            
-            case "/nextassist.do": {
-                showNext = EzbankController.nextAssist(request);
-                break;
-            }
-            
-            case "/submitassist.do": {
-                showNext = EzbankController.submitAssist(request, response);
-                break;
-            }
-            
-            case "/listallassist.do": {
-                showNext = EzbankController.listAllAssist(request);
-                break;
-            }
-             */
             default:
             {
                 response.sendError(404);
@@ -238,13 +142,13 @@ public class EzbankServlet extends HttpServlet
         String greeting = getInitParameter("greeting");
         request.setAttribute("greeting", greeting);
 
-        if (showNext.startsWith("redirect:"))
+        if (nextPage.startsWith("redirect:"))
         {
-            response.sendRedirect(response.encodeRedirectURL(showNext.substring(9)));
+            response.sendRedirect(response.encodeRedirectURL(nextPage.substring(9)));
         }
         else
         {
-            request.getRequestDispatcher(jspPath + showNext + ".jsp")
+            request.getRequestDispatcher(jspPath + nextPage + ".jsp")
                     .forward(request, response);
         }
     }

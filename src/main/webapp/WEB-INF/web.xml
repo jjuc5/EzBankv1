@@ -5,13 +5,13 @@
         <servlet-class>ezbank.controller.EzbankServlet</servlet-class>
         <init-param>
             <param-name>greeting</param-name>
-            <param-value>Ezbank Login</param-value>
+            <param-value>EzBank</param-value>
         </init-param>
     </servlet>
     
     <servlet-mapping>
         <servlet-name>EzbankServlet</servlet-name>
-        <url-pattern>*.do</url-pattern>
+        <url-pattern>*.ez</url-pattern>
     </servlet-mapping>
     
     <session-config>
