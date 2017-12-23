@@ -1,3 +1,10 @@
+/*
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+*/
 package ezbank.data;
 
 import java.sql.*;
@@ -101,38 +108,5 @@ public class CustomerData
 
         return customer;
     }
-/*
-    public static void update(Student student)
-    {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
-        PreparedStatement ps = null;
-
-        String update
-                = "UPDATE student SET "
-                + "first_name = ?, last_name = ?, "
-                + "program_name = ?, program_year = ?, program_coop = ? "
-                + "WHERE id = ?";
-        try
-        {
-            ps = connection.prepareStatement(update);
-            ps.setString(1, student.getFirstName());
-            ps.setString(2, student.getLastName());
-            ps.setString(3, student.getProgram());
-            ps.setInt(4, Integer.parseInt(student.getYear()));
-            ps.setBoolean(5, student.getCoop().equals("yes"));
-            ps.setInt(6, student.getId());
-            ps.executeUpdate();
-        }
-        catch (SQLException e)
-        {
-            throw new RuntimeException("Cannot update the student record.", e);
-        }
-        finally
-        {
-            DatabaseUtil.closePreparedStatement(ps);
-            pool.freeConnection(connection);
-        }
-    }
-*/
+    
 }

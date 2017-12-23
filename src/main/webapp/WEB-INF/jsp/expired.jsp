@@ -1,4 +1,10 @@
-<%-- Alex Tetervak, Sheridan College, Ontario --%>
+<!--
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+-->
 <%@page contentType="text/html" pageEncoding="UTF-8" session="false"%>
 <%@taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>

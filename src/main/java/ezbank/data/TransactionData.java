@@ -1,3 +1,10 @@
+/*
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+*/
 package ezbank.data;
 
 import ezbank.business.Account;
@@ -11,23 +18,24 @@ import java.util.Collections;
 public class TransactionData
 {
 
-    public static void insertDeposit(Transaction transaction, Customer customer, double balance)
+    public static void insertDeposit(Transaction transaction, Customer customer, Account account, double balance)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
-
+        
         // 1 is Chequing, 2 is Savings for Account_Type
         String update = "INSERT INTO transactions "
                 + "(Transaction_Typestransaction_type, transaction_date, transaction_amount"
                 + ", Accountsaccount_id) VALUES (?, ?, ?, ?)";
+        
         try
         {
             ps = connection.prepareStatement(update, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, transaction.getTranstype());
             ps.setDate(2, transaction.getTransaction_date());
             ps.setDouble(3, transaction.getTransaction_amount());
-            ps.setInt(4, transaction.getAccountsaccount_id());
+            ps.setInt(4, account.getAccount_id());
             ps.executeUpdate();
             ResultSet keys = ps.getGeneratedKeys();
             if (keys.next())
@@ -45,7 +53,7 @@ public class TransactionData
             
             ps = connection.prepareStatement(update2); 
             ps.setInt(1, customer.getCustomer_id());
-            ps.setInt(2, transaction.getAccountsaccount_id());
+            ps.setInt(2, account.getAccount_id());
             ps.setInt(3, transaction.getTransaction_id());
             ps.executeUpdate();
             
@@ -55,6 +63,162 @@ public class TransactionData
             ps = connection.prepareStatement(update3);
             ps.setDouble(1, newBalance);
             ps.setInt(2, transaction.getAccountsaccount_id());
+            ps.executeUpdate();
+            
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException("Cannot insert the transaction data.", e);
+        }
+        finally
+        {
+            DatabaseUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+    
+    public static void insertWithdrawal(Transaction transaction, Customer customer, Account account, double balance)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        
+        String update = "INSERT INTO transactions "
+                + "(Transaction_Typestransaction_type, transaction_date, transaction_amount"
+                + ", Accountsaccount_id) VALUES (?, ?, ?, ?)";
+        
+        try
+        {
+            ps = connection.prepareStatement(update, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, transaction.getTranstype());
+            ps.setDate(2, transaction.getTransaction_date());
+            ps.setDouble(3, transaction.getTransaction_amount());
+            ps.setInt(4, account.getAccount_id());
+            ps.executeUpdate();
+            ResultSet keys = ps.getGeneratedKeys();
+            if (keys.next())
+            {
+                transaction.setTransaction_id(keys.getInt(1));
+            }
+            else
+            {
+                throw new RuntimeException("Cannot get the generated key.");
+            }
+            
+            String update2 = "INSERT INTO customer_account_transactions "
+                + "(Customer_AccountCustomercustomer_id, Customer_AccountAccountsaccount_id, "
+                    + "Transactionstransaction_id) VALUES (?, ?, ?)";
+            
+            ps = connection.prepareStatement(update2); 
+            ps.setInt(1, customer.getCustomer_id());
+            ps.setInt(2, account.getAccount_id());
+            ps.setInt(3, transaction.getTransaction_id());
+            ps.executeUpdate();
+            
+            String update3 = "UPDATE accounts SET balance = ? WHERE account_id = ?";
+            
+            double newBalance = Math.round((balance - transaction.getTransaction_amount()) * 100.0) / 100.0;
+            ps = connection.prepareStatement(update3);
+            ps.setDouble(1, newBalance);
+            ps.setInt(2, transaction.getAccountsaccount_id());
+            ps.executeUpdate();
+            
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException("Cannot insert the transaction data.", e);
+        }
+        finally
+        {
+            DatabaseUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+    
+    public static void insertTransfer(Transaction withdrawalTransfer, Transaction depositTransfer, Customer customer, 
+            Account sourceAccount, Account destAccount, double sourceBalance, double destBalance)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        
+        String updateSourceWithdrawal = "INSERT INTO transactions "
+                + "(Transaction_Typestransaction_type, transaction_date, transaction_amount"
+                + ", Accountsaccount_id) VALUES (?, ?, ?, ?)";
+        
+        try
+        {
+            ps = connection.prepareStatement(updateSourceWithdrawal, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, withdrawalTransfer.getTranstype());
+            ps.setDate(2, withdrawalTransfer.getTransaction_date());
+            ps.setDouble(3, withdrawalTransfer.getTransaction_amount());
+            ps.setInt(4, sourceAccount.getAccount_id());
+            ps.executeUpdate();
+            ResultSet keys = ps.getGeneratedKeys();
+            if (keys.next())
+            {
+                withdrawalTransfer.setTransaction_id(keys.getInt(1));
+            }
+            else
+            {
+                throw new RuntimeException("Cannot get the generated key.");
+            }
+            
+            String updateSourceWithdrawal2 = "INSERT INTO customer_account_transactions "
+                + "(Customer_AccountCustomercustomer_id, Customer_AccountAccountsaccount_id, "
+                    + "Transactionstransaction_id) VALUES (?, ?, ?)";
+            
+            ps = connection.prepareStatement(updateSourceWithdrawal2); 
+            ps.setInt(1, customer.getCustomer_id());
+            ps.setInt(2, sourceAccount.getAccount_id());
+            ps.setInt(3, withdrawalTransfer.getTransaction_id());
+            ps.executeUpdate();
+            
+            String updateSourceWithdrawal3 = "UPDATE accounts SET balance = ? WHERE account_id = ?";
+            
+            double newBalanceSource = Math.round((sourceBalance - withdrawalTransfer.getTransaction_amount()) * 100.0) / 100.0;
+            ps = connection.prepareStatement(updateSourceWithdrawal3);
+            ps.setDouble(1, newBalanceSource);
+            ps.setInt(2, withdrawalTransfer.getAccountsaccount_id());
+            ps.executeUpdate();
+            
+            
+            String updateDestinationDeposit = "INSERT INTO transactions "
+                + "(Transaction_Typestransaction_type, transaction_date, transaction_amount"
+                + ", Accountsaccount_id) VALUES (?, ?, ?, ?)";
+            
+            ps = connection.prepareStatement(updateDestinationDeposit, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, depositTransfer.getTranstype());
+            ps.setDate(2, depositTransfer.getTransaction_date());
+            ps.setDouble(3, depositTransfer.getTransaction_amount());
+            ps.setInt(4, destAccount.getAccount_id());
+            ps.executeUpdate();
+            ResultSet keys2 = ps.getGeneratedKeys();
+            if (keys2.next())
+            {
+                depositTransfer.setTransaction_id(keys2.getInt(1));
+            }
+            else
+            {
+                throw new RuntimeException("Cannot get the generated key.");
+            }
+            
+            String updateDestinationDeposit2 = "INSERT INTO customer_account_transactions "
+                + "(Customer_AccountCustomercustomer_id, Customer_AccountAccountsaccount_id, "
+                    + "Transactionstransaction_id) VALUES (?, ?, ?)";
+            
+            ps = connection.prepareStatement(updateDestinationDeposit2); 
+            ps.setInt(1, customer.getCustomer_id());
+            ps.setInt(2, destAccount.getAccount_id());
+            ps.setInt(3, depositTransfer.getTransaction_id());
+            ps.executeUpdate();
+            
+            String updateDestinationDeposit3 = "UPDATE accounts SET balance = ? WHERE account_id = ?";
+            
+            double newBalanceDest = destBalance + depositTransfer.getTransaction_amount();
+            ps = connection.prepareStatement(updateDestinationDeposit3);
+            ps.setDouble(1, newBalanceDest);
+            ps.setInt(2, depositTransfer.getAccountsaccount_id());
             ps.executeUpdate();
             
         }

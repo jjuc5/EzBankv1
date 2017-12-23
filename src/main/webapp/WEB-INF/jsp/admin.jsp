@@ -1,8 +1,10 @@
-<%-- 
-    Document   : transaction
-    Created on : 13-Apr-2017, 4:36:33 PM
-    Author     : John Urbanowicz
---%>
+<!--
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+-->
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>

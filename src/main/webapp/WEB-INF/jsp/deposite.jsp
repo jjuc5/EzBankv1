@@ -1,8 +1,10 @@
-<%-- 
-    Document   : transfer
-    Created on : 13-Apr-2017, 4:36:33 PM
-    Author     : John Urbanowicz
---%>
+<!--
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+-->
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -73,20 +75,20 @@
                 <div class="col-md-8">
                     <main>
                         <my:SmileH1>Deposit E-Cheque</my:SmileH1>
-                        <form method="get" action="<c:url value="submitDeposit.do"/>">
+                        <form method="post" action="<c:url value="submitDeposit.do"/>">
                             <div class="col-md-8"><!--col-xs-2col-sm-6-->
                                <div class="form-group">
                                     <label for="accountsDeposit">Choose Account: </label> &nbsp;
-                                    <select id="accountsDeposit" name="accountsDeposit" value="${param.account_type}">
-                                        <c:forEach items="${accounts}" var="a">
-                                            <option value="${accounts}">${a.account_id} - 
-                                                <c:if test="${a.account_Typesaccount_type == 1}">
+                                    <select id="accountsDeposit" name="accountsDeposit">
+                                        <c:forEach items="${accounts}" var="acc">
+                                            <option value="${acc.account_id}">${acc.account_id} - 
+                                                <c:if test="${acc.account_Typesaccount_type == 1}">
                                                     Chequing -
                                                 </c:if>
-                                                <c:if test="${a.account_Typesaccount_type == 2}">
+                                                <c:if test="${acc.account_Typesaccount_type == 2}">
                                                     Savings -
                                                 </c:if>
-                                                    ${a.balance}
+                                                    ${acc.balance}
                                             </option>
                                         </c:forEach>
                                     </select>

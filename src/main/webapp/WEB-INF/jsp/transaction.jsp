@@ -1,8 +1,10 @@
-<%-- 
-    Document   : transaction
-    Created on : 13-Apr-2017, 4:36:33 PM
-    Author     : John Urbanowicz
---%>
+<!--
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+-->
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -37,10 +39,10 @@
                                 </div>
                                 <div id="collapse1" class="panel-collapse collapse">
                                     <ul class="list-group">
-                                        <li><a href="account.jsp" class="list-group-item list-group-item-action">
+                                        <li><a href="<c:url value="transaction.do"/>" class="list-group-item list-group-item-action">
                                                 Accounts Overview</a></li>
-                                                  <li><a href="<c:url value="chequing.do"/>" class="list-group-item list-group-item-action">Chequing Account</a></li>
-                                                  <li><a href="<c:url value="savings.do"/>" class="list-group-item list-group-item-action">Savings Account</a></li>
+                                        <li><a href="<c:url value="chequing.do"/>" class="list-group-item list-group-item-action">Chequing Account</a></li>
+                                        <li><a href="<c:url value="savings.do"/>" class="list-group-item list-group-item-action">Savings Account</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -100,6 +102,7 @@
                                 <p class="message">No accounts found to summarize.</p>
                             </c:otherwise>
                         </c:choose>
+                        <p class="message">${message}</p>
                     </main>
                 </div> 
             </div>

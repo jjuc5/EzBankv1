@@ -1,3 +1,10 @@
+/*
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+*/
 package ezbank.data;
 
 import java.sql.*;
@@ -45,6 +52,40 @@ public class LoginData
             DatabaseUtil.closePreparedStatement(ps);
             pool.freeConnection(connection);
         }
+    }
+    
+    public static String getLoginName(int user_id)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String login_name = "";
+        
+        String query = "SELECT login_name FROM users WHERE user_id = ?";
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, user_id);
+            rs = ps.executeQuery();
+            
+            if (rs.next())
+            {
+                login_name = rs.getString("login_name");
+                return login_name;
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException("Cannot find User by login_name: " + login_name, e);
+        }
+        finally
+        {
+            DatabaseUtil.closeResultSet(rs);
+            DatabaseUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+        return login_name;
     }
     
     public static boolean checkPassword(String login, String password)

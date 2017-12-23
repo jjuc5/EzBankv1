@@ -1,3 +1,10 @@
+<!--
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+-->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="my" tagdir="/WEB-INF/tags" %>
@@ -43,8 +50,7 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <my:SmileH1><b>Log In</b></my:SmileH1>
-                            <p class="message">Please login to continue.</p>
-                        </div>   
+                        </div>
                         <form action="<c:url value="loginSubmit.do"/>" class="form-inline" method="post">
                             <div class="centerText">
                                 <div align="center">
@@ -68,6 +74,7 @@
                                         </div>
                                         <p><a href="<c:url value="input.do"/>">Sign-Up For An Account</a></p>
                                     </div>
+                                    <p class="message">${message}</p>
                                 </div>
                             </div>
                         </div>

@@ -1,16 +1,23 @@
+/*
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+*/
 package ezbank.business;
 
 import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.*;
-
 import java.io.Serializable;
 
+/**
+ * This class represents a Customer as an object.  
+ * 
+ * @author John Urbanowicz, Melanie Iarocci
+ */
 public class Customer implements Serializable
 {
-
-
-
-
     private Integer user_id;
     private Integer customer_id;
 

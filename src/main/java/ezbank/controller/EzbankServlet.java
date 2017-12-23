@@ -1,3 +1,10 @@
+/*
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+*/
 package ezbank.controller;
 
 import java.io.IOException;
@@ -69,6 +76,12 @@ public class EzbankServlet extends HttpServlet
                 break;
             }
             
+            case "/submitTransfer.do":
+            {
+                showNext = EzbankController.submitTransfer(request, response);
+                break;
+            }
+            
             case "/deposite.do":
             {
                 showNext = EzbankController.deposite(request, response);
@@ -84,6 +97,12 @@ public class EzbankServlet extends HttpServlet
             case "/printe.do":
             {
                 showNext = EzbankController.printe(request, response);
+                break;
+            }
+            
+            case "/submitWithdrawal.do":
+            {
+                showNext = EzbankController.submitWithdrawal(request, response);
                 break;
             }
             

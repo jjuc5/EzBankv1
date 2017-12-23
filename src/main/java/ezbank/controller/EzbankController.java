@@ -1,3 +1,10 @@
+/*
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+*/
 package ezbank.controller;
 
 import ezbank.business.Account;
@@ -44,6 +51,7 @@ public class EzbankController
     {
         String login_name = request.getParameter("login_name");
         String password = request.getParameter("password");
+        String message;
 
         if (LoginData.checkPassword(login_name, password) == true)
         {
@@ -57,13 +65,16 @@ public class EzbankController
             session.setAttribute("customer", customer);
             session.setAttribute("login_name", login_name);
             ArrayList<Account> accounts;
-            accounts = AccountData.get(login_name);
+            accounts = AccountData.getAccounts(login_name);
             session.setAttribute("accounts", accounts);
             
             return "transaction"; // show "transaction.jsp"
         }
         else
         {
+            HttpSession session = request.getSession();
+            message = "Invalid login credentials.  Please try again.";
+            session.setAttribute("message", message);
             return login(request); // go back to showing "login.jsp"
         }
     }
@@ -79,8 +90,10 @@ public class EzbankController
         HttpSession session = request.getSession();
         
         String login_name = session.getAttribute("login_name").toString();
+        
         ArrayList<Account> accounts;
-        accounts = AccountData.get(login_name);
+        accounts = AccountData.getAccounts(login_name);
+        
         session.setAttribute("accounts", accounts);
 
         return "transaction"; // show "transaction.jsp"
@@ -133,6 +146,88 @@ public class EzbankController
     // a user comes to the page at "transfer.do"    
     public static String transfer(HttpServletRequest request, HttpServletResponse response)
     {
+        HttpSession session = request.getSession();
+        
+        String login_name = session.getAttribute("login_name").toString();
+        
+        ArrayList<Account> accounts;
+        accounts = AccountData.getAccounts(login_name);
+        
+        session.setAttribute("accounts", accounts);
+        
+        return "transfer"; // show "transfer.jsp"
+    }
+    
+    public static String submitTransfer(HttpServletRequest request, HttpServletResponse response)
+    {
+        HttpSession session = request.getSession();
+        String login_name = session.getAttribute("login_name").toString();
+        String accIDSourceString = request.getParameter("accountsSource");
+        int accIDSource = Integer.parseInt(accIDSourceString);
+        String accIDDestinationString = request.getParameter("accountsDestination");
+        int accIDDestination = Integer.parseInt(accIDDestinationString);
+        Double amount = Double.parseDouble(request.getParameter("amount"));
+        String message = "";
+        double sourceBalance = 0.0;
+        double destBalance = 0.0;
+        
+        Account sourceAccount = AccountData.get(accIDSource);
+        Account destAccount = AccountData.get(accIDDestination);
+
+        sourceBalance = sourceAccount.getBalance();
+        destBalance = destAccount.getBalance();
+        
+        Customer customer = (Customer) session.getAttribute("customer");
+        customer.setUsername(LoginData.getLoginName(customer.getUser_id()));
+        
+        if(!(accIDSource == accIDDestination))
+        {
+            if(amount <= sourceBalance)
+            {
+                Transaction withdrawalTransfer = new Transaction();
+
+                withdrawalTransfer.setTranstype(2);
+                withdrawalTransfer.setTransaction_amount(Math.round(amount));
+                withdrawalTransfer.setTransaction_date(java.sql.Date.valueOf(java.time.LocalDate.now()));
+                withdrawalTransfer.setAccountsaccount_id(accIDSource);
+
+                Transaction depositTransfer = new Transaction();
+
+                depositTransfer.setTranstype(1);
+                depositTransfer.setTransaction_amount(Math.round(amount));
+                depositTransfer.setTransaction_date(java.sql.Date.valueOf(java.time.LocalDate.now()));
+                depositTransfer.setAccountsaccount_id(accIDDestination);
+
+                TransactionData.insertTransfer(withdrawalTransfer, depositTransfer, customer, sourceAccount, destAccount, 
+                        sourceBalance, destBalance);
+
+                session.setAttribute("customer", customer);
+                session.setAttribute("login_name", customer.getUsername());
+                ArrayList<Account> accounts;
+                accounts = AccountData.getAccounts(customer.getUsername());
+                session.setAttribute("accounts", accounts);
+            }
+            else
+            {
+                message = "[Insufficient Funds]:  Unable to withdraw $" + amount + " with a balance of $" + sourceBalance + " "
+                        + "from source account";
+                request.setAttribute("message", message);
+                return "transaction";
+            }
+        }
+        else
+        {
+            message = "[Account Selection Error]:  Cannot transfer funds to the same account";
+            request.setAttribute("message", message);
+            return "transaction";
+        }
+        
+        
+        ArrayList<Account> accounts;
+        accounts = AccountData.getAccounts(login_name);
+        
+        session.setAttribute("accounts", accounts);
+        
         return "transfer"; // show "transfer.jsp"
     }
 
@@ -143,7 +238,7 @@ public class EzbankController
         
         String login_name = session.getAttribute("login_name").toString();
         ArrayList<Account> accounts;
-        accounts = AccountData.get(login_name);
+        accounts = AccountData.getAccounts(login_name);
         session.setAttribute("accounts", accounts);
         
         Customer customer = (Customer) session.getAttribute("customer");
@@ -152,70 +247,94 @@ public class EzbankController
         return "deposite"; // show "deposite.jsp"
     }
     
-    // a user comes to the data input page at "deposite.do"    
     public static String submitDeposit(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession();
         
-        String account_type = request.getParameter("account_type");
+        String accIDString = request.getParameter("accountsDeposit");
+        int accID = Integer.parseInt(accIDString);
         Double amount = Double.parseDouble(request.getParameter("amount"));
-        
-        int parsedAccount_Type = 0;
         double balance = 0.0;
-        ArrayList<Account> accounts = (ArrayList<Account>) session.getAttribute("accounts");
         
         Customer customer = (Customer) session.getAttribute("customer");
+        customer.setUsername(LoginData.getLoginName(customer.getUser_id()));
         Transaction depositTransaction = new Transaction();
-        
-        if(account_type.contains("Chequing"))
-        {
-            parsedAccount_Type = 1;
-        }
-        else if(account_type.contains("Savings"))
-        {
-            parsedAccount_Type = 2;
-        }
         
         depositTransaction.setTranstype(1);
         depositTransaction.setTransaction_amount(amount);
         depositTransaction.setTransaction_date(java.sql.Date.valueOf(java.time.LocalDate.now()));
+        depositTransaction.setAccountsaccount_id(accID);
         
-        if(parsedAccount_Type == 1)
-        {
-            for(Account account : accounts)
-            {
-                if(account.getAccount_Typesaccount_type() == 1)
-                {
-                    depositTransaction.setAccountsaccount_id(account.getAccount_id());
-                    balance = account.getBalance();
-                }
-            }
-        }
-        else if(parsedAccount_Type == 2)
-        {
-            for(Account account : accounts)
-            {
-                if(account.getAccount_Typesaccount_type() == 2)
-                {
-                    depositTransaction.setAccountsaccount_id(account.getAccount_id());
-                    balance = account.getBalance();
-                }
-            }
-        }
+        Account getAccount = AccountData.get(accID);
+        balance = getAccount.getBalance();
         
-        TransactionData.insertDeposit(depositTransaction, customer, balance);
+        TransactionData.insertDeposit(depositTransaction, customer, getAccount, balance);
         
+        session.setAttribute("customer", customer);
+        session.setAttribute("login_name", customer.getUsername());
+        ArrayList<Account> accounts;
+        accounts = AccountData.getAccounts(customer.getUsername());
+        session.setAttribute("accounts", accounts);
         
-        
-        return "deposite"; // show "deposite.jsp"
+        return "transaction"; // show "transaction.jsp"
     }
     
      // a user comes to the data input page at "printe.do"    
     public static String printe(HttpServletRequest request, HttpServletResponse response)
     {
+        HttpSession session = request.getSession();
+        
+        String login_name = session.getAttribute("login_name").toString();
+        ArrayList<Account> accounts;
+        accounts = AccountData.getAccounts(login_name);
+        session.setAttribute("accounts", accounts);
+        
+        Customer customer = (Customer) session.getAttribute("customer");
+        session.setAttribute("customer", customer);
+        
         return "printe"; // show "printe.jsp"
     }
     
+    public static String submitWithdrawal(HttpServletRequest request, HttpServletResponse response)
+    {
+        HttpSession session = request.getSession();
+        
+        String accIDString = request.getParameter("accountsWithdrawal");
+        int accID = Integer.parseInt(accIDString);
+        Double amount = Double.parseDouble(request.getParameter("amount"));
+        double balance = 0.0;
+        String message;
+        
+        Customer customer = (Customer) session.getAttribute("customer");
+        customer.setUsername(LoginData.getLoginName(customer.getUser_id()));
+        Transaction withdrawalTransaction = new Transaction();
+        
+        Account getAccount = AccountData.get(accID);
+        balance = getAccount.getBalance();
+        
+        if(amount <= balance)
+        {
+            withdrawalTransaction.setTranstype(2);
+            withdrawalTransaction.setTransaction_amount(amount);
+            withdrawalTransaction.setTransaction_date(java.sql.Date.valueOf(java.time.LocalDate.now()));
+            withdrawalTransaction.setAccountsaccount_id(accID);
+            TransactionData.insertWithdrawal(withdrawalTransaction, customer, getAccount, balance);
+        }
+        else
+        {
+            message = "[Insufficient Funds]:  Unable to withdraw $" + amount + " with a balance of $" + balance;
+            request.setAttribute("message", message);
+            return "transaction";
+        }
+        
+        session.setAttribute("customer", customer);
+        session.setAttribute("login_name", customer.getUsername());
+        ArrayList<Account> accounts;
+        accounts = AccountData.getAccounts(customer.getUsername());
+        session.setAttribute("accounts", accounts);
+        
+        return "transaction"; // show "transaction.jsp"
+    }
     
     //  a user clicks on "Logout" link to "forget.do"
     public static String logout(HttpServletResponse response)
@@ -258,6 +377,7 @@ public class EzbankController
         {
             HttpSession session = request.getSession();
             session.setAttribute("customer", customer);
+            session.setAttribute("login_name", customer.getUsername());
             // no data saving yet, the user must look through and confirm
             return "next"; // show "next.jsp"
         }
@@ -298,7 +418,7 @@ public class EzbankController
             AccountData.insert(customer);
             
             ArrayList<Account> accounts;
-            accounts = AccountData.get(customer.getUsername());
+            accounts = AccountData.getAccounts(customer.getUsername());
             
             session.setAttribute("accounts", accounts);
 
@@ -308,6 +428,7 @@ public class EzbankController
             cookie.setMaxAge(30 * 24 * 60 * 60);// one month in sec
             response.addCookie(cookie);
             session.setAttribute("customer", customer);
+            
             return "redirect:thanks.do";
         }
     }
@@ -335,8 +456,9 @@ public class EzbankController
     // a user is redirected to "Thank you" page at "thanks.do"
     public static String thanks(HttpServletRequest request)
     {
-        HttpSession session = request.getSession(false);
-        //String customerID = request.getParameter("customer_id");
+        // I REMOVED FALSE FROM request.getSession();
+        HttpSession session = request.getSession();
+        
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null)
         {
@@ -347,271 +469,4 @@ public class EzbankController
             return "thanks";
         }
     }
-    /*
-    // a user clicks on "List All" link to "listall.do", 
-    // or a user is redirected to "listall.do" 
-    public static String listAll(HttpServletRequest request)
-    {
-        List<Student> list = StudentData.getAll();
-        request.setAttribute("visits", list);
-        if (request.isUserInRole("administrator"))
-        {
-            return "editall";
-        }
-        else
-        {
-            return "readall";
-        }
-    }
-
-    public static String addAssist(HttpServletRequest request)
-    {
-        if (request.isUserInRole("administrator"))
-        {
-            return "addassist";
-        }
-        else
-        {
-            return "unauthorized";
-        }
-    }
-
-    public static String listAllAssist(HttpServletRequest request)
-    {
-        List<Assistant> list = AssistantData.getAll();
-        request.setAttribute("visits", list);
-        if (request.isUserInRole("administrator"))
-        {
-            return "listallassist";
-        }
-        else
-        {
-            return "unauthorized";
-        }
-    }
-
-    // a user clicks on "Clear All" link to "clearall.do"
-    public static String clearAll()
-    {
-        StudentData.delete();
-        return "redirect:listall.do";
-    }
-
-    // a user clicks "Edit" link (in the table) to "edit.do" 
-    public static String edit(HttpServletRequest request)
-    {
-
-        try
-        {
-            int id = Integer.parseInt(request.getParameter("id"));
-            Student student = StudentData.get(id);
-            if (student != null)
-            {
-                request.setAttribute("student", student);
-                return "edit"; // show the student data in the form to edit
-            }
-            else
-            {
-                return "redirect:listall.do";
-            }
-        }
-        catch (NumberFormatException e)
-        {
-            return "notfound";
-        }
-    }
-
-    public static String editAssist(HttpServletRequest request)
-    {
-
-        try
-        {
-            String username = request.getParameter("username");
-            Assistant assistant = AssistantData.getAssist(username);
-
-            if (assistant != null)
-            {
-                request.setAttribute("assistant", assistant);
-                return "editassist";
-            }
-            else
-            {
-                return "redirect:input.jsp";
-            }
-        }
-        catch (NumberFormatException e)
-        {
-            return "notfound";
-        }
-    }
-
-    // a user clicks "Update" button in "edit.jsp", 
-    // the form submits the data to "update.do"
-    public static String update(HttpServletRequest request)
-    {
-        Student student = new Student();
-        try
-        {
-            student.setId(Integer.parseInt(request.getParameter("id")));
-            student.setFirstName(request.getParameter("firstName"));
-            student.setLastName(request.getParameter("lastName"));
-            student.setProgram(request.getParameter("program"));
-            student.setYear(request.getParameter("year"));
-            String coop = request.getParameter("coop");
-            student.setCoop((coop == null) ? "no" : "yes");
-            Set<ConstraintViolation<Student>> errors
-                    = ValidatorUtil.getValidator().validate(student);
-            if (errors.isEmpty())
-            {
-                StudentData.update(student);
-                return "redirect:listall.do";
-            }
-            else
-            {
-
-                request.setAttribute("errors", errors);
-                request.setAttribute("student", student);
-                return "edit";
-            }
-        }
-        catch (NumberFormatException e)
-        {
-            return "notfound";
-        }
-    }
-
-    public static String updateAssist(HttpServletRequest request)
-    {
-        Assistant assistant = new Assistant();
-
-        assistant.setUsername(request.getParameter("username"));
-        assistant.setRole(request.getParameter("role"));
-
-        String originalUser = request.getParameter("originalUser");
-
-        AssistantData.update(assistant);
-
-        return "redirect:listallassist.do";
-    }
-
-    // a user cliks "Delete" link (in the table) to "delete.do"
-    public static String delete(HttpServletRequest request)
-    {
-        try
-        {
-            int id = Integer.parseInt(request.getParameter("id"));
-            Student student = StudentData.get(id);
-            if (student != null)
-            {
-                request.setAttribute("student", student);
-                return "delete"; // ask "Do you really want to remove the data?"
-            }
-            else
-            {
-                return "redirect:listall.do";
-            }
-        }
-        catch (NumberFormatException e)
-        {
-            return "notfound";
-        }
-    }
-
-    public static String deleteAssist(HttpServletRequest request)
-    {
-        try
-        {
-
-            String username = request.getParameter("username");
-
-            Assistant assistant = AssistantData.getAssist(username);
-            if (assistant != null)
-            {
-                request.setAttribute("assistant", assistant);
-                return "deleteassist";
-            }
-            else
-            {
-                return "redirect:listallassist.do";
-            }
-        }
-        catch (NumberFormatException e)
-        {
-            return "notfound";
-        }
-    }
-
-    // a user clicks "Remove Record" button in "delete.jsp",
-    // the form submits the data to "remove.do"
-    public static String remove(HttpServletRequest request)
-    {
-        try
-        {
-            StudentData.delete(Integer.parseInt(request.getParameter("id")));
-        }
-        catch (NumberFormatException e)
-        {
-            return "notfound";
-        }
-        return "redirect:listall.do";
-    }
-
-    public static String removeAssist(HttpServletRequest request)
-    {
-        AssistantData.delete(request.getParameter("username"));
-
-        return "redirect:listallassist.do";
-    }
-
-    // a user clicks "Change password" link
-    public static String changePassword(HttpServletRequest request)
-    {
-        request.setAttribute("message", "Enter your new password twice");
-        return "passwords";
-    }
-
-    // a user clicks "Change Password" button in "passwords.jsp",
-    // the form submits data to "/update_password.do"
-    public static String updatePassword(HttpServletRequest request)
-    {
-        String login = request.getRemoteUser();
-        if (login == null)
-        {
-            return "expired";
-        }
-        String message;
-        String current_password = request.getParameter("current_password");
-        String new_password_1 = request.getParameter("new_password_1");
-        String new_password_2 = request.getParameter("new_password_2");
-        if (current_password == null || current_password.isEmpty())
-        {
-            message = "Current password input is left empty.";
-        }
-        else if (LoginData.checkPassword(login, current_password))
-        {
-            if (new_password_1 == null || new_password_1.isEmpty()
-                    || new_password_2 == null || new_password_2.isEmpty())
-            {
-                message = "New password input is left empty.";
-            }
-            else if (new_password_1.equals(new_password_2))
-            {
-                LoginData.updatePassword(login, new_password_1);
-                message = "Your password has been changed.";
-            }
-            else
-            {
-                message = "New password inputs do not match.";
-            }
-        }
-        else
-        {
-            message = "Your current password input is wrong.";
-        }
-        request.setAttribute("message", message);
-
-        return "passwords";
-    }
-     */
-
 }

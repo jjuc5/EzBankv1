@@ -1,3 +1,10 @@
+<!--
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+-->
 <%@tag pageEncoding="UTF-8"%>
 <%@tag import="java.util.*, javax.validation.*" %>
 <%@attribute name="property" required="true"%>

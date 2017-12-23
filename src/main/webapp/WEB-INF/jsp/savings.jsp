@@ -1,9 +1,10 @@
-<%-- 
-    Document   : savings
-    Created on : 20-Dec-2017, 2:11:33 PM
-    Author     : John Urbanowicz
---%>
-
+<!--
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+-->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="my" tagdir="/WEB-INF/tags" %>

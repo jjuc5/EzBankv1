@@ -1,3 +1,10 @@
+/*
+    Project Deliverable 3
+    Group Members: John Urbanowicz, Richard Paul, Melanie Iarocci
+    Professor: Gurdeep Gill
+    Date: 23 Dec 2017
+    Sheridan College
+*/
 package ezbank.data;
 
 import ezbank.business.Account;
@@ -54,7 +61,7 @@ public class AccountData
         }
     }
     
-    public static ArrayList<Account> get(String login_name)
+    public static ArrayList<Account> getAccounts(String login_name)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -106,5 +113,43 @@ public class AccountData
             pool.freeConnection(connection);
         }
         return accounts;
+    }
+    
+    public static Account get(int account_id)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Account account = new Account();
+        
+        String query = "SELECT * FROM accounts WHERE account_id = ?";
+        
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, account_id);
+            rs = ps.executeQuery();
+            
+            if (rs.next())
+            {
+                account.setAccount_Typesaccount_type(rs.getInt("Account_Typesaccount_type"));
+                account.setCreation_date(rs.getDate("creation_date"));
+                account.setBalance(rs.getDouble("balance"));
+                account.setUsersuser_id(rs.getInt("Usersuser_id"));
+                account.setAccount_id(account_id);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException("Unable to retrieve customer's account data.", e);
+        }
+        finally
+        {
+            DatabaseUtil.closeResultSet(rs);
+            DatabaseUtil.closeStatement(ps);
+            pool.freeConnection(connection);
+        }
+        return account;
     }
 }
