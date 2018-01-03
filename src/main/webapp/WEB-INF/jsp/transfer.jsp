@@ -41,7 +41,7 @@
                                  <a data-toggle="collapse" href="#collapse1">Personal Accounts</a></h4></div>
                                  <div id="collapse1" class="panel-collapse collapse">
                                  <ul class="list-group">
-                                     <li><a href="<c:url value="transaction.ez"/>" class="list-group-item list-group-item-action">Accounts Overview</a></li>
+                                     <li><a href="<c:url value="summary.ez"/>" class="list-group-item list-group-item-action">Accounts Overview</a></li>
                                      <li><a href="<c:url value="chequing.ez"/>" class="list-group-item list-group-item-action">Chequing Account</a></li>
                                      <li><a href="<c:url value="savings.ez"/>" class="list-group-item list-group-item-action">Savings Account</a></li>
                                   </ul>

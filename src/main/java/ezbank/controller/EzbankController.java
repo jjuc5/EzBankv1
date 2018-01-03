@@ -95,6 +95,9 @@ public class EzbankController
             accounts = AccountData.getAccounts(login_name);
             session.setAttribute("accounts", accounts);
             
+            message = "";
+            session.setAttribute("message", message);
+            
             return "summary"; // show "summary.jsp"
         }
         else
