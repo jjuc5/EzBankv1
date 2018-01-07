@@ -108,11 +108,6 @@
                                 </div>
                                 <div class="col-md-8"><!--col-xs-2col-sm-6-->
                                     <div class="form-group row">
-                                        <form action="UploadServlet" method="post"
-                                            enctype = "multipart/form-data">
-                                            <input type="file" name="file" size="50" />
-                                            <br>
-                                        </form>
                                         <input type="submit" class="btn btn-primary" value="Submit">&nbsp;&nbsp;
                                     </div>
                                 </div>
